@@ -4,6 +4,7 @@ import { calculateVelocity } from "../../../metrics/velocity.js";
 import { computeBurndown } from "../../../metrics/burndown.js";
 import { computeGanttBars } from "../../../metrics/gantt.js";
 import type { GanttInput } from "../../../metrics/gantt.js";
+import { getTaskCommits } from "../../../core/git.js";
 
 export function metricsRoute(sevenDir: string) {
   const route = new Hono();
@@ -61,6 +62,25 @@ export function metricsRoute(sevenDir: string) {
 
     const bars = computeGanttBars(items);
     return c.json(bars);
+  });
+
+  route.get("/commits/:taskId", async (c) => {
+    const taskId = c.req.param("taskId");
+    const commits = getTaskCommits(taskId);
+    return c.json(commits);
+  });
+
+  route.get("/commits", async (c) => {
+    const tasks = await listItems(sevenDir, "task");
+    const allCommits: Array<{ hash: string; date: string; message: string; taskId: string; taskName: string }> = [];
+    for (const t of tasks) {
+      const commits = getTaskCommits(t.id);
+      for (const commit of commits) {
+        allCommits.push({ ...commit, taskId: t.id, taskName: t.data.name });
+      }
+    }
+    allCommits.sort((a, b) => a.date.localeCompare(b.date));
+    return c.json(allCommits);
   });
 
   return route;
