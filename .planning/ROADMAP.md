@@ -37,7 +37,13 @@ Plans:
   3. When all tasks for a KR are done, the system evaluates the result measure and either marks KR achieved or triggers another task breakdown round
   4. Tasks carry non-destructive re-estimation history and agent can suggest daily re-estimates for human approval
   5. OpenCode slash commands mirror full CLI functionality for agent-driven workflows
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 02-01-PLAN.md — Schema extensions + session state machine
+- [ ] 02-02-PLAN.md — MECE analysis engine
+- [ ] 02-03-PLAN.md — Lifecycle automation (evaluation, cascading)
+- [ ] 02-04-PLAN.md — Estimation module + git task history
+- [ ] 02-05-PLAN.md — CLI commands + OpenCode slash commands
 
 ### Phase 3: Dashboard & Gamification
 **Goal**: Users can launch a local dashboard that visualizes all OKR data with burndown charts, velocity metrics, Gantt views, and a gamified LCARS aesthetic
