@@ -62,12 +62,13 @@ export async function runMeasureScript(
  */
 export async function evaluateKr(
   sevenDir: string,
-  krId: string
+  krId: string,
+  runner: (script: string) => Promise<{ stdout: string; exitCode: number }> = runMeasureScript
 ): Promise<{ status: "achieved" | "needs-breakdown"; scriptOutput?: string }> {
   const { data } = await readItem(sevenDir, krId);
 
   if (data.measureScript) {
-    const result = await runMeasureScript(data.measureScript);
+    const result = await runner(data.measureScript);
     if (result.exitCode === 0) {
       return { status: "achieved", scriptOutput: result.stdout };
     }
