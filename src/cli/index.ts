@@ -8,6 +8,7 @@ import { makeRepairIndexCommand } from "./commands/repair-index.js";
 import { makeSessionCommand } from "./commands/session.js";
 import { makeEstimateCommand } from "./commands/estimate.js";
 import { makeEvaluateCommand } from "./commands/evaluate.js";
+import { makeDashboardCommand } from "./commands/dashboard.js";
 
 const program = new Command();
 
@@ -25,5 +26,6 @@ program.addCommand(makeRepairIndexCommand());
 program.addCommand(makeSessionCommand());
 program.addCommand(makeEstimateCommand());
 program.addCommand(makeEvaluateCommand());
+program.addCommand(makeDashboardCommand());
 
 program.parse();
