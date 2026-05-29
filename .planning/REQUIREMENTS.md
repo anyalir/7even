@@ -24,8 +24,8 @@
 - [x] **OKR-03**: Create, read, update tasks with statuses: to-do, in-progress, done
 - [x] **OKR-04**: Assign tasks to git users (identified by email and GitHub username)
 - [x] **OKR-05**: Guided OKR session: agent proposes key results from objective description, humans give feedback iteratively
-- [ ] **OKR-06**: MECE overlap checking when breaking objectives into key results
-- [ ] **OKR-07**: MECE overlap checking when breaking key results into tasks, against existing tasks
+- [x] **OKR-06**: MECE overlap checking when breaking objectives into key results
+- [x] **OKR-07**: MECE overlap checking when breaking key results into tasks, against existing tasks
 - [ ] **OKR-08**: When all tasks for a KR are done, evaluate result measure against goal parameters
 - [ ] **OKR-09**: If result measure not met after task completion, trigger another round of task breakdown to close the gap
 - [ ] **OKR-10**: When result measure met, KR status → achieved
@@ -112,8 +112,8 @@
 | OKR-03 | Phase 1 | Complete |
 | OKR-04 | Phase 1 | Complete |
 | OKR-05 | Phase 2 | Complete |
-| OKR-06 | Phase 2 | Pending |
-| OKR-07 | Phase 2 | Pending |
+| OKR-06 | Phase 2 | Complete |
+| OKR-07 | Phase 2 | Complete |
 | OKR-08 | Phase 2 | Pending |
 | OKR-09 | Phase 2 | Pending |
 | OKR-10 | Phase 2 | Pending |
