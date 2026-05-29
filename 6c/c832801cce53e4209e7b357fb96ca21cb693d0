@@ -1,0 +1,28 @@
+src/metrics/projection.ts
+  s_2f8c60ce325c5f::t_74101f047ae506 1-3,6,43
+  s_2f8c60ce325c5f::t_4e6b45deffb566 4-5,7-42
+src/metrics/burndown.ts
+  s_2f8c60ce325c5f::t_d0bd8f2db36f95 1-6,15,17-18,79
+  s_2f8c60ce325c5f::t_d70f863475c0c9 7-14,16,19-78
+src/metrics/__tests__/metrics.test.ts
+  s_2f8c60ce325c5f::t_c8570aa9e6d8d3 1-151
+src/metrics/velocity.ts
+  s_2f8c60ce325c5f::t_28125d1523eb8f 8-16,18-19,21-82
+  s_2f8c60ce325c5f::t_180079a5e203c9 1-7,17,20,83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "6cc832801cce53e4209e7b357fb96ca21cb693d0",
+  "prompts": {},
+  "sessions": {
+    "s_2f8c60ce325c5f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bb853b7ffeRuF3RypMqXXJT3",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
