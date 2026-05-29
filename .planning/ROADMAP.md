@@ -22,7 +22,10 @@ Build a repository-local issue tracker in three phases: first the data layer and
   3. `index.json` stays consistent after every mutation, and `npx 7 repair-index` rebuilds it from scratch
   4. Concurrent edits on the same item trigger CAS retry instead of silent data loss
   5. User can add inline comments to any work item and see them persisted in the JSON file
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — Core data layer: project setup, Zod schemas, storage engine, index manager, tests
+- [ ] 01-02-PLAN.md — CLI layer: Commander.js commands for all CRUD, status transitions, commit, repair-index
 
 ### Phase 2: Intelligence
 **Goal**: Agent can run guided OKR sessions that decompose objectives into KRs and tasks with MECE validation, and the system tracks estimation and lifecycle completion automatically
@@ -52,6 +55,6 @@ Build a repository-local issue tracker in three phases: first the data layer and
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/? | Not started | - |
+| 1. Foundation | 0/2 | Planning complete | - |
 | 2. Intelligence | 0/? | Not started | - |
 | 3. Dashboard & Gamification | 0/? | Not started | - |
