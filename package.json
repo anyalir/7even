@@ -1,0 +1,33 @@
+{
+  "name": "7even",
+  "version": "0.1.0",
+  "description": "Repository-local, agentic-AI-enabled issue tracker with OKR hierarchy",
+  "type": "module",
+  "bin": {
+    "7": "./dist/cli.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "okr",
+    "issue-tracker",
+    "cli"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}
