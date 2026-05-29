@@ -1,0 +1,26 @@
+src/metrics/gantt.ts
+  s_2f8c60ce325c5f::t_9b20eb5318eb40 1-22,65
+  s_2f8c60ce325c5f::t_2075151046cf6f 23-64
+src/metrics/__tests__/metrics.test.ts
+  s_2f8c60ce325c5f::t_34b64d4010f066 154-239
+  s_2f8c60ce325c5f::t_1545c0f49cc307 1,5-6
+src/metrics/git-metrics.ts
+  s_2f8c60ce325c5f::t_f9871181cf329a 3-15,20-21,25,78-80,84,116
+  s_2f8c60ce325c5f::t_4f415093067c6f 1-2,16-19,22-24,26-77,81-83,85-115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "b6a8f489bcd01e5f6b8c6918be72bfca99538142",
+  "prompts": {},
+  "sessions": {
+    "s_2f8c60ce325c5f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bb853b7ffeRuF3RypMqXXJT3",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
