@@ -59,11 +59,11 @@
 - [ ] **DASH-02**: Kanban board view showing all objectives, key results, and tasks by status
 - [x] **DASH-03**: LCARS-inspired pastel-on-dark design with rich, tasteful color palette
 - [ ] **DASH-04**: Color-coded remaining story point estimates in dashboard views
-- [ ] **DASH-05**: Burndown chart visualization at KR level
-- [ ] **DASH-06**: Velocity and ETA projection charts
-- [ ] **DASH-07**: Gantt-chart-like timeline view for O/KR/task hierarchy
+- [x] **DASH-05**: Burndown chart visualization at KR level
+- [x] **DASH-06**: Velocity and ETA projection charts
+- [x] **DASH-07**: Gantt-chart-like timeline view for O/KR/task hierarchy
 - [ ] **DASH-08**: Task detail view displaying inline comments and git commit messages/history
-- [ ] **DASH-09**: Commit frequency/size and weighted PR metric visualizations
+- [x] **DASH-09**: Commit frequency/size and weighted PR metric visualizations
 - [ ] **DASH-10**: Assignee view showing who is working on what
 
 ### Gamification
@@ -138,11 +138,11 @@
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Complete |
 | DASH-04 | Phase 3 | Pending |
-| DASH-05 | Phase 3 | Pending |
-| DASH-06 | Phase 3 | Pending |
-| DASH-07 | Phase 3 | Pending |
+| DASH-05 | Phase 3 | Complete |
+| DASH-06 | Phase 3 | Complete |
+| DASH-07 | Phase 3 | Complete |
 | DASH-08 | Phase 3 | Pending |
-| DASH-09 | Phase 3 | Pending |
+| DASH-09 | Phase 3 | Complete |
 | DASH-10 | Phase 3 | Pending |
 | GAME-01 | Phase 3 | Complete |
 | GAME-02 | Phase 3 | Complete |
