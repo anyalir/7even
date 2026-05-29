@@ -1,0 +1,116 @@
+/* LCARS decorative system — 3px bars, dots, frames */
+
+.lcars-bar-h {
+  height: var(--bar-width);
+  background: currentColor;
+  width: 100%;
+}
+
+.lcars-bar-v {
+  width: var(--bar-width);
+  background: currentColor;
+  height: 100%;
+}
+
+.lcars-dot {
+  width: 3px;
+  height: 3px;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* Page framing */
+.lcars-frame {
+  border: var(--bar-width) solid var(--text-muted);
+  padding: 1px;
+}
+
+.lcars-frame-top {
+  border-top: var(--bar-width) solid var(--text-muted);
+}
+
+.lcars-frame-left {
+  border-left: var(--bar-width) solid var(--text-muted);
+}
+
+/* Section frames with top-left decoration alignment */
+.lcars-section {
+  position: relative;
+  padding: 16px 16px 16px 20px;
+}
+
+.lcars-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--bar-width);
+  height: 100%;
+  background: var(--color-coral);
+}
+
+.lcars-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: var(--bar-width);
+  background: var(--color-coral);
+}
+
+/* Card with corner decorations */
+.lcars-card {
+  background: var(--bg-surface);
+  padding: 16px;
+  position: relative;
+}
+
+.lcars-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: var(--bar-width);
+  background: var(--color-amber);
+}
+
+.lcars-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--bar-width);
+  height: 12px;
+  background: var(--color-amber);
+}
+
+/* Divider */
+.lcars-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  margin: 16px 0;
+}
+
+.lcars-divider::after {
+  content: "";
+  flex: 1;
+  height: var(--bar-width);
+  background: currentColor;
+}
+
+/* Dark-on-light panel for detail areas */
+.panel-detail {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 12px 16px;
+}
+
+/* Light-on-dark (default) for nav/boards */
+.panel-nav {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}

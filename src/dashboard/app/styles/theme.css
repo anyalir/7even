@@ -1,0 +1,53 @@
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-surface: #14141f;
+  --text-primary: #e8e0d4;
+  --text-muted: #8a8278;
+
+  /* Objective colors — warm pastels via oklch */
+  --color-coral: oklch(0.75 0.12 25);
+  --color-amber: oklch(0.8 0.12 75);
+  --color-sage: oklch(0.75 0.1 145);
+  --color-blue: oklch(0.75 0.1 230);
+  --color-lavender: oklch(0.75 0.1 290);
+  --color-rose: oklch(0.75 0.1 350);
+
+  /* Functional */
+  --color-success: oklch(0.75 0.12 145);
+  --color-warning: oklch(0.8 0.12 75);
+  --color-danger: oklch(0.75 0.12 25);
+
+  /* Spacing */
+  --sidebar-width: 280px;
+  --bar-width: 3px;
+}
+
+* {
+  border-radius: 0 !important;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+button,
+.btn {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
