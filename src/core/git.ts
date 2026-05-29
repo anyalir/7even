@@ -59,6 +59,24 @@ export async function getChangeSummary(sevenDir: string): Promise<string> {
   }
 }
 
+export function getTaskCommits(
+  taskId: string
+): Array<{ hash: string; date: string; message: string }> {
+  try {
+    const output = execSync(
+      `git log --all --grep="task: ${taskId}" --format="%H|%aI|%s"`,
+      { encoding: "utf-8" }
+    ).trim();
+    if (!output) return [];
+    return output.split("\n").map((line) => {
+      const [hash, date, ...rest] = line.split("|");
+      return { hash, date, message: rest.join("|") };
+    });
+  } catch {
+    return [];
+  }
+}
+
 export async function casCommit(
   sevenDir: string,
   maxRetries = 3
