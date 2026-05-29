@@ -1,5 +1,7 @@
 import { NavLink } from "react-router";
 import { useEffect, useState } from "react";
+import { VelocityChart } from "./VelocityChart.js";
+import { SidebarBadgeIndicator } from "./SidebarBadgeIndicator.js";
 
 const NAV_ITEMS = [
   { to: "/timeline", label: "TIMELINE", color: "var(--color-coral)" },
@@ -8,32 +10,29 @@ const NAV_ITEMS = [
   { to: "/analytics", label: "ANALYTICS", color: "var(--color-blue)" },
 ];
 
-type VelocitySummary = {
-  completedSp: number;
-  taskCount: number;
+type BadgeAvailable = {
+  id: string;
+  earned: boolean;
+  earnedAt: string | null;
 };
 
+const BADGE_VIEWED_KEY = "7even-badges-last-viewed";
+
 export function LcarsSidebar() {
-  const [velocity, setVelocity] = useState<VelocitySummary | null>(null);
-  const [badgeCount, setBadgeCount] = useState(0);
   const [hasNew, setHasNew] = useState(false);
+  const [badgeCount, setBadgeCount] = useState(0);
 
   useEffect(() => {
-    fetch("/api/metrics/velocity")
-      .then((r) => r.json())
-      .then((windows: VelocitySummary[]) => {
-        if (windows.length > 0) {
-          const last = windows[windows.length - 1];
-          setVelocity(last);
-        }
-      })
-      .catch(() => {});
+    const lastViewed = localStorage.getItem(BADGE_VIEWED_KEY) ?? "1970-01-01T00:00:00Z";
 
     fetch("/api/badges")
       .then((r) => r.json())
-      .then((data: { earned: unknown[]; available: unknown[] }) => {
+      .then((data: { earned: unknown[]; available: BadgeAvailable[] }) => {
         setBadgeCount(data.earned.length);
-        if (data.earned.length > 0) setHasNew(true);
+        const fresh = data.available.filter(
+          (b) => b.earned && b.earnedAt && b.earnedAt > lastViewed
+        );
+        if (fresh.length > 0) setHasNew(true);
       })
       .catch(() => {});
   }, []);
@@ -99,18 +98,18 @@ export function LcarsSidebar() {
         ))}
       </div>
 
+      {/* Badge indicator */}
+      <SidebarBadgeIndicator />
+
       <div className="lcars-bar-h" style={{ color: "var(--text-muted)" }} />
 
-      {/* Velocity/ETA widget */}
-      <div style={{ padding: "12px 16px", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        <div style={{ color: "var(--text-muted)", marginBottom: 4 }}>VELOCITY</div>
-        <div>
-          {velocity
-            ? `${velocity.completedSp} SP / ${velocity.taskCount} TASKS`
-            : "NO DATA"}
+      {/* Velocity widget (compact) */}
+      <div style={{ padding: "12px 16px" }}>
+        <VelocityChart compact />
+        <div style={{ marginTop: 8, fontSize: 11, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <span style={{ color: "var(--text-muted)" }}>BADGES: </span>
+          {badgeCount} EARNED
         </div>
-        <div style={{ marginTop: 8, color: "var(--text-muted)" }}>BADGES</div>
-        <div>{badgeCount} EARNED</div>
       </div>
     </nav>
   );

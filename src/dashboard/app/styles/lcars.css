@@ -102,6 +102,17 @@
   background: currentColor;
 }
 
+/* Badge pulse animation */
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 /* Dark-on-light panel for detail areas */
 .panel-detail {
   background: var(--text-primary);
