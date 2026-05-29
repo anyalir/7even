@@ -1,0 +1,42 @@
+src/core/schemas/index.ts
+  s_af71b6853941da::t_da550be8f4fc77 1-11
+tsconfig.json
+  s_af71b6853941da::t_24f4babacc0ee7 1-17
+src/cli/index.ts
+  s_af71b6853941da::t_e5ccf80c31a6b7 1-2
+src/types/index.ts
+  s_af71b6853941da::t_5c65af60553457 1-14
+src/core/schemas/key-result.ts
+  s_af71b6853941da::t_2e0e56ddcb20ec 1-25
+src/core/schemas/task.ts
+  s_af71b6853941da::t_446cfb3831c758 1-29
+package.json
+  s_af71b6853941da::t_3065e474c1e910 16-20,22-26,32
+  s_af71b6853941da::t_5e6df5691453de 1-2,12,15,21,33
+  s_af71b6853941da::t_b5b61b21a8e022 3-11,13-14
+  s_af71b6853941da::t_b9323322f1fbb9 27-31
+tsup.config.ts
+  s_af71b6853941da::t_786d912212768f 1-10
+src/core/schemas/comment.ts
+  s_af71b6853941da::t_be29cbc0b15417 1-8
+src/core/slug.ts
+  s_af71b6853941da::t_8994d06cd49379 1-17
+src/core/schemas/objective.ts
+  s_af71b6853941da::t_445fd675f8364b 1-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "95532234ea4ea6f61aee8c5d753d2738ac0da553",
+  "prompts": {},
+  "sessions": {
+    "s_af71b6853941da": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c246fa4ffehQAYMgFvh0ftL8",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
