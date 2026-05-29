@@ -7,15 +7,15 @@
 
 ### Data Model & Storage
 
-- [ ] **DATA-01**: All work items stored as JSON files in `.7even/` directory
-- [ ] **DATA-02**: Status-based directory structure where file moves represent status changes
-- [ ] **DATA-03**: Every objective, key result, and task has a UUID
-- [ ] **DATA-04**: Maintained `index.json` mapping UUID → filesystem path, updated on every mutation
-- [ ] **DATA-05**: Objective schema: `objective.json` with status quo, constraints, functional/nonfunctional requirements, desired outcome, comments array
-- [ ] **DATA-06**: Key Result schema: `kr.json` with result measure, goal parameters, estimation history, comments array
-- [ ] **DATA-07**: Task schema: `<task-slug>.json` with assignee (git email + GitHub username), estimation history, comments array
-- [ ] **DATA-08**: No name duplication inside JSON files — filename is the canonical name
-- [ ] **DATA-09**: Index repair command that rebuilds `index.json` from filesystem scan
+- [x] **DATA-01**: All work items stored as JSON files in `.7even/` directory
+- [x] **DATA-02**: Status-based directory structure where file moves represent status changes
+- [x] **DATA-03**: Every objective, key result, and task has a UUID
+- [x] **DATA-04**: Maintained `index.json` mapping UUID → filesystem path, updated on every mutation
+- [x] **DATA-05**: Objective schema: `objective.json` with status quo, constraints, functional/nonfunctional requirements, desired outcome, comments array
+- [x] **DATA-06**: Key Result schema: `kr.json` with result measure, goal parameters, estimation history, comments array
+- [x] **DATA-07**: Task schema: `<task-slug>.json` with assignee (git email + GitHub username), estimation history, comments array
+- [x] **DATA-08**: No name duplication inside JSON files — filename is the canonical name
+- [x] **DATA-09**: Index repair command that rebuilds `index.json` from filesystem scan
 
 ### OKR Lifecycle
 
@@ -30,7 +30,7 @@
 - [ ] **OKR-09**: If result measure not met after task completion, trigger another round of task breakdown to close the gap
 - [ ] **OKR-10**: When result measure met, KR status → achieved
 - [ ] **OKR-11**: When all KRs of an objective achieved, objective status → achieved
-- [ ] **OKR-12**: Cross-reference between items via UUIDs
+- [x] **OKR-12**: Cross-reference between items via UUIDs
 
 ### Estimation & Metrics
 
@@ -75,7 +75,7 @@
 
 ### Work Documentation
 
-- [ ] **DOC-01**: Inline comments in JSON files as array of `{author, date, text}` objects
+- [x] **DOC-01**: Inline comments in JSON files as array of `{author, date, text}` objects
 - [ ] **DOC-02**: Task detail view integrates git commit messages and git history for the task
 
 ## v2 Requirements
@@ -98,15 +98,15 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DATA-01 | Phase 1 | Pending |
-| DATA-02 | Phase 1 | Pending |
-| DATA-03 | Phase 1 | Pending |
-| DATA-04 | Phase 1 | Pending |
-| DATA-05 | Phase 1 | Pending |
-| DATA-06 | Phase 1 | Pending |
-| DATA-07 | Phase 1 | Pending |
-| DATA-08 | Phase 1 | Pending |
-| DATA-09 | Phase 1 | Pending |
+| DATA-01 | Phase 1 | Complete |
+| DATA-02 | Phase 1 | Complete |
+| DATA-03 | Phase 1 | Complete |
+| DATA-04 | Phase 1 | Complete |
+| DATA-05 | Phase 1 | Complete |
+| DATA-06 | Phase 1 | Complete |
+| DATA-07 | Phase 1 | Complete |
+| DATA-08 | Phase 1 | Complete |
+| DATA-09 | Phase 1 | Complete |
 | OKR-01 | Phase 1 | Pending |
 | OKR-02 | Phase 1 | Pending |
 | OKR-03 | Phase 1 | Pending |
@@ -118,7 +118,7 @@
 | OKR-09 | Phase 2 | Pending |
 | OKR-10 | Phase 2 | Pending |
 | OKR-11 | Phase 2 | Pending |
-| OKR-12 | Phase 1 | Pending |
+| OKR-12 | Phase 1 | Complete |
 | EST-01 | Phase 2 | Pending |
 | EST-02 | Phase 2 | Pending |
 | EST-03 | Phase 2 | Pending |
@@ -148,7 +148,7 @@
 | GAME-02 | Phase 3 | Pending |
 | GAME-03 | Phase 3 | Pending |
 | GAME-04 | Phase 3 | Pending |
-| DOC-01 | Phase 1 | Pending |
+| DOC-01 | Phase 1 | Complete |
 | DOC-02 | Phase 2 | Pending |
 
 **Coverage:**
