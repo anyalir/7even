@@ -1,0 +1,19 @@
+.planning/phases/01-foundation/01-RESEARCH.md
+  s_b2a7b4eb8a1b61::t_547b6917690603 1-423
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "f930dd991460d8f1d70e606d0a785460b080a941",
+  "prompts": {},
+  "sessions": {
+    "s_b2a7b4eb8a1b61": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c2b5d00ffekkwYtdRsSQW1J6",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
