@@ -19,10 +19,10 @@
 
 ### OKR Lifecycle
 
-- [ ] **OKR-01**: Create, read, update objectives with statuses: proposed, accepted, achieved
-- [ ] **OKR-02**: Create, read, update key results with statuses: aspirational, achieved
-- [ ] **OKR-03**: Create, read, update tasks with statuses: to-do, in-progress, done
-- [ ] **OKR-04**: Assign tasks to git users (identified by email and GitHub username)
+- [x] **OKR-01**: Create, read, update objectives with statuses: proposed, accepted, achieved
+- [x] **OKR-02**: Create, read, update key results with statuses: aspirational, achieved
+- [x] **OKR-03**: Create, read, update tasks with statuses: to-do, in-progress, done
+- [x] **OKR-04**: Assign tasks to git users (identified by email and GitHub username)
 - [ ] **OKR-05**: Guided OKR session: agent proposes key results from objective description, humans give feedback iteratively
 - [ ] **OKR-06**: MECE overlap checking when breaking objectives into key results
 - [ ] **OKR-07**: MECE overlap checking when breaking key results into tasks, against existing tasks
@@ -46,11 +46,11 @@
 
 ### CLI & Agent Interface
 
-- [ ] **CLI-01**: CLI binary invocable via `npx 7 <command>`
-- [ ] **CLI-02**: CRUD commands for objectives, key results, and tasks
-- [ ] **CLI-03**: Status transition commands (move items between statuses, triggering directory moves)
-- [ ] **CLI-04**: Git-based CAS concurrency: compare-and-swap on commits, retry on conflict
-- [ ] **CLI-05**: Commit reference convention: task UID included in commit description after a newline
+- [x] **CLI-01**: CLI binary invocable via `npx 7 <command>`
+- [x] **CLI-02**: CRUD commands for objectives, key results, and tasks
+- [x] **CLI-03**: Status transition commands (move items between statuses, triggering directory moves)
+- [x] **CLI-04**: Git-based CAS concurrency: compare-and-swap on commits, retry on conflict
+- [x] **CLI-05**: Commit reference convention: task UID included in commit description after a newline
 - [ ] **CLI-06**: OpenCode slash commands mirroring CLI functionality for agent interaction
 
 ### Dashboard
@@ -107,10 +107,10 @@
 | DATA-07 | Phase 1 | Complete |
 | DATA-08 | Phase 1 | Complete |
 | DATA-09 | Phase 1 | Complete |
-| OKR-01 | Phase 1 | Pending |
-| OKR-02 | Phase 1 | Pending |
-| OKR-03 | Phase 1 | Pending |
-| OKR-04 | Phase 1 | Pending |
+| OKR-01 | Phase 1 | Complete |
+| OKR-02 | Phase 1 | Complete |
+| OKR-03 | Phase 1 | Complete |
+| OKR-04 | Phase 1 | Complete |
 | OKR-05 | Phase 2 | Pending |
 | OKR-06 | Phase 2 | Pending |
 | OKR-07 | Phase 2 | Pending |
@@ -128,11 +128,11 @@
 | EST-07 | Phase 3 | Pending |
 | EST-08 | Phase 3 | Pending |
 | EST-09 | Phase 3 | Pending |
-| CLI-01 | Phase 1 | Pending |
-| CLI-02 | Phase 1 | Pending |
-| CLI-03 | Phase 1 | Pending |
-| CLI-04 | Phase 1 | Pending |
-| CLI-05 | Phase 1 | Pending |
+| CLI-01 | Phase 1 | Complete |
+| CLI-02 | Phase 1 | Complete |
+| CLI-03 | Phase 1 | Complete |
+| CLI-04 | Phase 1 | Complete |
+| CLI-05 | Phase 1 | Complete |
 | CLI-06 | Phase 2 | Pending |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
