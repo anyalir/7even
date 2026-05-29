@@ -1,0 +1,25 @@
+src/core/git.ts
+  s_af71b6853941da::t_c60f5f1aae5aaf 1-138
+src/core/index-manager.ts
+  s_af71b6853941da::t_c49a254d538152 1-117
+src/core/storage.ts
+  s_af71b6853941da::t_fe02d88cc0e10a 1-367
+tsconfig.json
+  s_af71b6853941da::t_a1d86b22098620 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "4341d91485c681cddfefd7540fba670a3d692e86",
+  "prompts": {},
+  "sessions": {
+    "s_af71b6853941da": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c246fa4ffehQAYMgFvh0ftL8",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
