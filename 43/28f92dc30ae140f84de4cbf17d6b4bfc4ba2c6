@@ -1,0 +1,24 @@
+src/dashboard/app/components/GanttHeader.tsx
+  s_3a8bd869e3910e::t_460c8185daa989 1-152
+src/dashboard/app/components/GanttChart.tsx
+  s_3a8bd869e3910e::t_670485a4c0bd24 1,4-278
+  s_3a8bd869e3910e::t_6c3ae58ab17c24 2-3
+src/dashboard/app/components/GanttBar.tsx
+  s_3a8bd869e3910e::t_40b8ed2cfc95f4 1-82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "4328f92dc30ae140f84de4cbf17d6b4bfc4ba2c6",
+  "prompts": {},
+  "sessions": {
+    "s_3a8bd869e3910e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf2047ffePZNFeErwjrtidb",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
