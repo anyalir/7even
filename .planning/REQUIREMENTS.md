@@ -55,9 +55,9 @@
 
 ### Dashboard
 
-- [ ] **DASH-01**: Local dev server (Vite-based) serving the dashboard
+- [x] **DASH-01**: Local dev server (Vite-based) serving the dashboard
 - [ ] **DASH-02**: Kanban board view showing all objectives, key results, and tasks by status
-- [ ] **DASH-03**: LCARS-inspired pastel-on-dark design with rich, tasteful color palette
+- [x] **DASH-03**: LCARS-inspired pastel-on-dark design with rich, tasteful color palette
 - [ ] **DASH-04**: Color-coded remaining story point estimates in dashboard views
 - [ ] **DASH-05**: Burndown chart visualization at KR level
 - [ ] **DASH-06**: Velocity and ETA projection charts
@@ -71,7 +71,7 @@
 - [x] **GAME-01**: Badge system with visual display in dashboard
 - [x] **GAME-02**: Achievement system triggered by work milestones and patterns
 - [x] **GAME-03**: Pluggable architecture: users can define custom badges and achievements via configuration
-- [ ] **GAME-04**: Productivity game aesthetic throughout the dashboard UI
+- [x] **GAME-04**: Productivity game aesthetic throughout the dashboard UI
 
 ### Work Documentation
 
@@ -134,9 +134,9 @@
 | CLI-04 | Phase 1 | Complete |
 | CLI-05 | Phase 1 | Complete |
 | CLI-06 | Phase 2 | Complete |
-| DASH-01 | Phase 3 | Pending |
+| DASH-01 | Phase 3 | Complete |
 | DASH-02 | Phase 3 | Pending |
-| DASH-03 | Phase 3 | Pending |
+| DASH-03 | Phase 3 | Complete |
 | DASH-04 | Phase 3 | Pending |
 | DASH-05 | Phase 3 | Pending |
 | DASH-06 | Phase 3 | Pending |
@@ -147,7 +147,7 @@
 | GAME-01 | Phase 3 | Complete |
 | GAME-02 | Phase 3 | Complete |
 | GAME-03 | Phase 3 | Complete |
-| GAME-04 | Phase 3 | Pending |
+| GAME-04 | Phase 3 | Complete |
 | DOC-01 | Phase 1 | Complete |
 | DOC-02 | Phase 2 | Complete |
 
