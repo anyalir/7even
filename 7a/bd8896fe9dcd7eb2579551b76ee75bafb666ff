@@ -1,0 +1,33 @@
+src/core/schemas/task.ts
+  s_65f07b6025b414::t_06c05625cfe2a3 3
+  s_65f07b6025b414::t_7dbf8ab99d716d 11
+  s_65f07b6025b414::t_b905da40f5fa67 30
+src/core/schemas/index.ts
+  s_65f07b6025b414::t_1ce316912b0ecc 3,5-12
+src/types/index.ts
+  s_65f07b6025b414::t_125131f9f60f8a 6-7,13-14
+src/core/schemas/key-result.ts
+  s_65f07b6025b414::t_6debdd32f3a960 4-10
+  s_65f07b6025b414::t_f3abf2b2e9033f 17
+  s_65f07b6025b414::t_605b3dff9387c1 32-33
+src/core/schemas/session.ts
+  s_65f07b6025b414::t_cd57e2eb9eaba5 1-40
+src/core/schemas/acceptance.ts
+  s_65f07b6025b414::t_37c19d6e45d034 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "7abd8896fe9dcd7eb2579551b76ee75bafb666ff",
+  "prompts": {},
+  "sessions": {
+    "s_65f07b6025b414": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bfbdccbffeBD3cGXkyVMz8Bh",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
