@@ -1,0 +1,21 @@
+src/dashboard/app/components/AssigneeView.tsx
+  s_3bedd62ad9d869::t_69238642cee94f 1,9-23,25-114
+src/dashboard/app/components/TaskDetailPanel.tsx
+  s_3bedd62ad9d869::t_4109862ce2e0c7 1-2,12-23,25-269
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "18bdbc86152b77765f94a3667002298e25b4647d",
+  "prompts": {},
+  "sessions": {
+    "s_3bedd62ad9d869": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf2b45ffe0XKw33Ey6CW9I4",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
