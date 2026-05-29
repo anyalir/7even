@@ -51,7 +51,7 @@
 - [x] **CLI-03**: Status transition commands (move items between statuses, triggering directory moves)
 - [x] **CLI-04**: Git-based CAS concurrency: compare-and-swap on commits, retry on conflict
 - [x] **CLI-05**: Commit reference convention: task UID included in commit description after a newline
-- [ ] **CLI-06**: OpenCode slash commands mirroring CLI functionality for agent interaction
+- [x] **CLI-06**: OpenCode slash commands mirroring CLI functionality for agent interaction
 
 ### Dashboard
 
@@ -133,7 +133,7 @@
 | CLI-03 | Phase 1 | Complete |
 | CLI-04 | Phase 1 | Complete |
 | CLI-05 | Phase 1 | Complete |
-| CLI-06 | Phase 2 | Pending |
+| CLI-06 | Phase 2 | Complete |
 | DASH-01 | Phase 3 | Pending |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
