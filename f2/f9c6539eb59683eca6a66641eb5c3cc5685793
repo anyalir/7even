@@ -1,0 +1,42 @@
+src/dashboard/api/routes/objectives.ts
+  s_0f87cc65ac1de1::t_67f43b943d290c 1-29
+src/dashboard/api/routes/tasks.ts
+  s_0f87cc65ac1de1::t_891b37f31cbfe9 1-14
+src/dashboard/api/routes/metrics.ts
+  s_0f87cc65ac1de1::t_7ef4fbae976700 1-67
+src/dashboard/api/routes/badges.ts
+  s_0f87cc65ac1de1::t_cdf3845ada10b0 1-30
+tsconfig.json
+  s_0f87cc65ac1de1::t_a1a0cdfc2d1bdd 7
+src/dashboard/vite.config.ts
+  s_0f87cc65ac1de1::t_e00ef16d15a95d 1-15
+package.json
+  s_0f87cc65ac1de1::t_652b715236f2ad 24
+  s_0f87cc65ac1de1::t_7181f181adb047 25,28-33,38-40
+src/dashboard/app/main.tsx
+  s_0f87cc65ac1de1::t_4ea3873f58a246 1-8
+src/dashboard/index.html
+  s_0f87cc65ac1de1::t_91f89116c78bdc 1-12
+src/dashboard/app/styles/theme.css
+  s_0f87cc65ac1de1::t_878f9c7abc4e9e 1-53
+src/dashboard/app/styles/lcars.css
+  s_0f87cc65ac1de1::t_dcde9d7a7e6bdd 1-116
+src/dashboard/api/server.ts
+  s_0f87cc65ac1de1::t_2943c7fdcbe84e 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "f2f9c6539eb59683eca6a66641eb5c3cc5685793",
+  "prompts": {},
+  "sessions": {
+    "s_0f87cc65ac1de1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bb42d96ffe3KBfORbLQCsbuV",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
