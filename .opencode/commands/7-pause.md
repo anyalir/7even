@@ -1,0 +1,36 @@
+---
+description: Pause current task work
+---
+
+# /7-pause
+
+Pause the current in-progress task, recording state for later resumption.
+
+## Context
+
+```
+`npx tsx src/cli/index.ts task list --status in-progress`
+```
+
+## Instructions
+
+You are helping the user pause their current work cleanly.
+
+### If no argument provided:
+1. Show in-progress tasks from context
+2. If only one, confirm pause
+3. If multiple, ask which to pause
+
+### Pause flow:
+1. Ask what's been completed so far
+2. Ask what remains to be done
+3. Record state as a comment on the task:
+   ```
+   npx tsx src/cli/index.ts task comment <id> -m "PAUSE: Completed: [what done]. Remaining: [what left]."
+   ```
+4. Task stays in-progress (paused is a convention, not a status)
+
+### Key rules:
+- Always record what's done and what's left
+- Don't move task out of in-progress
+- Suggest running /7-proceed when ready to resume
