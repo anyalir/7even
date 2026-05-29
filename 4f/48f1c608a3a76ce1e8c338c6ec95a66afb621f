@@ -1,0 +1,19 @@
+src/cli/__tests__/cli.test.ts
+  s_c9b6b5ebd7bbb5::t_3ac6bc0a3c10cc 1-156
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "4f48f1c608a3a76ce1e8c338c6ec95a66afb621f",
+  "prompts": {},
+  "sessions": {
+    "s_c9b6b5ebd7bbb5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c1ed740ffeAEP1OJk6h7kzQM",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
