@@ -1,0 +1,19 @@
+.planning/PROJECT.md
+  s_e642a49f8298e3::t_05bbf7ee853b16 1-110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "9bed7d866b4af21d0f24d98d30847a8329a4ee9a",
+  "prompts": {},
+  "sessions": {
+    "s_e642a49f8298e3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c67fb8dffeMLsHMrKfmm5aqT",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
