@@ -1,0 +1,23 @@
+src/badges/checker.ts
+  s_72b721caf42d26::t_36dd1a6d132bac 1-50
+src/badges/types.ts
+  s_72b721caf42d26::t_04f900f18bb441 1-40
+src/badges/__tests__/badges.test.ts
+  s_72b721caf42d26::t_7d2262ea1be8ee 1-117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "2842b113e4e432c88292681a7015bb29facaf9e8",
+  "prompts": {},
+  "sessions": {
+    "s_72b721caf42d26": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bb84addffeEaQGF68SM3oGOC",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
