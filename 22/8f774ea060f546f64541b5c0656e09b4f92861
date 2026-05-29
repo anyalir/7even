@@ -1,0 +1,25 @@
+vitest.config.ts
+  s_af71b6853941da::t_906661294100cb 1-7
+src/core/__tests__/storage.test.ts
+  s_af71b6853941da::t_e40fa5d86d1486 1-210
+package.json
+  s_af71b6853941da::t_f77629e49875de 31-32
+src/core/__tests__/index-manager.test.ts
+  s_af71b6853941da::t_abb858ca300e75 1-97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "228f774ea060f546f64541b5c0656e09b4f92861",
+  "prompts": {},
+  "sessions": {
+    "s_af71b6853941da": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c246fa4ffehQAYMgFvh0ftL8",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
