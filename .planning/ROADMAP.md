@@ -71,4 +71,4 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/2 | Planning complete | - |
 | 2. Intelligence | 1/5 | In Progress|  |
-| 3. Dashboard & Gamification | 0/7 | Planning complete | - |
+| 3. Dashboard & Gamification | 2/7 | In Progress|  |

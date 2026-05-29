@@ -37,12 +37,12 @@
 - [x] **EST-01**: Initial story point estimation for tasks
 - [x] **EST-02**: Non-destructive re-estimation history: array of `{date, spRemaining, estimator}` entries in task JSON
 - [x] **EST-03**: Agent-suggested daily re-estimation of remaining complexity, human-approved
-- [ ] **EST-04**: Velocity calculation from completed story points and completion dates
-- [ ] **EST-05**: Burndown charts at KR level (aggregated from task SP history)
-- [ ] **EST-06**: Timeline projection: estimated ETA based on rolling velocity averages
-- [ ] **EST-07**: Gantt-chart-like view for objectives, key results, and tasks (auto-updated from estimates)
-- [ ] **EST-08**: Commit frequency and size metrics at task, KR, and objective level
-- [ ] **EST-09**: Weighted PR metrics at task, KR, and objective level
+- [x] **EST-04**: Velocity calculation from completed story points and completion dates
+- [x] **EST-05**: Burndown charts at KR level (aggregated from task SP history)
+- [x] **EST-06**: Timeline projection: estimated ETA based on rolling velocity averages
+- [x] **EST-07**: Gantt-chart-like view for objectives, key results, and tasks (auto-updated from estimates)
+- [x] **EST-08**: Commit frequency and size metrics at task, KR, and objective level
+- [x] **EST-09**: Weighted PR metrics at task, KR, and objective level
 
 ### CLI & Agent Interface
 
@@ -122,12 +122,12 @@
 | EST-01 | Phase 2 | Complete |
 | EST-02 | Phase 2 | Complete |
 | EST-03 | Phase 2 | Complete |
-| EST-04 | Phase 3 | Pending |
-| EST-05 | Phase 3 | Pending |
-| EST-06 | Phase 3 | Pending |
-| EST-07 | Phase 3 | Pending |
-| EST-08 | Phase 3 | Pending |
-| EST-09 | Phase 3 | Pending |
+| EST-04 | Phase 3 | Complete |
+| EST-05 | Phase 3 | Complete |
+| EST-06 | Phase 3 | Complete |
+| EST-07 | Phase 3 | Complete |
+| EST-08 | Phase 3 | Complete |
+| EST-09 | Phase 3 | Complete |
 | CLI-01 | Phase 1 | Complete |
 | CLI-02 | Phase 1 | Complete |
 | CLI-03 | Phase 1 | Complete |
