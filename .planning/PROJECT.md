@@ -25,7 +25,7 @@ Every piece of work — from strategic objectives to individual tasks — is tra
 - [ ] Guided OKR sessions: agent proposes KRs from objectives, humans give feedback; agent challenges overlaps, aims for MECE (mutually exclusive, collectively exhaustive)
 - [ ] Agent-driven task breakdown from KRs with MECE overlap checking against existing tasks
 - [ ] KR lifecycle: when all tasks done, result measure evaluated; if gap, another round of task breakdown; if met, KR → achieved; when all KRs achieved, Objective → achieved
-- [ ] CLI binary (`npx 7even <command>`) for human interaction
+- [ ] CLI binary (`npx 7 <command>`) for human interaction
 - [ ] OpenCode slash commands for agent interaction
 - [ ] Local dev server dashboard with kanban-style overview of all OKRs and tasks
 - [ ] Git-based CAS (compare-and-swap) concurrency: retry on conflict

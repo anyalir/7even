@@ -46,7 +46,7 @@
 
 ### CLI & Agent Interface
 
-- [ ] **CLI-01**: CLI binary invocable via `npx 7even <command>`
+- [ ] **CLI-01**: CLI binary invocable via `npx 7 <command>`
 - [ ] **CLI-02**: CRUD commands for objectives, key results, and tasks
 - [ ] **CLI-03**: Status transition commands (move items between statuses, triggering directory moves)
 - [ ] **CLI-04**: Git-based CAS concurrency: compare-and-swap on commits, retry on conflict
@@ -98,63 +98,63 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DATA-01 | — | Pending |
-| DATA-02 | — | Pending |
-| DATA-03 | — | Pending |
-| DATA-04 | — | Pending |
-| DATA-05 | — | Pending |
-| DATA-06 | — | Pending |
-| DATA-07 | — | Pending |
-| DATA-08 | — | Pending |
-| DATA-09 | — | Pending |
-| OKR-01 | — | Pending |
-| OKR-02 | — | Pending |
-| OKR-03 | — | Pending |
-| OKR-04 | — | Pending |
-| OKR-05 | — | Pending |
-| OKR-06 | — | Pending |
-| OKR-07 | — | Pending |
-| OKR-08 | — | Pending |
-| OKR-09 | — | Pending |
-| OKR-10 | — | Pending |
-| OKR-11 | — | Pending |
-| OKR-12 | — | Pending |
-| EST-01 | — | Pending |
-| EST-02 | — | Pending |
-| EST-03 | — | Pending |
-| EST-04 | — | Pending |
-| EST-05 | — | Pending |
-| EST-06 | — | Pending |
-| EST-07 | — | Pending |
-| EST-08 | — | Pending |
-| EST-09 | — | Pending |
-| CLI-01 | — | Pending |
-| CLI-02 | — | Pending |
-| CLI-03 | — | Pending |
-| CLI-04 | — | Pending |
-| CLI-05 | — | Pending |
-| CLI-06 | — | Pending |
-| DASH-01 | — | Pending |
-| DASH-02 | — | Pending |
-| DASH-03 | — | Pending |
-| DASH-04 | — | Pending |
-| DASH-05 | — | Pending |
-| DASH-06 | — | Pending |
-| DASH-07 | — | Pending |
-| DASH-08 | — | Pending |
-| DASH-09 | — | Pending |
-| DASH-10 | — | Pending |
-| GAME-01 | — | Pending |
-| GAME-02 | — | Pending |
-| GAME-03 | — | Pending |
-| GAME-04 | — | Pending |
-| DOC-01 | — | Pending |
-| DOC-02 | — | Pending |
+| DATA-01 | Phase 1 | Pending |
+| DATA-02 | Phase 1 | Pending |
+| DATA-03 | Phase 1 | Pending |
+| DATA-04 | Phase 1 | Pending |
+| DATA-05 | Phase 1 | Pending |
+| DATA-06 | Phase 1 | Pending |
+| DATA-07 | Phase 1 | Pending |
+| DATA-08 | Phase 1 | Pending |
+| DATA-09 | Phase 1 | Pending |
+| OKR-01 | Phase 1 | Pending |
+| OKR-02 | Phase 1 | Pending |
+| OKR-03 | Phase 1 | Pending |
+| OKR-04 | Phase 1 | Pending |
+| OKR-05 | Phase 2 | Pending |
+| OKR-06 | Phase 2 | Pending |
+| OKR-07 | Phase 2 | Pending |
+| OKR-08 | Phase 2 | Pending |
+| OKR-09 | Phase 2 | Pending |
+| OKR-10 | Phase 2 | Pending |
+| OKR-11 | Phase 2 | Pending |
+| OKR-12 | Phase 1 | Pending |
+| EST-01 | Phase 2 | Pending |
+| EST-02 | Phase 2 | Pending |
+| EST-03 | Phase 2 | Pending |
+| EST-04 | Phase 3 | Pending |
+| EST-05 | Phase 3 | Pending |
+| EST-06 | Phase 3 | Pending |
+| EST-07 | Phase 3 | Pending |
+| EST-08 | Phase 3 | Pending |
+| EST-09 | Phase 3 | Pending |
+| CLI-01 | Phase 1 | Pending |
+| CLI-02 | Phase 1 | Pending |
+| CLI-03 | Phase 1 | Pending |
+| CLI-04 | Phase 1 | Pending |
+| CLI-05 | Phase 1 | Pending |
+| CLI-06 | Phase 2 | Pending |
+| DASH-01 | Phase 3 | Pending |
+| DASH-02 | Phase 3 | Pending |
+| DASH-03 | Phase 3 | Pending |
+| DASH-04 | Phase 3 | Pending |
+| DASH-05 | Phase 3 | Pending |
+| DASH-06 | Phase 3 | Pending |
+| DASH-07 | Phase 3 | Pending |
+| DASH-08 | Phase 3 | Pending |
+| DASH-09 | Phase 3 | Pending |
+| DASH-10 | Phase 3 | Pending |
+| GAME-01 | Phase 3 | Pending |
+| GAME-02 | Phase 3 | Pending |
+| GAME-03 | Phase 3 | Pending |
+| GAME-04 | Phase 3 | Pending |
+| DOC-01 | Phase 1 | Pending |
+| DOC-02 | Phase 2 | Pending |
 
 **Coverage:**
 - v1 requirements: 47 total
-- Mapped to phases: 0
-- Unmapped: 47 ⚠️
+- Mapped to phases: 47 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-05-29*
