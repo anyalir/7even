@@ -1,0 +1,31 @@
+.planning/ROADMAP.md
+  s_65f07b6025b414::t_84a877e9f496cd 65
+.planning/STATE.md
+  s_65f07b6025b414::t_faa5917ecd8d96 5-6,8,10-11
+  s_65f07b6025b414::t_e25cb35f9f603e 44
+  s_65f07b6025b414::t_57933974c9d480 47
+  s_65f07b6025b414::t_0b1ffc1fba7547 57-58
+  s_65f07b6025b414::t_5af9ff90eaa067 21,25-28,30
+  s_65f07b6025b414::t_590188edd8fe84 35-37
+  s_65f07b6025b414::t_060bf77cbdeb68 71
+.planning/REQUIREMENTS.md
+  s_65f07b6025b414::t_69ca277054a20c 26,37-38,114,122-123
+.planning/phases/02-intelligence/02-01-SUMMARY.md
+  s_65f07b6025b414::t_a33d91b37e9a92 1-102
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "8b4164c7671d006c28b9cac6894215dc8cf71082",
+  "prompts": {},
+  "sessions": {
+    "s_65f07b6025b414": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bfbdccbffeBD3cGXkyVMz8Bh",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
