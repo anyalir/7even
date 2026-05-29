@@ -48,7 +48,12 @@ type RowItem = GanttBarData & {
   childIds?: string[];
 };
 
-export function GanttChart() {
+type GanttChartProps = {
+  onKrClick?: (krId: string) => void;
+  activeBurndownKrId?: string | null;
+};
+
+export function GanttChart({ onKrClick, activeBurndownKrId }: GanttChartProps = {}) {
   const [bars, setBars] = useState<GanttBarData[]>([]);
   const [granularity, setGranularity] = useState<TimeGranularity>("week");
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
@@ -214,6 +219,10 @@ export function GanttChart() {
                   height: rowH,
                   alignItems: "center",
                   borderBottom: "1px solid rgba(138,130,120,0.15)",
+                  background:
+                    row.type === "key-result" && activeBurndownKrId === row.id
+                      ? "rgba(138,130,120,0.1)"
+                      : undefined,
                 }}
               >
                 {/* Label column */}
@@ -238,7 +247,13 @@ export function GanttChart() {
                     cursor: canExpand ? "pointer" : "default",
                     userSelect: "none",
                   }}
-                  onClick={() => canExpand && toggleCollapse(row.id)}
+                  onClick={() => {
+                    if (row.type === "key-result" && onKrClick) {
+                      onKrClick(row.id);
+                    } else if (canExpand) {
+                      toggleCollapse(row.id);
+                    }
+                  }}
                   title={row.name}
                 >
                   {canExpand && (
