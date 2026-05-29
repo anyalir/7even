@@ -36,7 +36,7 @@
 
 - [x] **EST-01**: Initial story point estimation for tasks
 - [x] **EST-02**: Non-destructive re-estimation history: array of `{date, spRemaining, estimator}` entries in task JSON
-- [ ] **EST-03**: Agent-suggested daily re-estimation of remaining complexity, human-approved
+- [x] **EST-03**: Agent-suggested daily re-estimation of remaining complexity, human-approved
 - [ ] **EST-04**: Velocity calculation from completed story points and completion dates
 - [ ] **EST-05**: Burndown charts at KR level (aggregated from task SP history)
 - [ ] **EST-06**: Timeline projection: estimated ETA based on rolling velocity averages
@@ -76,7 +76,7 @@
 ### Work Documentation
 
 - [x] **DOC-01**: Inline comments in JSON files as array of `{author, date, text}` objects
-- [ ] **DOC-02**: Task detail view integrates git commit messages and git history for the task
+- [x] **DOC-02**: Task detail view integrates git commit messages and git history for the task
 
 ## v2 Requirements
 
@@ -121,7 +121,7 @@
 | OKR-12 | Phase 1 | Complete |
 | EST-01 | Phase 2 | Complete |
 | EST-02 | Phase 2 | Complete |
-| EST-03 | Phase 2 | Pending |
+| EST-03 | Phase 2 | Complete |
 | EST-04 | Phase 3 | Pending |
 | EST-05 | Phase 3 | Pending |
 | EST-06 | Phase 3 | Pending |
@@ -149,7 +149,7 @@
 | GAME-03 | Phase 3 | Pending |
 | GAME-04 | Phase 3 | Pending |
 | DOC-01 | Phase 1 | Complete |
-| DOC-02 | Phase 2 | Pending |
+| DOC-02 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 47 total
