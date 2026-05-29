@@ -1,0 +1,24 @@
+src/dashboard/app/components/CommitMetricsChart.tsx
+  s_dca47cdc1909ab::t_78584d6294a318 1-127
+src/dashboard/app/pages/AnalyticsPage.tsx
+  s_dca47cdc1909ab::t_889354adb233f4 1-7,9-37,40-46,49-72,74-165
+src/dashboard/api/routes/metrics.ts
+  s_dca47cdc1909ab::t_174b3bdcc4d06b 67-85
+  s_dca47cdc1909ab::t_61d5eb6ae2b382 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "3b71ddedea52618ca768743ea7e128cd82d25ab5",
+  "prompts": {},
+  "sessions": {
+    "s_dca47cdc1909ab": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf15d0ffeFXnZXMZZpRFg8X",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
