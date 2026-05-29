@@ -1,7 +1,15 @@
 export { CommentSchema } from "./comment.js";
 export { ObjectiveSchema } from "./objective.js";
-export { KeyResultSchema } from "./key-result.js";
+export { KeyResultSchema, StructuredMeasurementSchema } from "./key-result.js";
 export { TaskSchema } from "./task.js";
+export { AcceptanceCriterionSchema } from "./acceptance.js";
+export {
+  SessionSchema,
+  SessionProposalSchema,
+  MeceReportSchema,
+  MeceOverlapSchema,
+  MeceGapSchema,
+} from "./session.js";
 
 import { z } from "zod";
 import { ObjectiveSchema } from "./objective.js";

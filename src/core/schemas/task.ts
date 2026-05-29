@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CommentSchema } from "./comment.js";
+import { AcceptanceCriterionSchema } from "./acceptance.js";
 
 export const TaskSchema = z.object({
   id: z.string().uuid(),
@@ -7,7 +8,7 @@ export const TaskSchema = z.object({
   createdAt: z.string().datetime(),
   createdBy: z.string(),
   description: z.string(),
-  schemaVersion: z.number().int().default(1),
+  schemaVersion: z.number().int().default(2),
   parentId: z.string().uuid().nullable().default(null),
   comments: z.array(CommentSchema).default([]),
   assignee: z
@@ -26,4 +27,5 @@ export const TaskSchema = z.object({
       })
     )
     .default([]),
+  acceptanceCriteria: z.array(AcceptanceCriterionSchema).default([]),
 });
