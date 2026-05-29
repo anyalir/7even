@@ -1,0 +1,37 @@
+.planning/phases/03-dashboard-gamification/03-05-SUMMARY.md
+  s_3a8bd869e3910e::t_ab319c2e5350f5 93-94
+  s_3a8bd869e3910e::t_0552f2c211be37 1-92
+.planning/REQUIREMENTS.md
+  s_3a8bd869e3910e::t_24611959e670f2 64,66,141-143
+.planning/STATE.md
+  s_dca47cdc1909ab::t_f8034552cf5500 26,28,30
+  s_dca47cdc1909ab::t_949c7117c87efe 81
+  s_dca47cdc1909ab::t_0ffca6add86e2f 94
+  s_dca47cdc1909ab::t_a0f829d063aca8 56
+  s_dca47cdc1909ab::t_e318a5de19e023 11
+  s_3a8bd869e3910e::t_05c973e68ddd40 80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "a5f8b386f79d9aeaa3c0c087d2936507ec5058bc",
+  "prompts": {},
+  "sessions": {
+    "s_3a8bd869e3910e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf2047ffePZNFeErwjrtidb",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    },
+    "s_dca47cdc1909ab": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf15d0ffeFXnZXMZZpRFg8X",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
