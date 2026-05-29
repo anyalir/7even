@@ -1,0 +1,38 @@
+src/cli/commands/dashboard.ts
+  s_0f87cc65ac1de1::t_9ad57db423133f 1-39
+src/dashboard/app/components/LcarsSidebar.tsx
+  s_0f87cc65ac1de1::t_5939d03045fd33 1-117
+src/dashboard/app/router.tsx
+  s_0f87cc65ac1de1::t_784cfe832e041c 1-19
+src/dashboard/app/pages/AchievementsPage.tsx
+  s_0f87cc65ac1de1::t_2b941f83e88a25 1-12
+src/dashboard/env.d.ts
+  s_0f87cc65ac1de1::t_bfd24acc75460a 1
+src/dashboard/app/layouts/AppLayout.tsx
+  s_0f87cc65ac1de1::t_5e03da87395d15 1-28
+src/cli/index.ts
+  s_0f87cc65ac1de1::t_6f44ad4ae528a8 11
+  s_0f87cc65ac1de1::t_5ca39dd074f5b9 29
+src/dashboard/app/pages/TimelinePage.tsx
+  s_0f87cc65ac1de1::t_5c905c71f59e48 1-12
+src/dashboard/app/pages/BoardPage.tsx
+  s_0f87cc65ac1de1::t_125097d86a2b5b 1-12
+src/dashboard/app/pages/AnalyticsPage.tsx
+  s_0f87cc65ac1de1::t_a7c2f4c7cb8e66 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "69bb72bfb3bc57b6eeba152804e7dddfb644329b",
+  "prompts": {},
+  "sessions": {
+    "s_0f87cc65ac1de1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bb42d96ffe3KBfORbLQCsbuV",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
