@@ -1,0 +1,43 @@
+src/dashboard/app/pages/BoardPage.tsx
+  s_3bedd62ad9d869::t_87197fca75c2bd 1-34,36-74,77-98,100-155
+src/dashboard/app/hooks/useApi.ts
+  s_3bedd62ad9d869::t_2361be63300f3e 1-36
+src/dashboard/app/components/TaskDetailPanel.tsx
+  s_3bedd62ad9d869::t_7e33d398e256b7 1-12
+src/dashboard/app/components/KanbanLane.tsx
+  s_3bedd62ad9d869::t_5419a1a94e127d 1-109
+src/dashboard/app/components/VelocityChart.tsx
+  s_dca47cdc1909ab::t_92cc340a00508c 1-206,208-210,212-230
+  s_dca47cdc1909ab::t_001617ed431484 207,211
+src/dashboard/app/components/AssigneeView.tsx
+  s_3bedd62ad9d869::t_08cbe81e15f122 1-10
+src/dashboard/app/components/TaskCard.tsx
+  s_3bedd62ad9d869::t_0ab45be0650427 1-90
+src/dashboard/app/components/BurndownChart.tsx
+  s_dca47cdc1909ab::t_c49fb8df8b8fed 1-243,249-280
+  s_dca47cdc1909ab::t_47dfe604472cdd 244-248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "2bb8e03cf8a2b8093f174a88771c51e8ba716dd2",
+  "prompts": {},
+  "sessions": {
+    "s_3bedd62ad9d869": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf2b45ffe0XKw33Ey6CW9I4",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    },
+    "s_dca47cdc1909ab": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baf15d0ffeFXnZXMZZpRFg8X",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
