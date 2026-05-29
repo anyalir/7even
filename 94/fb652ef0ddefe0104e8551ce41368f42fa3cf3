@@ -1,0 +1,23 @@
+src/dashboard/app/components/BadgeCard.tsx
+  s_b4b17fb74937f2::t_2a8085e3d571a5 1-54
+src/dashboard/app/components/AchievementTimeline.tsx
+  s_b4b17fb74937f2::t_9b2d3245223806 1-90
+src/dashboard/app/pages/AchievementsPage.tsx
+  s_b4b17fb74937f2::t_6f461685782cd4 1-37,39-100,103-110,112-235
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "94fb652ef0ddefe0104e8551ce41368f42fa3cf3",
+  "prompts": {},
+  "sessions": {
+    "s_b4b17fb74937f2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18baa12d5ffe9Xv0kNt7WLQXDW",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
