@@ -53,6 +53,7 @@ Progress: [█████████░] 93% (13/14 plans)
 | Phase 03-01 P01 | 3min | 2 tasks | 6 files |
 | Phase 03 P03 | 3min | 2 tasks | 22 files |
 | Phase 03 P05 | 3min | 2 tasks | 4 files |
+| Phase 03 P04 | 3min | 2 tasks | 6 files |
 | Phase 03 P06 | 3min | 2 tasks | 5 files |
 
 ## Accumulated Context
@@ -77,6 +78,7 @@ Recent decisions affecting current work:
 - Custom badges via dynamic import with shape validation
 - [Phase 03-01]: No date-fns dependency — plain Date arithmetic for metrics
 - [Phase 03-03]: jsx: react-jsx in main tsconfig; Hono route factories with sevenDir injection
+- [Phase 03-04]: SP-scaled width blocks not heatmap; detail panel vertical divider as KR quick-nav
 - [Phase 03-05]: Custom div-based Gantt; KR burndown inline toggle
 - [Phase 03-06]: ComposedChart for velocity; commits API endpoint; brush zoom on burndown
 
