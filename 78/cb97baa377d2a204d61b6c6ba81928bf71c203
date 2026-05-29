@@ -1,0 +1,19 @@
+.planning/phases/03-dashboard-gamification/03-RESEARCH.md
+  s_617d21333b3de0::t_26a008e6cce8bf 1-445
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "78cb97baa377d2a204d61b6c6ba81928bf71c203",
+  "prompts": {},
+  "sessions": {
+    "s_617d21333b3de0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bc4b091ffe49nHIJJk6KSt90",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
