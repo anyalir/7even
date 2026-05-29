@@ -23,7 +23,7 @@
 - [x] **OKR-02**: Create, read, update key results with statuses: aspirational, achieved
 - [x] **OKR-03**: Create, read, update tasks with statuses: to-do, in-progress, done
 - [x] **OKR-04**: Assign tasks to git users (identified by email and GitHub username)
-- [ ] **OKR-05**: Guided OKR session: agent proposes key results from objective description, humans give feedback iteratively
+- [x] **OKR-05**: Guided OKR session: agent proposes key results from objective description, humans give feedback iteratively
 - [ ] **OKR-06**: MECE overlap checking when breaking objectives into key results
 - [ ] **OKR-07**: MECE overlap checking when breaking key results into tasks, against existing tasks
 - [ ] **OKR-08**: When all tasks for a KR are done, evaluate result measure against goal parameters
@@ -34,8 +34,8 @@
 
 ### Estimation & Metrics
 
-- [ ] **EST-01**: Initial story point estimation for tasks
-- [ ] **EST-02**: Non-destructive re-estimation history: array of `{date, spRemaining, estimator}` entries in task JSON
+- [x] **EST-01**: Initial story point estimation for tasks
+- [x] **EST-02**: Non-destructive re-estimation history: array of `{date, spRemaining, estimator}` entries in task JSON
 - [ ] **EST-03**: Agent-suggested daily re-estimation of remaining complexity, human-approved
 - [ ] **EST-04**: Velocity calculation from completed story points and completion dates
 - [ ] **EST-05**: Burndown charts at KR level (aggregated from task SP history)
@@ -111,7 +111,7 @@
 | OKR-02 | Phase 1 | Complete |
 | OKR-03 | Phase 1 | Complete |
 | OKR-04 | Phase 1 | Complete |
-| OKR-05 | Phase 2 | Pending |
+| OKR-05 | Phase 2 | Complete |
 | OKR-06 | Phase 2 | Pending |
 | OKR-07 | Phase 2 | Pending |
 | OKR-08 | Phase 2 | Pending |
@@ -119,8 +119,8 @@
 | OKR-10 | Phase 2 | Pending |
 | OKR-11 | Phase 2 | Pending |
 | OKR-12 | Phase 1 | Complete |
-| EST-01 | Phase 2 | Pending |
-| EST-02 | Phase 2 | Pending |
+| EST-01 | Phase 2 | Complete |
+| EST-02 | Phase 2 | Complete |
 | EST-03 | Phase 2 | Pending |
 | EST-04 | Phase 3 | Pending |
 | EST-05 | Phase 3 | Pending |

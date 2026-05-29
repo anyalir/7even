@@ -62,5 +62,5 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/2 | Planning complete | - |
-| 2. Intelligence | 0/? | Not started | - |
+| 2. Intelligence | 1/5 | In Progress|  |
 | 3. Dashboard & Gamification | 0/? | Not started | - |
