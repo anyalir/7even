@@ -1,0 +1,21 @@
+src/core/__tests__/estimation.test.ts
+  s_7e4aa6879ae445::t_ccbedaa6c045a4 1-142
+src/core/__tests__/git.test.ts
+  s_7e4aa6879ae445::t_86986c5790013a 1-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "1cb6fdcd462239b6497cfc5501cdf5a7791f4163",
+  "prompts": {},
+  "sessions": {
+    "s_7e4aa6879ae445": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bf4d160ffef94y7KgPg5orxa",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
