@@ -1,0 +1,19 @@
+src/core/mece.ts
+  s_08f380973f3036::t_15077399fcd91a 1-169
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "bc19965d4d0f6e061d01ba91c6fdf40e816a186a",
+  "prompts": {},
+  "sessions": {
+    "s_08f380973f3036": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bf88051ffemTpcTiArh00ebb",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
