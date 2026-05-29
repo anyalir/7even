@@ -1,0 +1,23 @@
+.planning/STATE.md
+  s_83444d468fc526::t_a883e791e3288a 6,11,50
+.planning/REQUIREMENTS.md
+  s_83444d468fc526::t_ed2b5768c18c0f 29-32,117-120
+.planning/phases/02-intelligence/02-03-SUMMARY.md
+  s_83444d468fc526::t_41df9955322a1c 1-107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "c5e16551618af35bd83c95eb87fa7eaae970788d",
+  "prompts": {},
+  "sessions": {
+    "s_83444d468fc526": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18bf4db3affeyXINJhEHjo7c6x",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
