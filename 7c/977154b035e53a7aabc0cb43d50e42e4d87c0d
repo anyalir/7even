@@ -1,0 +1,19 @@
+.planning/phases/02-intelligence/02-RESEARCH.md
+  s_ab7e470e11f80f::t_23a934433b6a31 1-406
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "7c977154b035e53a7aabc0cb43d50e42e4d87c0d",
+  "prompts": {},
+  "sessions": {
+    "s_ab7e470e11f80f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c05b804ffeUj4WiCnjLeyXiH",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
