@@ -1,0 +1,19 @@
+.planning/config.json
+  s_e642a49f8298e3::t_47af23ee25c5da 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "0db70256dc0b087b693eddfe76e153e99f221c29",
+  "prompts": {},
+  "sessions": {
+    "s_e642a49f8298e3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c67fb8dffeMLsHMrKfmm5aqT",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
