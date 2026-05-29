@@ -55,7 +55,15 @@ Plans:
   3. Task detail view shows inline comments, git commit messages, and commit history for that task
   4. Badges and achievements appear in the dashboard, and users can define custom badges via configuration
   5. UI follows LCARS-inspired pastel-on-dark design with color-coded SP estimates and productivity game aesthetic
-**Plans**: TBD
+**Plans**: 7 plans
+Plans:
+- [ ] 03-01-PLAN.md — Metrics computation layer (velocity, burndown, projection, Gantt, git metrics)
+- [ ] 03-02-PLAN.md — Badge and achievement system (types, checker, builtins, plugin loader)
+- [ ] 03-03-PLAN.md — Dashboard scaffolding (Vite + React, Hono API, LCARS theme, sidebar, CLI command)
+- [ ] 03-04-PLAN.md — Tasks Board page (KR-lane kanban, task cards, detail panel, assignee view)
+- [ ] 03-05-PLAN.md — Project Timeline page (Gantt chart with expandable O/KR/task hierarchy)
+- [ ] 03-06-PLAN.md — Charts and analytics (burndown, velocity, commit metrics, analytics page)
+- [ ] 03-07-PLAN.md — Achievements page (hall of fame, badge display, sidebar indicator, visual checkpoint)
 
 ## Progress
 
@@ -63,4 +71,4 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/2 | Planning complete | - |
 | 2. Intelligence | 1/5 | In Progress|  |
-| 3. Dashboard & Gamification | 0/? | Not started | - |
+| 3. Dashboard & Gamification | 0/7 | Planning complete | - |
