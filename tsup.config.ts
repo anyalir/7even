@@ -10,4 +10,14 @@ export default defineConfig({
   banner: {
     js: "#!/usr/bin/env node",
   },
+  external: [
+    "vite",
+    "@vitejs/plugin-react",
+    "react",
+    "react-dom",
+    "react-router",
+    "recharts",
+    "@hono/node-server",
+    "hono",
+  ],
 });

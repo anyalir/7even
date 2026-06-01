@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { readdir, stat } from "node:fs/promises";
 
 const INDEX_FILE = "index.json";
+const SHORT_ID_FILE = "short-ids.json";
 
 export async function readIndex(
   sevenDir: string
@@ -13,6 +14,27 @@ export async function readIndex(
   } catch {
     return {};
   }
+}
+
+export async function readShortIdIndex(
+  sevenDir: string
+): Promise<Record<string, string>> {
+  try {
+    const raw = await readFile(join(sevenDir, SHORT_ID_FILE), "utf-8");
+    return JSON.parse(raw) as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
+async function writeShortIdIndex(
+  sevenDir: string,
+  index: Record<string, string>
+): Promise<void> {
+  const p = join(sevenDir, SHORT_ID_FILE);
+  const tmp = p + ".tmp";
+  await writeFile(tmp, JSON.stringify(index, null, 2) + "\n", "utf-8");
+  await rename(tmp, p);
 }
 
 export async function writeIndex(
@@ -28,12 +50,19 @@ export async function writeIndex(
 export async function addToIndex(
   sevenDir: string,
   id: string,
-  relativePath: string
+  relativePath: string,
+  shortId?: string
 ): Promise<void> {
   const index = await readIndex(sevenDir);
   // Store POSIX paths
   index[id] = relativePath.replace(/\\/g, "/");
   await writeIndex(sevenDir, index);
+
+  if (shortId) {
+    const shortIndex = await readShortIdIndex(sevenDir);
+    shortIndex[shortId] = id;
+    await writeShortIdIndex(sevenDir, shortIndex);
+  }
 }
 
 export async function removeFromIndex(
@@ -111,6 +140,21 @@ export async function repairIndex(
 
   if (!options?.dryRun) {
     await writeIndex(sevenDir, freshIndex);
+
+    // Also rebuild short-id index
+    const freshShortIndex: Record<string, string> = {};
+    for (const { fullPath } of files) {
+      try {
+        const raw = await readFile(fullPath, "utf-8");
+        const data = JSON.parse(raw);
+        if (data && data.id && data.shortId) {
+          freshShortIndex[data.shortId] = data.id;
+        }
+      } catch {
+        // Skip
+      }
+    }
+    await writeShortIdIndex(sevenDir, freshShortIndex);
   }
 
   return { added, removed, unchanged };

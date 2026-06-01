@@ -75,7 +75,7 @@ export function SidebarBadgeIndicator() {
             left: 16,
             right: 16,
             background: "var(--bg-surface)",
-            border: "var(--bar-width) solid var(--text-muted)",
+            border: "var(--bar-width) solid var(--border-subtle)",
             padding: 12,
             zIndex: 10,
           }}

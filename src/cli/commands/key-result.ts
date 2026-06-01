@@ -15,6 +15,7 @@ export function makeKeyResultCommand(): Command {
     .command("create")
     .description("Create a new key result")
     .requiredOption("-d, --description <text>", "Key result description")
+    .option("-s, --summary <text>", "Short summary (5-10 words)")
     .requiredOption("--parent <id>", "Parent objective ID or slug")
     .action(async (opts) => {
       try {
@@ -22,9 +23,9 @@ export function makeKeyResultCommand(): Command {
         const parentId = await resolveId(sevenDir, opts.parent, "objective");
         // Verify parent exists and is an objective
         const { data: parentData } = await readItem(sevenDir, parentId);
-        const slug = generateSlug(opts.description);
+        const slug = generateSlug(opts.summary || opts.description);
         const author = getGitAuthor();
-        const data = {
+        const data: Record<string, unknown> = {
           id: crypto.randomUUID(),
           status: "aspirational",
           createdAt: new Date().toISOString(),
@@ -32,9 +33,11 @@ export function makeKeyResultCommand(): Command {
           description: opts.description,
           parentId,
         };
+        if (opts.summary) data.summary = opts.summary;
         const id = await createItem(sevenDir, "key-result", slug, data, parentId);
+        const { data: created } = await readItem(sevenDir, id);
         console.log(chalk.green(`Created key result: ${slug}`));
-        console.log(chalk.dim(`ID: ${id}`));
+        console.log(chalk.dim(`ID: ${id}`) + (created.shortId ? `  ${chalk.cyan(created.shortId)}` : ""));
       } catch (err: any) {
         console.error(chalk.red(err.message));
         process.exitCode = 1;
@@ -113,11 +116,12 @@ export function makeKeyResultCommand(): Command {
     .command("comment <id>")
     .description("Add a comment to a key result")
     .requiredOption("-m, --message <text>", "Comment text")
+    .option("--type <type>", "Comment type: human or agent", "human")
     .action(async (id, opts) => {
       try {
         const sevenDir = await resolveSevenDir();
         const resolvedId = await resolveId(sevenDir, id, "key-result");
-        await addComment(sevenDir, resolvedId, opts.message, "human");
+        await addComment(sevenDir, resolvedId, opts.message, opts.type);
         console.log(chalk.green("Comment added."));
       } catch (err: any) {
         console.error(chalk.red(err.message));
@@ -135,6 +139,10 @@ async function resolveId(
 ): Promise<string> {
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrSlug)) {
     return idOrSlug;
+  }
+  if (/^O\d+(KR\d+(T\d+)?)?$/i.test(idOrSlug)) {
+    const { resolveId: resolveShortId } = await import("../../core/storage.js");
+    return resolveShortId(sevenDir, idOrSlug);
   }
   const items = await listItems(sevenDir, itemType);
   for (const item of items) {

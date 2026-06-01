@@ -103,7 +103,7 @@ export function GanttHeader({
         style={{
           position: "relative",
           height: 28,
-          borderBottom: "1px solid var(--text-muted)",
+          borderBottom: "1px solid var(--border-subtle)",
         }}
       >
         {ticks.map((t, i) => (
@@ -123,7 +123,7 @@ export function GanttHeader({
               style={{
                 width: 1,
                 height: 6,
-                background: "var(--text-muted)",
+                background: "var(--border-subtle)",
                 margin: "0 auto 2px",
               }}
             />

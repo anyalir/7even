@@ -68,7 +68,7 @@ describe("CLI E2E", () => {
     // Extract objective ID from output
     const objIdLine = consoleLogs.find((l) => l.includes("ID:"));
     expect(objIdLine).toBeTruthy();
-    const objId = objIdLine!.replace(/.*ID:\s*/, "").replace(/\x1b\[[0-9;]*m/g, "").trim();
+    const objId = objIdLine!.replace(/.*ID:\s*/, "").replace(/\x1b\[[0-9;]*m/g, "").trim().split(/\s+/)[0];
 
     // Show objective
     consoleLogs.length = 0;
@@ -83,7 +83,7 @@ describe("CLI E2E", () => {
     await run(program, ["key-result", "create", "-d", "Test KR", "--parent", objId]);
     const krIdLine = consoleLogs.find((l) => l.includes("ID:"));
     expect(krIdLine).toBeTruthy();
-    const krId = krIdLine!.replace(/.*ID:\s*/, "").replace(/\x1b\[[0-9;]*m/g, "").trim();
+    const krId = krIdLine!.replace(/.*ID:\s*/, "").replace(/\x1b\[[0-9;]*m/g, "").trim().split(/\s+/)[0];
 
     // Create task
     consoleLogs.length = 0;
@@ -91,7 +91,7 @@ describe("CLI E2E", () => {
     await run(program, ["task", "create", "-d", "Test task", "--parent", krId]);
     const taskIdLine = consoleLogs.find((l) => l.includes("ID:"));
     expect(taskIdLine).toBeTruthy();
-    const taskId = taskIdLine!.replace(/.*ID:\s*/, "").replace(/\x1b\[[0-9;]*m/g, "").trim();
+    const taskId = taskIdLine!.replace(/.*ID:\s*/, "").replace(/\x1b\[[0-9;]*m/g, "").trim().split(/\s+/)[0];
 
     // Move task to in-progress
     consoleLogs.length = 0;

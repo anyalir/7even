@@ -95,14 +95,27 @@ export function AssigneeView({ tasks, onTaskClick }: AssigneeViewProps) {
                 gap: 6,
               }}
             >
-              {group.tasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  color={color}
-                  onClick={() => onTaskClick(task)}
-                />
-              ))}
+              {group.tasks.map((task) => {
+                const deps = task.dependsOn ?? [];
+                const blockedBy: string[] = [];
+                const dependsOnIds: string[] = [];
+                for (const depId of deps) {
+                  const dep = tasks.find((t) => t.id === depId);
+                  const sid = dep?.shortId ?? (dep as any)?.shortId ?? depId.slice(0, 8);
+                  dependsOnIds.push(sid);
+                  if (dep && dep.status !== "done") blockedBy.push(sid);
+                }
+                return (
+                  <TaskCard
+                    key={task.id}
+                    task={task}
+                    color={color}
+                    onClick={() => onTaskClick(task)}
+                    blockedBy={blockedBy}
+                    dependsOnIds={dependsOnIds}
+                  />
+                );
+              })}
             </div>
           </div>
         );

@@ -9,16 +9,26 @@ Resume working on a paused or in-progress task.
 ## Context
 
 ```
-`npx tsx src/cli/index.ts task show $1`
+`npx 7 task show $1`
 ```
 
 ```
-`npx tsx src/cli/index.ts estimate suggest $1`
+`npx 7 task --help`
+```
+
+```
+`npx 7 estimate --help`
+```
+
+```
+`npx 7 estimate suggest $1 2>/dev/null`
 ```
 
 ## Instructions
 
 You are helping the user resume work on a task.
+
+**Important:** All IDs are UUIDs. Check `--help` output above for available flags.
 
 ### If no argument provided:
 1. List in-progress tasks
@@ -30,7 +40,7 @@ You are helping the user resume work on a task.
    - Which criteria have been met?
    - Which remain?
 3. Show re-estimation suggestion — has scope changed since last estimate?
-4. If re-estimation needed: `npx tsx src/cli/index.ts estimate add <id> <sp>`
+4. If re-estimation needed: `npx 7 estimate add <uuid> <sp>`
 5. Pick up where the pause comment left off
 
 ### Key rules:

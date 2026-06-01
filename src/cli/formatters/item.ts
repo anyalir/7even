@@ -29,11 +29,15 @@ export function formatItem(
   const lines: string[] = [];
 
   lines.push(
-    `${colorFn("●")} ${chalk.bold(data.description)} ${chalk.dim(`[${data.status}]`)}`
+    `${colorFn("●")} ${data.shortId ? chalk.bold.cyan(data.shortId) + " " : ""}${chalk.bold(data.description)} ${chalk.dim(`[${data.status}]`)}`
   );
   lines.push(chalk.dim(`  ID: ${data.id}`));
-  lines.push(`  Type: ${TYPE_LABELS[itemType]}  Slug: ${slug}`);
+  lines.push(`  Type: ${TYPE_LABELS[itemType]}  Slug: ${slug}${data.shortId ? `  ShortId: ${data.shortId}` : ""}`);
 
+  if (data.summary) lines.push(`  Summary: ${data.summary}`);
+  if (data.dependsOn?.length > 0) {
+    lines.push(`  Depends on: ${data.dependsOn.join(", ")}`);
+  }
   if (data.assignee) {
     lines.push(
       `  Assignee: ${data.assignee.email}${data.assignee.github ? ` (@${data.assignee.github})` : ""}`
@@ -73,8 +77,9 @@ export function formatItemList(
     const type = inferTypeFromPath(item.path);
     const colorFn = STATUS_COLORS[item.data.status] ?? chalk.white;
     const slug = extractSlug(item.path, type);
+    const shortTag = item.data.shortId ? chalk.cyan(item.data.shortId.padEnd(10)) + " " : "";
     lines.push(
-      `${colorFn("●")} ${chalk.dim(TYPE_LABELS[type].padEnd(4))} ${item.data.status.padEnd(14)} ${slug.padEnd(30)} ${item.data.description}`
+      `${colorFn("●")} ${shortTag}${chalk.dim(TYPE_LABELS[type].padEnd(4))} ${item.data.status.padEnd(14)} ${slug.padEnd(30)} ${item.data.description}`
     );
   }
   return lines.join("\n");

@@ -37,14 +37,18 @@ export function metricsRoute(sevenDir: string) {
       ...objectives.map((o) => ({
         id: o.id,
         type: "objective" as const,
-        name: o.data.name,
+        name: o.data.description,
+        shortId: o.data.shortId,
+        summary: o.data.summary,
         createdAt: o.data.createdAt,
         status: o.data.status,
       })),
       ...keyResults.map((kr) => ({
         id: kr.id,
         type: "key-result" as const,
-        name: kr.data.name,
+        name: kr.data.description,
+        shortId: kr.data.shortId,
+        summary: kr.data.summary,
         createdAt: kr.data.createdAt,
         status: kr.data.status,
         parentId: kr.data.parentId,
@@ -52,11 +56,13 @@ export function metricsRoute(sevenDir: string) {
       ...tasks.map((t) => ({
         id: t.id,
         type: "task" as const,
-        name: t.data.name,
+        name: t.data.description,
+        shortId: t.data.shortId,
         createdAt: t.data.createdAt,
         status: t.data.status,
         estimationHistory: t.data.estimationHistory,
         parentId: t.data.parentId,
+        dependsOn: t.data.dependsOn,
       })),
     ];
 
@@ -76,7 +82,7 @@ export function metricsRoute(sevenDir: string) {
     for (const t of tasks) {
       const commits = getTaskCommits(t.id);
       for (const commit of commits) {
-        allCommits.push({ ...commit, taskId: t.id, taskName: t.data.name });
+        allCommits.push({ ...commit, taskId: t.id, taskName: t.data.description });
       }
     }
     allCommits.sort((a, b) => a.date.localeCompare(b.date));

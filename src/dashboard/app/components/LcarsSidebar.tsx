@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { VelocityChart } from "./VelocityChart.js";
 import { SidebarBadgeIndicator } from "./SidebarBadgeIndicator.js";
 
-const NAV_ITEMS = [
+export const NAV_ITEMS = [
   { to: "/timeline", label: "TIMELINE", color: "var(--color-coral)" },
   { to: "/board", label: "BOARD", color: "var(--color-amber)" },
   { to: "/achievements", label: "ACHIEVEMENTS", color: "var(--color-sage)" },
@@ -52,7 +52,12 @@ export function LcarsSidebar() {
         <span style={{ color: "var(--color-coral)" }}>7</span>EVEN
       </div>
 
-      <div className="lcars-bar-h" style={{ color: "var(--text-muted)" }} />
+      {/* Dot separator */}
+      <div style={{ display: "flex", gap: 4, padding: "0 16px 8px" }}>
+        {NAV_ITEMS.map((item) => (
+          <div key={item.to} style={{ width: 3, height: 3, background: item.color, opacity: 0.6 }} />
+        ))}
+      </div>
 
       {/* Nav links */}
       <div style={{ flex: 1, padding: "8px 0" }}>
@@ -101,7 +106,12 @@ export function LcarsSidebar() {
       {/* Badge indicator */}
       <SidebarBadgeIndicator />
 
-      <div className="lcars-bar-h" style={{ color: "var(--text-muted)" }} />
+      {/* Dot separator */}
+      <div style={{ display: "flex", gap: 4, padding: "8px 16px" }}>
+        {NAV_ITEMS.map((item) => (
+          <div key={item.to} style={{ width: 3, height: 3, background: item.color, opacity: 0.6 }} />
+        ))}
+      </div>
 
       {/* Velocity widget (compact) */}
       <div style={{ padding: "12px 16px" }}>

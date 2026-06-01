@@ -55,7 +55,7 @@ export function AnalyticsPage() {
           style={{
             background: "var(--bg-surface)",
             color: "var(--text-primary)",
-            border: "1px solid var(--text-muted)",
+            border: "1px solid var(--border-subtle)",
             padding: "6px 12px",
             fontSize: 12,
             textTransform: "uppercase",
@@ -74,14 +74,7 @@ export function AnalyticsPage() {
 
       {/* Burndown Section */}
       <section style={{ marginBottom: 32 }}>
-        <div className="lcars-section">
-          <div
-            style={{
-              borderTop: "3px solid var(--color-coral)",
-              width: 48,
-              marginBottom: 12,
-            }}
-          />
+        <div className="lcars-section" style={{ "--lcars-accent": "var(--color-coral)" } as React.CSSProperties}>
           <h2
             style={{
               fontSize: 13,
@@ -112,14 +105,7 @@ export function AnalyticsPage() {
 
       {/* Velocity Section */}
       <section style={{ marginBottom: 32 }}>
-        <div className="lcars-section">
-          <div
-            style={{
-              borderTop: "3px solid var(--color-sage)",
-              width: 48,
-              marginBottom: 12,
-            }}
-          />
+        <div className="lcars-section" style={{ "--lcars-accent": "var(--color-sage)" } as React.CSSProperties}>
           <h2
             style={{
               fontSize: 13,
@@ -139,14 +125,7 @@ export function AnalyticsPage() {
 
       {/* Commit Metrics Section */}
       <section style={{ marginBottom: 32 }}>
-        <div className="lcars-section">
-          <div
-            style={{
-              borderTop: "3px solid var(--color-lavender)",
-              width: 48,
-              marginBottom: 12,
-            }}
-          />
+        <div className="lcars-section" style={{ "--lcars-accent": "var(--color-lavender)" } as React.CSSProperties}>
           <h2
             style={{
               fontSize: 13,

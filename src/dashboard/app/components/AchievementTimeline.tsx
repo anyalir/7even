@@ -32,7 +32,7 @@ export function AchievementTimeline({ entries }: Props) {
           left: 0,
           width: "var(--bar-width)",
           height: "100%",
-          background: "var(--text-muted)",
+          background: "var(--border-subtle)",
         }}
       />
 

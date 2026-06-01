@@ -117,10 +117,14 @@ export async function casCommit(
       const body = uuids.length > 0 ? `\n\n${uuids.join("\n")}` : "";
       const message = summary + body;
 
-      execSync(`git commit -m ${JSON.stringify(message)}`, {
+      const { spawnSync } = await import("node:child_process");
+      const commitResult = spawnSync("git", ["commit", "-m", message], {
         cwd: repoRoot,
         encoding: "utf-8",
       });
+      if (commitResult.status !== 0) {
+        throw new Error(commitResult.stderr || "git commit failed");
+      }
 
       // Pull --rebase and push
       try {

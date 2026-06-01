@@ -183,12 +183,12 @@ export function VelocityChart({ compact }: Props) {
               dataKey="label"
               tick={{ fill: "var(--text-muted)", fontSize: 10 }}
               tickLine={false}
-              axisLine={{ stroke: "var(--text-muted)" }}
+              axisLine={{ stroke: "var(--border-subtle)" }}
             />
             <YAxis
               tick={{ fill: "var(--text-muted)", fontSize: 10 }}
               tickLine={false}
-              axisLine={{ stroke: "var(--text-muted)" }}
+              axisLine={{ stroke: "var(--border-subtle)" }}
               label={{
                 value: "Story Points",
                 angle: -90,
@@ -200,7 +200,7 @@ export function VelocityChart({ compact }: Props) {
             <Tooltip
               contentStyle={{
                 background: "var(--bg-surface)",
-                border: "1px solid var(--text-muted)",
+                border: "1px solid var(--border-subtle)",
                 color: "var(--text-primary)",
                 fontSize: 12,
               }}

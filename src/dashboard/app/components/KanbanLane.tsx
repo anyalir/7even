@@ -5,6 +5,7 @@ interface KanbanLaneProps {
   krName: string;
   color: string;
   tasks: TaskData[];
+  allTasks: TaskData[];
   collapsed?: boolean;
   onToggle: () => void;
   onTaskClick: (task: TaskData) => void;
@@ -21,10 +22,29 @@ export function KanbanLane({
   krName,
   color,
   tasks,
+  allTasks,
   collapsed = false,
   onToggle,
   onTaskClick,
 }: KanbanLaneProps) {
+  const taskMap = new Map(allTasks.map((t) => [t.id, t]));
+
+  function resolveDeps(task: TaskData) {
+    const deps = task.dependsOn ?? [];
+    if (deps.length === 0) return { blockedBy: [], dependsOnIds: [] };
+    const dependsOnIds: string[] = [];
+    const blockedBy: string[] = [];
+    for (const depId of deps) {
+      const dep = taskMap.get(depId);
+      const sid = dep?.shortId ?? (dep as any)?.shortId ?? depId.slice(0, 8);
+      dependsOnIds.push(sid);
+      if (dep && dep.status !== "done") {
+        blockedBy.push(sid);
+      }
+    }
+    return { blockedBy, dependsOnIds };
+  }
+
   const grouped = STATUS_COLUMNS.map((status) => ({
     status,
     tasks: tasks.filter((t) => t.status === status),
@@ -91,14 +111,19 @@ export function KanbanLane({
                 {STATUS_LABELS[status]} ({colTasks.length})
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                {colTasks.map((task) => (
-                  <TaskCard
-                    key={task.id}
-                    task={task}
-                    color={color}
-                    onClick={() => onTaskClick(task)}
-                  />
-                ))}
+                {colTasks.map((task) => {
+                  const { blockedBy, dependsOnIds } = resolveDeps(task);
+                  return (
+                    <TaskCard
+                      key={task.id}
+                      task={task}
+                      color={color}
+                      onClick={() => onTaskClick(task)}
+                      blockedBy={blockedBy}
+                      dependsOnIds={dependsOnIds}
+                    />
+                  );
+                })}
               </div>
             </div>
           ))}

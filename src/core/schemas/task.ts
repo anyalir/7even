@@ -4,6 +4,7 @@ import { AcceptanceCriterionSchema } from "./acceptance.js";
 
 export const TaskSchema = z.object({
   id: z.string().uuid(),
+  shortId: z.string().default(""),
   status: z.enum(["to-do", "in-progress", "done"]),
   createdAt: z.string().datetime(),
   createdBy: z.string(),
@@ -28,4 +29,5 @@ export const TaskSchema = z.object({
     )
     .default([]),
   acceptanceCriteria: z.array(AcceptanceCriterionSchema).default([]),
+  dependsOn: z.array(z.string().uuid()).default([]),
 });

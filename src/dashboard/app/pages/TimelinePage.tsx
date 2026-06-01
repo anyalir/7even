@@ -93,7 +93,7 @@ export function TimelinePage() {
             </div>
           ))}
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ width: 12, height: 10, background: "rgba(0,0,0,0.25)", border: "1px solid var(--text-muted)" }} />
+            <div style={{ width: 12, height: 10, background: "rgba(0,0,0,0.25)", border: "1px solid var(--border-subtle)" }} />
             Progress
           </div>
         </div>

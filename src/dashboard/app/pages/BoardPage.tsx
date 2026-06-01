@@ -8,6 +8,7 @@ import type { TaskData } from "../components/TaskCard.js";
 interface KRData {
   id: string;
   name: string;
+  shortId?: string;
   status: string;
   parentId: string;
   tasks: TaskData[];
@@ -16,6 +17,7 @@ interface KRData {
 interface ObjectiveData {
   id: string;
   name: string;
+  shortId?: string;
   status: string;
   color?: string;
   keyResults: KRData[];
@@ -38,6 +40,7 @@ export function BoardPage() {
   const [collapsedKrs, setCollapsedKrs] = useState<Set<string>>(new Set());
   const [selectedTask, setSelectedTask] = useState<TaskData | null>(null);
   const [selectedKrTasks, setSelectedKrTasks] = useState<TaskData[]>([]);
+  const [selectedObjColor, setSelectedObjColor] = useState<string>("var(--color-lavender)");
 
   // Auto-collapse achieved KRs on first load
   const [initialized, setInitialized] = useState(false);
@@ -63,9 +66,10 @@ export function BoardPage() {
     });
   }
 
-  function handleTaskClick(task: TaskData, krTasks: TaskData[]) {
+  function handleTaskClick(task: TaskData, krTasks: TaskData[], objColor?: string) {
     setSelectedTask(task);
     setSelectedKrTasks(krTasks);
+    if (objColor) setSelectedObjColor(objColor);
   }
 
   // Collect all tasks for assignee view
@@ -118,7 +122,7 @@ export function BoardPage() {
                       color: "var(--text-muted)",
                     }}
                   >
-                    {obj.name}
+                    {obj.shortId && <span style={{ marginRight: 6 }}>{obj.shortId}</span>}{obj.name}
                   </span>
                 </div>
                 {obj.keyResults.map((kr) => {
@@ -126,12 +130,13 @@ export function BoardPage() {
                   return (
                     <KanbanLane
                       key={kr.id}
-                      krName={kr.name}
+                      krName={kr.shortId ? `${kr.shortId} — ${kr.name}` : kr.name}
                       color={objColor}
                       tasks={kr.tasks}
+                      allTasks={allTasks}
                       collapsed={collapsedKrs.has(kr.id)}
                       onToggle={() => toggleKr(kr.id)}
-                      onTaskClick={(task) => handleTaskClick(task, kr.tasks)}
+                       onTaskClick={(task) => handleTaskClick(task, kr.tasks, objColor)}
                     />
                   );
                 })}
@@ -149,6 +154,7 @@ export function BoardPage() {
         <TaskDetailPanel
           task={selectedTask}
           krTasks={selectedKrTasks}
+          objColor={selectedObjColor}
           onClose={() => setSelectedTask(null)}
           onTaskSelect={(task) => setSelectedTask(task)}
         />

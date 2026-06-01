@@ -33,8 +33,9 @@ export function makeTaskCommand(): Command {
           parentId,
         };
         const id = await createItem(sevenDir, "task", slug, data, parentId);
+        const { data: created } = await readItem(sevenDir, id);
         console.log(chalk.green(`Created task: ${slug}`));
-        console.log(chalk.dim(`ID: ${id}`));
+        console.log(chalk.dim(`ID: ${id}`) + (created.shortId ? `  ${chalk.cyan(created.shortId)}` : ""));
       } catch (err: any) {
         console.error(chalk.red(err.message));
         process.exitCode = 1;
@@ -111,11 +112,12 @@ export function makeTaskCommand(): Command {
     .command("comment <id>")
     .description("Add a comment to a task")
     .requiredOption("-m, --message <text>", "Comment text")
+    .option("--type <type>", "Comment type: human or agent", "human")
     .action(async (id, opts) => {
       try {
         const sevenDir = await resolveSevenDir();
         const resolvedId = await resolveId(sevenDir, id, "task");
-        await addComment(sevenDir, resolvedId, opts.message, "human");
+        await addComment(sevenDir, resolvedId, opts.message, opts.type);
         console.log(chalk.green("Comment added."));
       } catch (err: any) {
         console.error(chalk.red(err.message));
@@ -147,6 +149,47 @@ export function makeTaskCommand(): Command {
       }
     });
 
+  cmd
+    .command("depend <task-id> <depends-on-id>")
+    .description("Add a dependency (task-id depends on depends-on-id)")
+    .action(async (taskId: string, dependsOnId: string) => {
+      try {
+        const sevenDir = await resolveSevenDir();
+        const resolvedTaskId = await resolveId(sevenDir, taskId, "task");
+        const resolvedDepId = await resolveId(sevenDir, dependsOnId, "task");
+        const { data } = await readItem(sevenDir, resolvedTaskId);
+        const deps: string[] = data.dependsOn ?? [];
+        if (deps.includes(resolvedDepId)) {
+          console.log(chalk.dim("Dependency already exists."));
+          return;
+        }
+        deps.push(resolvedDepId);
+        await updateItem(sevenDir, resolvedTaskId, { dependsOn: deps });
+        console.log(chalk.green(`${data.shortId || taskId} now depends on ${dependsOnId}`));
+      } catch (err: any) {
+        console.error(chalk.red(err.message));
+        process.exitCode = 1;
+      }
+    });
+
+  cmd
+    .command("undepend <task-id> <depends-on-id>")
+    .description("Remove a dependency")
+    .action(async (taskId: string, dependsOnId: string) => {
+      try {
+        const sevenDir = await resolveSevenDir();
+        const resolvedTaskId = await resolveId(sevenDir, taskId, "task");
+        const resolvedDepId = await resolveId(sevenDir, dependsOnId, "task");
+        const { data } = await readItem(sevenDir, resolvedTaskId);
+        const deps: string[] = (data.dependsOn ?? []).filter((d: string) => d !== resolvedDepId);
+        await updateItem(sevenDir, resolvedTaskId, { dependsOn: deps });
+        console.log(chalk.green(`Dependency removed.`));
+      } catch (err: any) {
+        console.error(chalk.red(err.message));
+        process.exitCode = 1;
+      }
+    });
+
   return cmd;
 }
 
@@ -157,6 +200,10 @@ async function resolveId(
 ): Promise<string> {
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrSlug)) {
     return idOrSlug;
+  }
+  if (/^O\d+(KR\d+(T\d+)?)?$/i.test(idOrSlug)) {
+    const { resolveId: resolveShortId } = await import("../../core/storage.js");
+    return resolveShortId(sevenDir, idOrSlug);
   }
   const items = await listItems(sevenDir, itemType);
   for (const item of items) {

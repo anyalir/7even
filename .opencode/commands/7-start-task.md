@@ -9,16 +9,26 @@ Start working on a task by first defining acceptance criteria. Agent leads — h
 ## Context
 
 ```
-`npx tsx src/cli/index.ts task show $1`
+`npx 7 task show $1`
 ```
 
 ```
-`npx tsx src/cli/index.ts key-result show $(npx tsx src/cli/index.ts task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //')`
+`npx 7 task --help`
+```
+
+```
+`npx 7 estimate --help`
+```
+
+```
+`npx 7 key-result show $(npx 7 task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //') 2>/dev/null`
 ```
 
 ## Instructions
 
 You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFORE any implementation begins.
+
+**Important:** All IDs in 7even are UUIDs or shortIds (e.g. O1KR2, O1KR2T3). Both are accepted by all CLI commands.
 
 ### If no argument provided:
 1. List tasks in to-do status
@@ -37,12 +47,25 @@ You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFOR
 5. Iterate with user until criteria are approved
 
 ### After criteria approved:
-1. Write criteria to task: `npx tsx src/cli/index.ts task update <id> --acceptance-criteria '<JSON>'`
-2. Move task to in-progress: `npx tsx src/cli/index.ts task move <id> in-progress`
-3. Suggest starting implementation with the first criterion
+1. Write criteria to task: `npx 7 task update <id> --acceptance-criteria '<JSON>'`
+2. Assign the task to the current user: `npx 7 task assign <id> --email <git-author-email>`
+   - Get the user's email from `git config user.email`
+3. Move task to in-progress: `npx 7 task move <id> in-progress`
+4. Suggest starting implementation with the first criterion
+
+### During implementation:
+- **Commit messages**: Write a clear subject line (no task ID in subject). Add the task UUID on a separate line in the commit body:
+  ```
+  git commit -m "implement photo validation scoring engine" -m "7even-task: 84f8d63b-0fb2-492a-bbd5-59f024cbdf7a"
+  ```
+- **Progress comments**: After significant milestones, comment on the task:
+  ```
+  npx 7 task comment <id> --type agent -m "Completed AC #1: scoring engine returns codes. AC #2 in progress."
+  ```
+- **After completion**: Use `/7-verify-task <id>` to run acceptance criteria, then `/7-complete-task <id>` to finalize.
 
 ### Key rules:
 - NEVER skip to implementation before criteria are defined and approved
 - Agent proposes criteria, user refines — not the other way around
 - Each criterion must be verifiable by a script, not just "it works"
-- Estimate story points if not already estimated: `npx tsx src/cli/index.ts estimate suggest <id>`
+- Estimate story points if not already estimated: `npx 7 estimate suggest <uuid>`

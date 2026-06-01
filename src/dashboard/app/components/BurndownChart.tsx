@@ -148,7 +148,7 @@ export function BurndownChart({ krId, objectiveId }: Props) {
             style={{
               background: "var(--bg-surface)",
               color: "var(--text-primary)",
-              border: "1px solid var(--text-muted)",
+              border: "1px solid var(--border-subtle)",
               padding: "4px 8px",
               fontSize: 12,
               textTransform: "uppercase",
@@ -165,7 +165,7 @@ export function BurndownChart({ krId, objectiveId }: Props) {
               style={{
                 background: "var(--bg-surface)",
                 color: "var(--text-primary)",
-                border: "1px solid var(--text-muted)",
+                border: "1px solid var(--border-subtle)",
                 padding: "4px 8px",
                 fontSize: 12,
                 flex: 1,
@@ -220,12 +220,12 @@ export function BurndownChart({ krId, objectiveId }: Props) {
               dataKey="date"
               tick={{ fill: "var(--text-muted)", fontSize: 10 }}
               tickLine={false}
-              axisLine={{ stroke: "var(--text-muted)" }}
+              axisLine={{ stroke: "var(--border-subtle)" }}
             />
             <YAxis
               tick={{ fill: "var(--text-muted)", fontSize: 10 }}
               tickLine={false}
-              axisLine={{ stroke: "var(--text-muted)" }}
+              axisLine={{ stroke: "var(--border-subtle)" }}
               label={{
                 value: "SP Remaining",
                 angle: -90,
@@ -237,7 +237,7 @@ export function BurndownChart({ krId, objectiveId }: Props) {
             <Tooltip
               contentStyle={{
                 background: "var(--bg-surface)",
-                border: "1px solid var(--text-muted)",
+                border: "1px solid var(--border-subtle)",
                 color: "var(--text-primary)",
                 fontSize: 12,
               }}

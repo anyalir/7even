@@ -4,8 +4,12 @@
   "description": "Repository-local, agentic-AI-enabled issue tracker with OKR hierarchy",
   "type": "module",
   "bin": {
-    "7": "./dist/cli.js"
+    "7": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    ".opencode/commands"
+  ],
   "engines": {
     "node": ">=20"
   },

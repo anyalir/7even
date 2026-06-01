@@ -15,21 +15,24 @@ export function makeObjectiveCommand(): Command {
     .command("create")
     .description("Create a new objective")
     .requiredOption("-d, --description <text>", "Objective description")
+    .option("-s, --summary <text>", "Short summary (5-10 words)")
     .action(async (opts) => {
       try {
         const sevenDir = await resolveSevenDir();
-        const slug = generateSlug(opts.description);
+        const slug = generateSlug(opts.summary || opts.description);
         const author = getGitAuthor();
-        const data = {
+        const data: Record<string, unknown> = {
           id: crypto.randomUUID(),
           status: "proposed",
           createdAt: new Date().toISOString(),
           createdBy: `${author.name} <${author.email}>`,
           description: opts.description,
         };
+        if (opts.summary) data.summary = opts.summary;
         const id = await createItem(sevenDir, "objective", slug, data);
+        const { data: created } = await readItem(sevenDir, id);
         console.log(chalk.green(`Created objective: ${slug}`));
-        console.log(chalk.dim(`ID: ${id}`));
+        console.log(chalk.dim(`ID: ${id}`) + (created.shortId ? `  ${chalk.cyan(created.shortId)}` : ""));
       } catch (err: any) {
         console.error(chalk.red(err.message));
         process.exitCode = 1;
@@ -116,11 +119,12 @@ export function makeObjectiveCommand(): Command {
     .command("comment <id>")
     .description("Add a comment to an objective")
     .requiredOption("-m, --message <text>", "Comment text")
+    .option("--type <type>", "Comment type: human or agent", "human")
     .action(async (id, opts) => {
       try {
         const sevenDir = await resolveSevenDir();
         const resolvedId = await resolveId(sevenDir, id, "objective");
-        await addComment(sevenDir, resolvedId, opts.message, "human");
+        await addComment(sevenDir, resolvedId, opts.message, opts.type);
         console.log(chalk.green("Comment added."));
       } catch (err: any) {
         console.error(chalk.red(err.message));
@@ -139,6 +143,11 @@ async function resolveId(
   // If it looks like a UUID, return directly
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrSlug)) {
     return idOrSlug;
+  }
+  // Try shortId (e.g. O1, O1KR2, O1KR2T3)
+  if (/^O\d+(KR\d+(T\d+)?)?$/i.test(idOrSlug)) {
+    const { resolveId: resolveShortId } = await import("../../core/storage.js");
+    return resolveShortId(sevenDir, idOrSlug);
   }
   // Otherwise search by slug match
   const items = await listItems(sevenDir, itemType);

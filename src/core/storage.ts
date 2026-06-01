@@ -9,9 +9,11 @@ import {
   addToIndex,
   removeFromIndex,
   writeIndex,
+  readShortIdIndex,
 } from "./index-manager.js";
 import { getGitRoot, getGitAuthor } from "./git.js";
 import { generateSlug } from "./slug.js";
+import { generateShortId } from "./counters.js";
 import type { ItemType } from "../types/index.js";
 
 const SCHEMAS = {
@@ -31,6 +33,31 @@ const ITEM_FILE_NAMES: Record<ItemType, string | null> = {
   "key-result": "kr.json",
   task: null, // tasks use slug-based names
 };
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const SHORT_ID_RE = /^O\d+(KR\d+(T\d+)?)?$/i;
+
+/**
+ * Resolve a shortId (e.g. "O1KR2T3") or UUID to a UUID.
+ */
+export async function resolveId(
+  sevenDir: string,
+  idOrShortId: string
+): Promise<string> {
+  if (UUID_RE.test(idOrShortId)) return idOrShortId;
+  const upper = idOrShortId.toUpperCase();
+  if (SHORT_ID_RE.test(upper)) {
+    const shortIndex = await readShortIdIndex(sevenDir);
+    const uuid = shortIndex[upper];
+    if (!uuid) throw new Error(`Short ID not found: ${idOrShortId}`);
+    return uuid;
+  }
+  // Common typo: leading zero instead of letter O
+  if (/^0\d/.test(idOrShortId)) {
+    throw new Error(`Invalid identifier: ${idOrShortId}. Did you mean "${idOrShortId.replace(/^0/, "O").toUpperCase()}"? (letter O, not zero)`);
+  }
+  throw new Error(`Invalid identifier: ${idOrShortId}. Use UUID or short ID (e.g. O1KR2T3).`);
+}
 
 export async function resolveSevenDir(): Promise<string> {
   const root = getGitRoot();
@@ -105,9 +132,18 @@ export async function createItem(
   parentId?: string
 ): Promise<string> {
   const schema = getSchemaForType(itemType);
-  const validated = schema.parse(data);
-  const id = (validated as any).id as string;
-  const status = (validated as any).status as string;
+  const validated = schema.parse(data) as any;
+  const id = validated.id as string;
+  const status = validated.status as string;
+
+  // Generate hierarchical shortId
+  let parentShortId: string | undefined;
+  if (parentId) {
+    const parent = await readItem(sevenDir, parentId);
+    parentShortId = parent.data.shortId || undefined;
+  }
+  const shortId = await generateShortId(sevenDir, itemType, parentShortId);
+  validated.shortId = shortId;
 
   let targetDir: string;
 
@@ -139,7 +175,7 @@ export async function createItem(
   await writeFile(filePath, JSON.stringify(validated, null, 2) + "\n", "utf-8");
 
   const relativePath = relative(sevenDir, filePath).replace(/\\/g, "/");
-  await addToIndex(sevenDir, id, relativePath);
+  await addToIndex(sevenDir, id, relativePath, shortId);
 
   return id;
 }

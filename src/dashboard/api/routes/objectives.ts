@@ -16,10 +16,10 @@ export function objectivesRoute(sevenDir: string) {
         .map((kr) => {
           const krTasks = tasks
             .filter((t) => t.data.parentId === kr.id)
-            .map((t) => ({ id: t.id, ...t.data }));
-          return { id: kr.id, ...kr.data, tasks: krTasks };
+            .map((t) => ({ id: t.id, ...t.data, name: t.data.description }));
+          return { id: kr.id, ...kr.data, name: kr.data.description, tasks: krTasks };
         });
-      return { id: obj.id, ...obj.data, keyResults: krs };
+      return { id: obj.id, ...obj.data, name: obj.data.description, keyResults: krs };
     });
 
     return c.json(result);

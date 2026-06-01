@@ -4,20 +4,26 @@ export type GanttInput = {
   id: string;
   type: "objective" | "key-result" | "task";
   name: string;
+  shortId?: string;
+  summary?: string;
   createdAt: string;
   status: string;
   estimationHistory?: EstEntry[];
   parentId?: string;
+  dependsOn?: string[];
 };
 
 export type GanttBar = {
   id: string;
   type: string;
   name: string;
+  shortId?: string;
+  summary?: string;
   start: string;
   end: string;
   parentId?: string;
   progress: number;
+  dependsOn?: string[];
 };
 
 export function computeGanttBars(items: GanttInput[]): GanttBar[] {
@@ -51,9 +57,12 @@ export function computeGanttBars(items: GanttInput[]): GanttBar[] {
       id: item.id,
       type: item.type,
       name: item.name,
+      shortId: item.shortId,
+      summary: item.summary,
       start,
       end,
       progress,
+      dependsOn: item.dependsOn,
     };
 
     if (item.parentId) {

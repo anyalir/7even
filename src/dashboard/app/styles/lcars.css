@@ -21,22 +21,23 @@
 
 /* Page framing */
 .lcars-frame {
-  border: var(--bar-width) solid var(--text-muted);
+  border: var(--bar-width) solid var(--border-subtle);
   padding: 1px;
 }
 
 .lcars-frame-top {
-  border-top: var(--bar-width) solid var(--text-muted);
+  border-top: var(--bar-width) solid var(--border-subtle);
 }
 
 .lcars-frame-left {
-  border-left: var(--bar-width) solid var(--text-muted);
+  border-left: var(--bar-width) solid var(--border-subtle);
 }
 
 /* Section frames with top-left decoration alignment */
 .lcars-section {
   position: relative;
   padding: 16px 16px 16px 20px;
+  --lcars-accent: var(--color-coral);
 }
 
 .lcars-section::before {
@@ -46,7 +47,7 @@
   left: 0;
   width: var(--bar-width);
   height: 100%;
-  background: var(--color-coral);
+  background: var(--lcars-accent);
 }
 
 .lcars-section::after {
@@ -56,7 +57,7 @@
   left: 0;
   width: 24px;
   height: var(--bar-width);
-  background: var(--color-coral);
+  background: var(--lcars-accent);
 }
 
 /* Card with corner decorations */
@@ -73,7 +74,7 @@
   left: 0;
   width: 12px;
   height: var(--bar-width);
-  background: var(--color-amber);
+  background: var(--lcars-accent, var(--color-amber));
 }
 
 .lcars-card::after {
@@ -83,7 +84,7 @@
   left: 0;
   width: var(--bar-width);
   height: 12px;
-  background: var(--color-amber);
+  background: var(--lcars-accent, var(--color-amber));
 }
 
 /* Divider */

@@ -37,8 +37,21 @@ export async function loadSession(
   sevenDir: string,
   sessionId: string
 ): Promise<Session> {
-  const filePath = join(getSessionsDir(sevenDir), `${sessionId}.json`);
-  const raw = await readFile(filePath, "utf-8");
+  const sessionsDir = getSessionsDir(sevenDir);
+  // Try exact match first
+  try {
+    const raw = await readFile(join(sessionsDir, `${sessionId}.json`), "utf-8");
+    return SessionSchema.parse(JSON.parse(raw));
+  } catch {
+    // Fall through to prefix match
+  }
+  // Prefix match (e.g. "59350ce6" matches "59350ce6-f241-4fb4-...")
+  const files = await readdir(sessionsDir);
+  const match = files.find((f) => f.startsWith(sessionId) && f.endsWith(".json"));
+  if (!match) {
+    throw new Error(`Session not found: ${sessionId}`);
+  }
+  const raw = await readFile(join(sessionsDir, match), "utf-8");
   return SessionSchema.parse(JSON.parse(raw));
 }
 

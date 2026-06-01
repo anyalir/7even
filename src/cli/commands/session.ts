@@ -108,6 +108,26 @@ export function makeSessionCommand(): Command {
       }
     });
 
+  cmd
+    .command("close <session-id>")
+    .description("Close a completed session")
+    .action(async (sessionId: string) => {
+      try {
+        const sevenDir = await resolveSevenDir();
+        const session = await loadSession(sevenDir, sessionId);
+        if (session.status === "completed") {
+          console.log(chalk.dim(`Session ${sessionId.slice(0, 8)} already closed.`));
+          return;
+        }
+        session.status = "completed";
+        await saveSession(sevenDir, session);
+        console.log(chalk.green(`Session ${session.id.slice(0, 8)} closed.`));
+      } catch (err: any) {
+        console.error(chalk.red(err.message));
+        process.exitCode = 1;
+      }
+    });
+
   return cmd;
 }
 
@@ -117,7 +137,7 @@ function statusColor(status: string): string {
       return chalk.green(status);
     case "paused":
       return chalk.yellow(status);
-    case "closed":
+    case "completed":
       return chalk.dim(status);
     default:
       return status;

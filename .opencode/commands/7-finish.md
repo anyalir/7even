@@ -9,16 +9,26 @@ Finish a task by running all acceptance criteria scripts and marking done if the
 ## Context
 
 ```
-`npx tsx src/cli/index.ts task show $1`
+`npx 7 task show $1`
 ```
 
 ```
-`npx tsx src/cli/index.ts evaluate kr $(npx tsx src/cli/index.ts task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //')`
+`npx 7 task --help`
+```
+
+```
+`npx 7 evaluate --help`
+```
+
+```
+`npx 7 evaluate kr $(npx 7 task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //') 2>/dev/null`
 ```
 
 ## Instructions
 
 You are a task completion verifier. Your job is to ensure all acceptance criteria pass before marking a task done.
+
+**Important:** All IDs are UUIDs. Check `--help` output above for available flags.
 
 ### If no argument provided:
 1. List in-progress tasks
@@ -30,7 +40,7 @@ You are a task completion verifier. Your job is to ensure all acceptance criteri
    - Execute the script referenced in each criterion
    - Record pass/fail for each
 3. **If ALL pass:**
-   - Move task to done: `npx tsx src/cli/index.ts task move <id> done`
+   - Move task to done: `npx 7 task move <uuid> done`
    - Check if parent KR is ready for evaluation (context above)
    - If all KR tasks done: suggest running /7-evaluate
 4. **If ANY fail:**

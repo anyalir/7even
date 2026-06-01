@@ -1,16 +1,17 @@
-import { Outlet } from "react-router";
-import { LcarsSidebar } from "../components/LcarsSidebar.js";
+import { Outlet, useLocation } from "react-router";
+import { LcarsSidebar, NAV_ITEMS } from "../components/LcarsSidebar.js";
 
 export function AppLayout() {
+  const location = useLocation();
+  const activeNav = NAV_ITEMS.find((item) => location.pathname.startsWith(item.to));
+  const activeColor = activeNav?.color ?? "var(--text-muted)";
+
   return (
     <div
       style={{
         display: "grid",
         gridTemplateColumns: "var(--sidebar-width) 1fr",
         height: "100vh",
-        borderTop: "var(--bar-width) solid var(--text-muted)",
-        borderLeft: "var(--bar-width) solid var(--text-muted)",
-        borderBottom: "var(--bar-width) solid var(--text-muted)",
       }}
     >
       <LcarsSidebar />
@@ -18,7 +19,8 @@ export function AppLayout() {
         style={{
           overflow: "auto",
           padding: "24px",
-          borderLeft: "var(--bar-width) solid var(--text-muted)",
+          borderLeft: `var(--bar-width) solid ${activeColor}`,
+          transition: "border-color 0.15s",
         }}
       >
         <Outlet />

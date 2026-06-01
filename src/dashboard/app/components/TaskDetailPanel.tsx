@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useApi } from "../hooks/useApi.js";
+import { label, sid } from "../utils/label.js";
 import type { TaskData } from "./TaskCard.js";
 
 interface TaskDetailPanelProps {
   task: TaskData;
   krTasks: TaskData[];
+  objColor?: string;
   onClose: () => void;
   onTaskSelect: (task: TaskData) => void;
 }
@@ -21,7 +23,7 @@ const STATUS_LABEL: Record<string, string> = {
   done: "DONE",
 };
 
-export function TaskDetailPanel({ task, krTasks, onClose, onTaskSelect }: TaskDetailPanelProps) {
+export function TaskDetailPanel({ task, krTasks, objColor = "var(--color-lavender)", onClose, onTaskSelect }: TaskDetailPanelProps) {
   const { data: commits } = useApi<CommitData[]>(`/api/metrics/commits/${task.id}`);
 
   // Close on Escape
@@ -62,7 +64,7 @@ export function TaskDetailPanel({ task, krTasks, onClose, onTaskSelect }: TaskDe
           style={{
             width: 140,
             background: "var(--bg-surface)",
-            borderRight: "var(--bar-width) solid var(--color-lavender)",
+            borderRight: `var(--bar-width) solid ${objColor}`,
             display: "flex",
             flexDirection: "column",
             padding: "48px 0 16px 0",
@@ -81,25 +83,51 @@ export function TaskDetailPanel({ task, krTasks, onClose, onTaskSelect }: TaskDe
           >
             KR TASKS
           </div>
-          {krTasks.map((t) => (
-            <div
-              key={t.id}
-              onClick={() => onTaskSelect(t)}
-              style={{
-                padding: "4px 8px",
-                fontSize: 11,
-                cursor: "pointer",
-                borderLeft:
-                  t.id === task.id
-                    ? "var(--bar-width) solid var(--color-lavender)"
-                    : "var(--bar-width) solid transparent",
-                color: t.id === task.id ? "var(--text-primary)" : "var(--text-muted)",
-                background: t.id === task.id ? "rgba(255,255,255,0.05)" : "transparent",
-              }}
-            >
-              {t.name}
-            </div>
-          ))}
+          {krTasks.map((t) => {
+            const isActive = t.id === task.id;
+            const shortId = sid(t);
+            return (
+              <div
+                key={t.id}
+                onClick={() => onTaskSelect(t)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 8px",
+                  cursor: "pointer",
+                  background: isActive ? objColor : "transparent",
+                  color: isActive ? "var(--bg-primary)" : "var(--text-muted)",
+                  transition: "background 0.15s",
+                }}
+              >
+                <div
+                  style={{
+                    width: "var(--bar-width)",
+                    minHeight: 20,
+                    alignSelf: "stretch",
+                    background: isActive ? "var(--bg-primary)" : objColor,
+                    opacity: isActive ? 0.4 : 0.3,
+                  }}
+                />
+                {shortId ? (
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {shortId}
+                  </span>
+                ) : (
+                  <span style={{ fontSize: 11 }}>{t.name}</span>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Detail content — dark-on-light */}
@@ -132,7 +160,7 @@ export function TaskDetailPanel({ task, krTasks, onClose, onTaskSelect }: TaskDe
 
           {/* Task name & status */}
           <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 4, paddingRight: 32 }}>
-            {task.name}
+            {label(task.shortId, task.name)}
           </h2>
           <span
             style={{
@@ -165,7 +193,7 @@ export function TaskDetailPanel({ task, krTasks, onClose, onTaskSelect }: TaskDe
                   {task.estimationHistory.map((e, i) => (
                     <tr key={i} style={{ borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
                       <td style={tdStyle}>{formatDate(e.date)}</td>
-                      <td style={tdStyle}>{e.points}</td>
+                      <td style={tdStyle}>{(e as any).spRemaining}</td>
                       <td style={tdStyle}>{e.estimator}</td>
                     </tr>
                   ))}
@@ -202,7 +230,9 @@ export function TaskDetailPanel({ task, krTasks, onClose, onTaskSelect }: TaskDe
                     {c.hash.slice(0, 7)}
                   </code>{" "}
                   <span style={{ opacity: 0.5 }}>{formatDate(c.date)}</span>
-                  <div style={{ marginTop: 1 }}>{c.message}</div>
+                  <div style={{ marginTop: 1, whiteSpace: "pre-wrap" }}>
+                    {c.message.replace(/\\n/g, "\n")}
+                  </div>
                 </div>
               ))
             )}

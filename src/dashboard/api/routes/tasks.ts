@@ -6,7 +6,7 @@ export function tasksRoute(sevenDir: string) {
 
   route.get("/", async (c) => {
     const tasks = await listItems(sevenDir, "task");
-    const result = tasks.map((t) => ({ id: t.id, ...t.data }));
+    const result = tasks.map((t) => ({ id: t.id, ...t.data, name: t.data.description }));
     return c.json(result);
   });
 

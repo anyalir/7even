@@ -9,12 +9,18 @@ Pause the current in-progress task, recording state for later resumption.
 ## Context
 
 ```
-`npx tsx src/cli/index.ts task list --status in-progress`
+`npx 7 task list --status in-progress`
+```
+
+```
+`npx 7 task --help`
 ```
 
 ## Instructions
 
 You are helping the user pause their current work cleanly.
+
+**Important:** All IDs are UUIDs.
 
 ### If no argument provided:
 1. Show in-progress tasks from context
@@ -26,7 +32,7 @@ You are helping the user pause their current work cleanly.
 2. Ask what remains to be done
 3. Record state as a comment on the task:
    ```
-   npx tsx src/cli/index.ts task comment <id> -m "PAUSE: Completed: [what done]. Remaining: [what left]."
+   npx 7 task comment <uuid> -m "PAUSE: Completed: [what done]. Remaining: [what left]."
    ```
 4. Task stays in-progress (paused is a convention, not a status)
 
