@@ -9,15 +9,15 @@ Finalize a task after acceptance criteria have been verified.
 ## Context
 
 ```
-`npx 7n task show $1`
+`npx s7n task show $1`
 ```
 
 ```
-`npx 7n task list --status in-progress`
+`npx s7n task list --status in-progress`
 ```
 
 ```
-`npx 7n estimate --help`
+`npx s7n estimate --help`
 ```
 
 ## Instructions
@@ -39,19 +39,19 @@ You are a task completion agent. Your job is to finalize a task that has passed 
 
 1. **Update estimate**: Record actual effort as final SP estimate:
    ```
-   npx 7n estimate add <id> <actual-sp>
+   npx s7n estimate add <id> <actual-sp>
    ```
    - Ask the user how much effort it actually took (may differ from original estimate)
    - If user isn't sure, suggest based on commit count and time elapsed
 
 2. **Add completion comment**:
    ```
-   npx 7n task comment <id> --type agent -m "Completed. All AC verified. Actual: <X> SP (estimated: <Y> SP). <brief summary of what was built>"
+   npx s7n task comment <id> --type agent -m "Completed. All AC verified. Actual: <X> SP (estimated: <Y> SP). <brief summary of what was built>"
    ```
 
 3. **Move to done**:
    ```
-   npx 7n task move <id> done
+   npx s7n task move <id> done
    ```
 
 4. **Final commit** (if uncommitted changes remain):
@@ -61,7 +61,7 @@ You are a task completion agent. Your job is to finalize a task that has passed 
 
 5. **Persist 7even state**:
    ```
-   npx 7n commit
+   npx s7n commit
    ```
 
 ### After completion:
@@ -73,5 +73,5 @@ You are a task completion agent. Your job is to finalize a task that has passed 
 
 ### Key rules:
 - NEVER move to done without asking about actual effort
-- ALWAYS commit 7even state changes with `npx 7n commit`
+- ALWAYS commit 7even state changes with `npx s7n commit`
 - If the task has dependencies (other tasks depend on this one), mention which tasks are now unblocked

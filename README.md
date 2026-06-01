@@ -9,27 +9,27 @@ Built for AI-assisted development workflows. Works standalone via CLI, or with [
 ## Install
 
 ```bash
-npm install 7even
+npm install @anyalir/7even
 ```
 
 ## Quick Start
 
 ```bash
 # Initialize in any git repo
-npx 7n init
+npx s7n init
 
 # Create an objective, then follow the prompts
 /7-new-objective "Build a photo validation system for seasonal colour analysis"
 
 # Or use the cli directly
-npx 7n objective create -d "Build a photo validation system for seasonal colour analysis" \
+npx s7n objective create -d "Build a photo validation system for seasonal colour analysis" \
   -s "Photo validation for colour analysis"
 
 # Decompose into key results (agent-guided with OpenCode)
 /7-okr-breakdown O1
 
 # Or manually
-npx 7n key-result create -d "Validation achieves ≥90% accuracy vs expert review" \
+npx s7n key-result create -d "Validation achieves ≥90% accuracy vs expert review" \
   -s "Photo quality validation at 90% accuracy" \
   --parent O1
 
@@ -37,11 +37,11 @@ npx 7n key-result create -d "Validation achieves ≥90% accuracy vs expert revie
 /7-breakdown O1KR1
 
 # Or manually
-npx 7n task create -d "Create 100-photo test set with expert labels" --parent O1KR1
-npx 7n estimate add O1KR1T1 5
+npx s7n task create -d "Create 100-photo test set with expert labels" --parent O1KR1
+npx s7n estimate add O1KR1T1 5
 
 # Launch the dashboard
-npx 7n dashboard
+npx s7n dashboard
 ```
 
 ## Concepts
@@ -68,9 +68,9 @@ Objective (O1)
 Every item gets a hierarchical short ID: `O1`, `O1KR1`, `O1KR1T1`. These are persistent (stored in JSON), globally unique within a project, and accepted by all CLI commands. Case-insensitive.
 
 ```bash
-npx 7n task show O1KR1T1    # works
-npx 7n task show o1kr1t1    # also works
-npx 7n task show 01kr1t1    # helpful error: "Did you mean O1KR1T1? (letter O, not zero)"
+npx s7n task show O1KR1T1    # works
+npx s7n task show o1kr1t1    # also works
+npx s7n task show 01kr1t1    # helpful error: "Did you mean O1KR1T1? (letter O, not zero)"
 ```
 
 ### Data Storage
@@ -103,44 +103,44 @@ All commands follow a noun-verb pattern with short aliases.
 ### Objectives
 
 ```bash
-npx 7n objective create -d "Description" -s "Short summary"
-npx 7n objective list
-npx 7n objective show O1
-npx 7n objective comment O1 -m "Some note" --type agent
+npx s7n objective create -d "Description" -s "Short summary"
+npx s7n objective list
+npx s7n objective show O1
+npx s7n objective comment O1 -m "Some note" --type agent
 
 # Aliases
-npx 7n o create ...
-npx 7n o list
+npx s7n o create ...
+npx s7n o list
 ```
 
 ### Key Results
 
 ```bash
-npx 7n key-result create -d "Measurable outcome description" \
+npx s7n key-result create -d "Measurable outcome description" \
   -s "5-10 word summary" --parent O1
-npx 7n key-result list
-npx 7n key-result show O1KR1
-npx 7n key-result comment O1KR1 -m "Adjacent to O1KR2" --type agent
+npx s7n key-result list
+npx s7n key-result show O1KR1
+npx s7n key-result comment O1KR1 -m "Adjacent to O1KR2" --type agent
 
 # Aliases
-npx 7n kr create ...
+npx s7n kr create ...
 ```
 
 ### Tasks
 
 ```bash
-npx 7n task create -d "Concrete work item" --parent O1KR1
-npx 7n task list
-npx 7n task list --status to-do
-npx 7n task show O1KR1T1
-npx 7n task move O1KR1T1 in-progress
-npx 7n task move O1KR1T1 done
-npx 7n task assign O1KR1T1 --email dev@example.com
-npx 7n task comment O1KR1T1 -m "Progress update" --type agent
+npx s7n task create -d "Concrete work item" --parent O1KR1
+npx s7n task list
+npx s7n task list --status to-do
+npx s7n task show O1KR1T1
+npx s7n task move O1KR1T1 in-progress
+npx s7n task move O1KR1T1 done
+npx s7n task assign O1KR1T1 --email dev@example.com
+npx s7n task comment O1KR1T1 -m "Progress update" --type agent
 
 # Aliases
-npx 7n t create ...
-npx 7n t list
+npx s7n t create ...
+npx s7n t list
 ```
 
 ### Dependencies
@@ -149,13 +149,13 @@ Tasks can depend on other tasks. Dependencies are visible on the dashboard and i
 
 ```bash
 # T2 depends on T1 (T1 must finish before T2 can start)
-npx 7n task depend O1KR1T2 O1KR1T1
+npx s7n task depend O1KR1T2 O1KR1T1
 
 # Remove a dependency
-npx 7n task undepend O1KR1T2 O1KR1T1
+npx s7n task undepend O1KR1T2 O1KR1T1
 
 # Dependencies can cross KR boundaries
-npx 7n task depend O1KR2T1 O1KR1T3
+npx s7n task depend O1KR2T1 O1KR1T3
 ```
 
 ### Estimation
@@ -163,18 +163,18 @@ npx 7n task depend O1KR2T1 O1KR1T3
 Non-destructive estimation history. Re-estimate as you learn more.
 
 ```bash
-npx 7n estimate add O1KR1T1 5          # Initial: 5 story points
-npx 7n estimate add O1KR1T1 3          # Re-estimate: 3 SP remaining
-npx 7n estimate show O1KR1T1           # Show history
+npx s7n estimate add O1KR1T1 5          # Initial: 5 story points
+npx s7n estimate add O1KR1T1 3          # Re-estimate: 3 SP remaining
+npx s7n estimate show O1KR1T1           # Show history
 ```
 
 ### Other Commands
 
 ```bash
-npx 7n commit                          # Commit .7even/ changes to git
-npx 7n repair-index                    # Rebuild index from filesystem
-npx 7n evaluate O1KR1                  # Evaluate KR completion
-npx 7n dashboard                       # Launch local dashboard
+npx s7n commit                          # Commit .7even/ changes to git
+npx s7n repair-index                    # Rebuild index from filesystem
+npx s7n evaluate O1KR1                  # Evaluate KR completion
+npx s7n dashboard                       # Launch local dashboard
 ```
 
 ## Dashboard
@@ -182,8 +182,8 @@ npx 7n dashboard                       # Launch local dashboard
 Local dashboard with timeline, board, achievements, and analytics views. Data is read directly from `.7even/` JSON files. No backend server or database required.
 
 ```bash
-npx 7n dashboard                       # Opens at localhost:7777
-npx 7n dashboard --port 8080           # Custom port
+npx s7n dashboard                       # Opens at localhost:7777
+npx s7n dashboard --port 8080           # Custom port
 ```
 
 ### Timeline
@@ -206,7 +206,7 @@ Burndown charts (per KR or objective), velocity tracking with ETA projection, co
 
 ## OpenCode Integration
 
-7even ships with slash commands for [OpenCode](https://opencode.ai). Running `npx 7n init` symlinks them into `.opencode/commands/`.
+7even ships with slash commands for [OpenCode](https://opencode.ai). Running `npx s7n init` symlinks them into `.opencode/commands/`.
 
 ### Workflow: New Project
 
@@ -257,12 +257,12 @@ git commit -m "implement photo validation scoring engine" \
 From a fictional seasonal colour analysis app.
 
 ```
-$ npx 7n objective list
+$ npx s7n objective list
 ● O1  OBJ proposed  Photo validation for seasonal colour analysis
 ● O2  OBJ proposed  Colour season analysis with modification guidance
 ● O3  OBJ proposed  Seasonal product recommendations with affiliate monetization
 
-$ npx 7n key-result list
+$ npx s7n key-result list
 ● O1KR1  KR aspirational  Photo quality validation at 90% accuracy
 ● O1KR2  KR aspirational  All rejections include specific guidance
 ● O1KR3  KR aspirational  80% complete valid photo set in 3 attempts
@@ -273,7 +273,7 @@ $ npx 7n key-result list
 ● O3KR2  KR aspirational  20 personalized recommendations in 5s
 ● O3KR3  KR aspirational  Product catalog with 200 seasonally tagged items
 
-$ npx 7n task show O1KR1T1
+$ npx s7n task show O1KR1T1
 ● O1KR1T1 Create 100-photo test set with expert labels [in-progress]
   ID: 84f8d63b-0fb2-492a-bbd5-59f024cbdf7a
   Assignee: anya@lean.tech

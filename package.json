@@ -1,10 +1,10 @@
 {
-  "name": "7even",
+  "name": "@anyalir/7even",
   "version": "0.1.0",
   "description": "Repository-local, agentic-AI-enabled issue tracker with OKR hierarchy",
   "type": "module",
   "bin": {
-    "7n": "./dist/index.js"
+    "s7n": "./dist/index.js"
   },
   "files": [
     "dist",

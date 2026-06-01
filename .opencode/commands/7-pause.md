@@ -9,11 +9,11 @@ Pause the current in-progress task, recording state for later resumption.
 ## Context
 
 ```
-`npx 7n task list --status in-progress`
+`npx s7n task list --status in-progress`
 ```
 
 ```
-`npx 7n task --help`
+`npx s7n task --help`
 ```
 
 ## Instructions
@@ -32,7 +32,7 @@ You are helping the user pause their current work cleanly.
 2. Ask what remains to be done
 3. Record state as a comment on the task:
    ```
-   npx 7n task comment <uuid> -m "PAUSE: Completed: [what done]. Remaining: [what left]."
+   npx s7n task comment <uuid> -m "PAUSE: Completed: [what done]. Remaining: [what left]."
    ```
 4. Task stays in-progress (paused is a convention, not a status)
 
