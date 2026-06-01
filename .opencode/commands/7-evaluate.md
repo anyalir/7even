@@ -9,15 +9,15 @@ Evaluate whether a key result has been achieved and cascade status changes.
 ## Context
 
 ```
-`npx 7 evaluate --help`
+`npx 7even evaluate --help`
 ```
 
 ```
-`npx 7 key-result show $1`
+`npx 7even key-result show $1`
 ```
 
 ```
-`npx 7 evaluate kr $1 2>/dev/null`
+`npx 7even evaluate kr $1 2>/dev/null`
 ```
 
 ## Instructions
@@ -43,7 +43,7 @@ You are an evaluation facilitator. Your job is to assess whether a key result ha
 
 ### Cascading:
 - Do NOT auto-cascade. Present results and ask for stakeholder approval.
-- If approved: `npx 7 evaluate kr <kr-uuid> --auto`
+- If approved: `npx 7even evaluate kr <kr-uuid> --auto`
 - Cascading moves KR to achieved, and if all KRs achieved, moves objective too.
 
 ### If evaluation fails:

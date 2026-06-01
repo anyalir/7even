@@ -27,49 +27,49 @@ All commands accept UUIDs or short IDs (e.g. `O1`, `O1KR1`, `O1KR1T1`). Case-ins
 ### Creating Items
 
 ```bash
-npx 7 objective create -d "Description" -s "Short summary"
-npx 7 key-result create -d "Measurable outcome" -s "Summary" --parent O1
-npx 7 task create -d "Concrete work item" --parent O1KR1
+npx 7even objective create -d "Description" -s "Short summary"
+npx 7even key-result create -d "Measurable outcome" -s "Summary" --parent O1
+npx 7even task create -d "Concrete work item" --parent O1KR1
 ```
 
 ### Viewing
 
 ```bash
-npx 7 objective list          # All objectives
-npx 7 key-result list         # All KRs
-npx 7 task list               # All tasks
-npx 7 task list --status to-do
-npx 7 task show O1KR1T1       # Detail view
+npx 7even objective list          # All objectives
+npx 7even key-result list         # All KRs
+npx 7even task list               # All tasks
+npx 7even task list --status to-do
+npx 7even task show O1KR1T1       # Detail view
 ```
 
 ### Task Lifecycle
 
 ```bash
-npx 7 task move O1KR1T1 in-progress
-npx 7 task move O1KR1T1 done
-npx 7 task assign O1KR1T1 --email dev@example.com
+npx 7even task move O1KR1T1 in-progress
+npx 7even task move O1KR1T1 done
+npx 7even task assign O1KR1T1 --email dev@example.com
 ```
 
 ### Dependencies
 
 ```bash
-npx 7 task depend O1KR1T2 O1KR1T1     # T2 depends on T1
-npx 7 task undepend O1KR1T2 O1KR1T1   # Remove
+npx 7even task depend O1KR1T2 O1KR1T1     # T2 depends on T1
+npx 7even task undepend O1KR1T2 O1KR1T1   # Remove
 ```
 
 ### Estimation
 
 ```bash
-npx 7 estimate add O1KR1T1 5          # 5 story points
-npx 7 estimate show O1KR1T1           # History
+npx 7even estimate add O1KR1T1 5          # 5 story points
+npx 7even estimate show O1KR1T1           # History
 ```
 
 ### Comments
 
 ```bash
-npx 7 task comment O1KR1T1 -m "Note" --type agent
-npx 7 key-result comment O1KR1 -m "Note" --type agent
-npx 7 objective comment O1 -m "Note" --type agent
+npx 7even task comment O1KR1T1 -m "Note" --type agent
+npx 7even key-result comment O1KR1 -m "Note" --type agent
+npx 7even objective comment O1 -m "Note" --type agent
 ```
 
 Always use `--type agent` when adding comments as an AI agent.
@@ -77,8 +77,8 @@ Always use `--type agent` when adding comments as an AI agent.
 ### Persistence
 
 ```bash
-npx 7 commit                          # Commit .7even/ to git
-npx 7 repair-index                    # Rebuild index from filesystem
+npx 7even commit                          # Commit .7even/ to git
+npx 7even repair-index                    # Rebuild index from filesystem
 ```
 
 ## Slash Commands (Preferred for Complex Workflows)
@@ -131,4 +131,4 @@ Persistent, globally unique within project, case-insensitive.
 2. **Comments get typed** — always use `--type agent` so humans can distinguish AI notes
 3. **Dependencies cross boundaries** — tasks can depend on tasks in other KRs
 4. **Estimation is non-destructive** — each estimate is appended to history
-5. **Dashboard at localhost:7777** — `npx 7 dashboard` for visual overview
+5. **Dashboard at localhost:7777** — `npx 7even dashboard` for visual overview

@@ -17,7 +17,7 @@ let originalCwd: string;
 
 function createProgram(): Command {
   const program = new Command();
-  program.name("7").exitOverride();
+  program.name("7even").exitOverride();
   program.addCommand(makeInitCommand());
   program.addCommand(makeObjectiveCommand());
   program.addCommand(makeKeyResultCommand());

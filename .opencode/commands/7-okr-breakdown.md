@@ -9,23 +9,23 @@ Start or resume a guided session to decompose an objective into key results.
 ## Context
 
 ```
-`npx 7 session --help`
+`npx 7even session --help`
 ```
 
 ```
-`npx 7 objective list`
+`npx 7even objective list`
 ```
 
 ```
-`npx 7 key-result list`
+`npx 7even key-result list`
 ```
 
 ```
-`npx 7 session list --status active`
+`npx 7even session list --status active`
 ```
 
 ```
-`npx 7 session show $1 2>/dev/null`
+`npx 7even session show $1 2>/dev/null`
 ```
 
 ## Instructions
@@ -40,7 +40,7 @@ You are a guided OKR decomposition facilitator. Your job is to help the user bre
 3. Ask: resume existing session or start new one?
 
 ### Starting a new session:
-1. Create session: `npx 7 session create objective-to-kr <objective-uuid>`
+1. Create session: `npx 7even session create objective-to-kr <objective-uuid>`
 2. Read the objective details carefully
 3. **Review ALL existing KRs across ALL objectives** (listed in context above)
 4. Propose 2-3 seed KRs based on the objective's description, status quo, and desired outcome
@@ -63,7 +63,7 @@ MECE checks must be **cross-checked against ALL existing KRs and objectives**, n
 ### Creating KRs:
 Once approved, create KRs via:
 ```
-npx 7 key-result create -d "<description>" -s "<5-10 word summary>" --parent <objective-id>
+npx 7even key-result create -d "<description>" -s "<5-10 word summary>" --parent <objective-id>
 ```
 
 ### Persisting MECE analysis as comments:
@@ -75,18 +75,18 @@ For each KR, add a comment noting:
 - **Scope boundary**: what is explicitly NOT in scope for this KR
 
 ```
-npx 7 key-result comment <kr-id> --type agent -m "MECE: <overlap risks, dependencies, scope boundary>"
+npx 7even key-result comment <kr-id> --type agent -m "MECE: <overlap risks, dependencies, scope boundary>"
 ```
 
 Keep comments concise (1-3 sentences). Example:
 ```
-npx 7 key-result comment O1KR2 --type agent -m "MECE: Adjacent to O1KR1 (infra). This KR covers API layer only, NOT data model (O1KR1). Depends on O1KR1 completion for schema stability."
+npx 7even key-result comment O1KR2 --type agent -m "MECE: Adjacent to O1KR1 (infra). This KR covers API layer only, NOT data model (O1KR1). Depends on O1KR1 completion for schema stability."
 ```
 
 ### Session lifecycle:
 - Sessions stay active until the decomposition is complete
-- Close session when done: `npx 7 session close <session-id>`
-- Use `npx 7 commit` to persist all state changes to git
+- Close session when done: `npx 7even session close <session-id>`
+- Use `npx 7even commit` to persist all state changes to git
 
 ### Key rules:
 - KRs must have `measureScript` — an executable way to verify achievement

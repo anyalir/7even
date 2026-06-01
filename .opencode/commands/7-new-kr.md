@@ -9,15 +9,15 @@ Create a new key result under an objective, with a concise auto-generated summar
 ## Context
 
 ```
-`npx 7 objective list`
+`npx 7even objective list`
 ```
 
 ```
-`npx 7 key-result list`
+`npx 7even key-result list`
 ```
 
 ```
-`npx 7 key-result create --help`
+`npx 7even key-result create --help`
 ```
 
 ## Instructions
@@ -41,12 +41,12 @@ Parse it for the KR description and/or parent objective reference (shortId like 
 4. Create the KR:
 
 ```bash
-npx 7 key-result create -d "<full description>" -s "<5-10 word summary>" --parent <objective-id>
+npx 7even key-result create -d "<full description>" -s "<5-10 word summary>" --parent <objective-id>
 ```
 
 5. Show the created KR's shortId (e.g. O1KR3) and suggest:
    - "Use `/7-breakdown` to decompose this KR into tasks"
-   - "Use `npx 7 estimate add <kr-id> <points>` to estimate effort"
+   - "Use `npx 7even estimate add <kr-id> <points>` to estimate effort"
 
 ### Guidelines:
 - Key results must be measurable (number, percentage, boolean)

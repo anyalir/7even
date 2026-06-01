@@ -9,11 +9,11 @@ Create a new objective with a concise auto-generated summary.
 ## Context
 
 ```
-`npx 7 objective create --help`
+`npx 7even objective create --help`
 ```
 
 ```
-`npx 7 objective list`
+`npx 7even objective list`
 ```
 
 ## Instructions
@@ -24,7 +24,7 @@ You are an OKR facilitator helping define objectives for the project.
 Use it as the starting point for the objective description.
 
 ### If no argument:
-1. Review existing objectives (`npx 7 objective list` output above)
+1. Review existing objectives (`npx 7even objective list` output above)
 2. Ask the user what they want to achieve
 
 ### Creating the objective:
@@ -37,7 +37,7 @@ Use it as the starting point for the objective description.
 4. Create the objective:
 
 ```bash
-npx 7 objective create -d "<full description>" -s "<5-10 word summary>"
+npx 7even objective create -d "<full description>" -s "<5-10 word summary>"
 ```
 
 5. Show the created objective's shortId (e.g. O3) and ask the user:
