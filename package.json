@@ -1,10 +1,10 @@
 {
   "name": "@anyalir/7even",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Repository-local, agentic-AI-enabled issue tracker with OKR hierarchy",
   "type": "module",
   "bin": {
-    "s7n": "./dist/index.js"
+    "s7n": "dist/index.js"
   },
   "files": [
     "dist",
@@ -23,8 +23,16 @@
     "issue-tracker",
     "cli"
   ],
-  "author": "",
+  "author": "Anya Livia Rudolph <anyarudo@gmail.com>",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anyalir/7even.git"
+  },
+  "homepage": "https://github.com/anyalir/7even#readme",
+  "bugs": {
+    "url": "https://github.com/anyalir/7even/issues"
+  },
   "dependencies": {
     "@hono/node-server": "^2.0.4",
     "@tanstack/react-table": "^8.21.3",

@@ -15,7 +15,7 @@ const program = new Command();
 program
   .name("s7n")
   .description("7even work tracker")
-  .version("0.1.0");
+  .version("0.1.1");
 
 program.addCommand(makeInitCommand());
 program.addCommand(makeObjectiveCommand());
