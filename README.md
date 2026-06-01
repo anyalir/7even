@@ -1,5 +1,7 @@
 # 7even
 
+![Fun will now commence](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWU3OGJpb3FmZWlid3Q0YjBycWljamJiMHZ2OTYwZHdteXFpeDdmMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VhpuNI1KejNbBGXCxS/giphy.gif)
+
 Repository-local, agentic-AI-enabled OKR issue tracker. All data lives as JSON files in `.7even/`, committed alongside your code. No external services, no accounts, no sync issues.
 
 Built for AI-assisted development workflows. Works standalone via CLI, or with [OpenCode](https://opencode.ai) slash commands for guided OKR decomposition, task breakdown, and MECE validation.
@@ -16,7 +18,10 @@ npm install 7even
 # Initialize in any git repo
 npx 7 init
 
-# Create an objective
+# Create an objective, then follow the prompts
+/7-new-objective "Build a photo validation system for seasonal colour analysis"
+
+# Or use the cli directly
 npx 7 objective create -d "Build a photo validation system for seasonal colour analysis" \
   -s "Photo validation for colour analysis"
 
@@ -174,7 +179,7 @@ npx 7 dashboard                       # Launch local dashboard
 
 ## Dashboard
 
-LCARS-inspired local dashboard with four pages:
+Local dashboard with timeline, board, achievements, and analytics views. Data is read directly from `.7even/` JSON files. No backend server or database required.
 
 ```bash
 npx 7 dashboard                       # Opens at localhost:7777
@@ -249,7 +254,7 @@ git commit -m "implement photo validation scoring engine" \
 
 ## Example: Real Project
 
-From a seasonal colour analysis app ([bestyou](https://github.com/anomalyco/bestyou)):
+From a fictional seasonal colour analysis app.
 
 ```
 $ npx 7 objective list
@@ -271,7 +276,7 @@ $ npx 7 key-result list
 $ npx 7 task show O1KR1T1
 ● O1KR1T1 Create 100-photo test set with expert labels [in-progress]
   ID: 84f8d63b-0fb2-492a-bbd5-59f024cbdf7a
-  Assignee: anya.rudolph@clark.de
+  Assignee: anya@lean.tech
   Estimates:
     2026-06-01 — 5 SP by Anya Livia Rudolph
   Comments:
