@@ -8,7 +8,8 @@
   },
   "files": [
     "dist",
-    ".opencode/commands"
+    ".opencode/commands",
+    ".opencode/skills"
   ],
   "engines": {
     "node": ">=20"

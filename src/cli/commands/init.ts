@@ -5,46 +5,47 @@ import { mkdir, readdir, symlink, lstat } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-async function symlinkOpenCodeCommands(sevenDir: string) {
-  // Package commands source: <pkg-root>/.opencode/commands/
-  // __dirname is dist/ in compiled output, src/cli/commands/ in source
-  // Use require.resolve or walk up to find .opencode/commands/
+async function findPkgRoot(): Promise<string> {
   const __dir = dirname(fileURLToPath(import.meta.url));
   let pkgRoot = __dir;
-  // Walk up until we find .opencode/commands/ or hit root
   for (let i = 0; i < 5; i++) {
     const candidate = join(pkgRoot, ".opencode", "commands");
     try {
       await readdir(candidate);
-      break;
+      return pkgRoot;
     } catch {
       pkgRoot = dirname(pkgRoot);
     }
   }
-  const srcDir = join(pkgRoot, ".opencode", "commands");
-  const gitRoot = dirname(sevenDir);
-  const destDir = join(gitRoot, ".opencode", "commands");
+  return __dir; // fallback
+}
 
+async function symlinkDir(
+  srcDir: string,
+  destDir: string,
+  filter: (f: string) => boolean,
+  label: string,
+): Promise<void> {
   let files: string[];
   try {
     files = await readdir(srcDir);
   } catch {
-    console.error(chalk.yellow("Could not find 7even OpenCode commands to symlink."));
+    console.error(chalk.yellow(`Could not find 7even ${label} to symlink.`));
     return;
   }
 
-  const commandFiles = files.filter((f) => f.startsWith("7-") && f.endsWith(".md"));
-  if (commandFiles.length === 0) return;
+  const targets = files.filter(filter);
+  if (targets.length === 0) return;
 
   await mkdir(destDir, { recursive: true });
 
   let linked = 0;
-  for (const file of commandFiles) {
+  for (const file of targets) {
     const dest = join(destDir, file);
     const src = join(srcDir, file);
     try {
       const stat = await lstat(dest).catch(() => null);
-      if (stat) continue; // already exists
+      if (stat) continue;
       await symlink(src, dest);
       linked++;
     } catch (err: any) {
@@ -53,10 +54,31 @@ async function symlinkOpenCodeCommands(sevenDir: string) {
   }
 
   if (linked > 0) {
-    console.log(chalk.green(`Symlinked ${linked} OpenCode slash commands to .opencode/commands/`));
+    console.log(chalk.green(`Symlinked ${linked} ${label} to ${destDir.replace(dirname(destDir.replace(/\/$/, "")) + "/", "")}/`));
   } else {
-    console.log(chalk.dim("OpenCode slash commands already present."));
+    console.log(chalk.dim(`${label} already present.`));
   }
+}
+
+async function symlinkOpenCode(sevenDir: string) {
+  const pkgRoot = await findPkgRoot();
+  const gitRoot = dirname(sevenDir);
+
+  // Slash commands
+  await symlinkDir(
+    join(pkgRoot, ".opencode", "commands"),
+    join(gitRoot, ".opencode", "commands"),
+    (f) => f.startsWith("7-") && f.endsWith(".md"),
+    "OpenCode slash commands",
+  );
+
+  // Skill
+  await symlinkDir(
+    join(pkgRoot, ".opencode", "skills"),
+    join(gitRoot, ".opencode", "skills"),
+    (f) => f === "7even",
+    "OpenCode skill",
+  );
 }
 
 export function makeInitCommand(): Command {
@@ -67,13 +89,12 @@ export function makeInitCommand(): Command {
         const sevenDir = await resolveSevenDir();
         await initSevenDir(sevenDir);
         console.log(chalk.green(`Initialized .7even/ in ${sevenDir}`));
-        await symlinkOpenCodeCommands(sevenDir);
+        await symlinkOpenCode(sevenDir);
       } catch (err: any) {
         if (err.message?.includes("already exists")) {
           console.error(chalk.yellow("Already initialized"));
-          // Still symlink commands even if .7even/ exists
           const sevenDir = await resolveSevenDir();
-          await symlinkOpenCodeCommands(sevenDir);
+          await symlinkOpenCode(sevenDir);
           process.exitCode = 1;
         } else {
           console.error(chalk.red(err.message));
