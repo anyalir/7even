@@ -24,7 +24,7 @@
     "cli"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "@hono/node-server": "^2.0.4",
     "@tanstack/react-table": "^8.21.3",

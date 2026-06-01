@@ -299,4 +299,4 @@ $ npx 7 task show O1KR1T1
 
 ## License
 
-ISC
+Apache 2.0
