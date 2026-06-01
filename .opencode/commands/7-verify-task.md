@@ -9,11 +9,11 @@ Run acceptance criteria for a task and report pass/fail status.
 ## Context
 
 ```
-`npx 7even task show $1`
+`npx 7n task show $1`
 ```
 
 ```
-`npx 7even task list --status in-progress`
+`npx 7n task list --status in-progress`
 ```
 
 ## Instructions
@@ -45,7 +45,7 @@ You are a verification agent. Your job is to run each acceptance criterion and r
 
 ### Recording results:
 ```
-npx 7even task comment <id> --type agent -m "Verification: 3/4 AC passed. FAIL: AC #2 — scoring threshold not met (82% vs 90% target)."
+npx 7n task comment <id> --type agent -m "Verification: 3/4 AC passed. FAIL: AC #2 — scoring threshold not met (82% vs 90% target)."
 ```
 
 ### Key rules:

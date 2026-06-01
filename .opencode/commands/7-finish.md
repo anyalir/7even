@@ -9,19 +9,19 @@ Finish a task by running all acceptance criteria scripts and marking done if the
 ## Context
 
 ```
-`npx 7even task show $1`
+`npx 7n task show $1`
 ```
 
 ```
-`npx 7even task --help`
+`npx 7n task --help`
 ```
 
 ```
-`npx 7even evaluate --help`
+`npx 7n evaluate --help`
 ```
 
 ```
-`npx 7even evaluate kr $(npx 7even task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //') 2>/dev/null`
+`npx 7n evaluate kr $(npx 7n task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //') 2>/dev/null`
 ```
 
 ## Instructions
@@ -40,7 +40,7 @@ You are a task completion verifier. Your job is to ensure all acceptance criteri
    - Execute the script referenced in each criterion
    - Record pass/fail for each
 3. **If ALL pass:**
-   - Move task to done: `npx 7even task move <uuid> done`
+   - Move task to done: `npx 7n task move <uuid> done`
    - Check if parent KR is ready for evaluation (context above)
    - If all KR tasks done: suggest running /7-evaluate
 4. **If ANY fail:**

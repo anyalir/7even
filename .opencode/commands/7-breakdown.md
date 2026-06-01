@@ -9,27 +9,27 @@ Break a key result into implementable tasks with MECE validation.
 ## Context
 
 ```
-`npx 7even task create --help`
+`npx 7n task create --help`
 ```
 
 ```
-`npx 7even key-result show $1`
+`npx 7n key-result show $1`
 ```
 
 ```
-`npx 7even objective list`
+`npx 7n objective list`
 ```
 
 ```
-`npx 7even key-result list`
+`npx 7n key-result list`
 ```
 
 ```
-`npx 7even task list`
+`npx 7n task list`
 ```
 
 ```
-`npx 7even session list --status active`
+`npx 7n session list --status active`
 ```
 
 ## Instructions
@@ -43,7 +43,7 @@ You are a task decomposition facilitator. Your job is to break a key result into
 2. Ask which KR to break down
 
 ### Starting breakdown:
-1. Create session: `npx 7even session create kr-to-task <kr-uuid>`
+1. Create session: `npx 7n session create kr-to-task <kr-uuid>`
 2. Read the KR and its parent objective for full context
 3. **Review ALL existing tasks across ALL KRs** (listed in context above)
 4. Propose 3-5 tasks that collectively achieve the KR
@@ -51,7 +51,7 @@ You are a task decomposition facilitator. Your job is to break a key result into
 ### Task quality:
 - Each task should be completable in one focused session
 - Tasks must have clear acceptance criteria (defined later via /7-start-task)
-- Estimate story points for each task (add after creation via `npx 7even estimate add <task-uuid> <points>`)
+- Estimate story points for each task (add after creation via `npx 7n estimate add <task-uuid> <points>`)
 
 ### Global MECE validation:
 MECE checks must be **cross-checked against ALL existing tasks across ALL KRs and objectives**, not just the current KR:
@@ -67,12 +67,12 @@ MECE checks must be **cross-checked against ALL existing tasks across ALL KRs an
 ### Creating tasks:
 Once approved, create tasks via:
 ```
-npx 7even task create -d "<description>" --parent <kr-uuid>
+npx 7n task create -d "<description>" --parent <kr-uuid>
 ```
 
 Then estimate each task:
 ```
-npx 7even estimate add <task-uuid> <points>
+npx 7n estimate add <task-uuid> <points>
 ```
 
 ### Recording dependencies:
@@ -80,10 +80,10 @@ After creating all tasks, record any identified dependencies between them. A dep
 
 For each dependency:
 ```
-npx 7even task depend <dependent-task-id> <dependency-task-id>
+npx 7n task depend <dependent-task-id> <dependency-task-id>
 ```
 
-Dependencies can cross KR boundaries — if a task in this KR depends on a task in another KR, still record it. Use shortIds for clarity (e.g. `npx 7even task depend O1KR2T3 O1KR1T1`).
+Dependencies can cross KR boundaries — if a task in this KR depends on a task in another KR, still record it. Use shortIds for clarity (e.g. `npx 7n task depend O1KR2T3 O1KR1T1`).
 
 ### Persisting MECE analysis as comments:
 After MECE validation, add a comment to each newly created task summarizing the relevant MECE findings. This serves as execution context for whoever picks up the task.
@@ -94,10 +94,10 @@ For each task, add a comment noting:
 - **Scope boundary**: what is explicitly NOT in scope for this task (to prevent accidental duplication)
 
 ```
-npx 7even task comment <task-id> --type agent -m "MECE: <overlap risks, dependencies, scope boundary>"
+npx 7n task comment <task-id> --type agent -m "MECE: <overlap risks, dependencies, scope boundary>"
 ```
 
 Keep comments concise (1-3 sentences). Example:
 ```
-npx 7even task comment O1KR2T1 --type agent -m "MECE: Depends on O1KR1T2 (auth system). Boundary: this task handles data model only, NOT API endpoints (see O1KR2T2). No overlap with O2 tasks."
+npx 7n task comment O1KR2T1 --type agent -m "MECE: Depends on O1KR1T2 (auth system). Boundary: this task handles data model only, NOT API endpoints (see O1KR2T2). No overlap with O2 tasks."
 ```

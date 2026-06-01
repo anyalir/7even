@@ -13,7 +13,7 @@ import { makeDashboardCommand } from "./commands/dashboard.js";
 const program = new Command();
 
 program
-  .name("7even")
+  .name("7n")
   .description("7even work tracker")
   .version("0.1.0");
 

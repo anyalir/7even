@@ -9,19 +9,19 @@ Start working on a task by first defining acceptance criteria. Agent leads — h
 ## Context
 
 ```
-`npx 7even task show $1`
+`npx 7n task show $1`
 ```
 
 ```
-`npx 7even task --help`
+`npx 7n task --help`
 ```
 
 ```
-`npx 7even estimate --help`
+`npx 7n estimate --help`
 ```
 
 ```
-`npx 7even key-result show $(npx 7even task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //') 2>/dev/null`
+`npx 7n key-result show $(npx 7n task show $1 2>&1 | grep parentId | head -1 | sed 's/.*: //') 2>/dev/null`
 ```
 
 ## Instructions
@@ -47,10 +47,10 @@ You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFOR
 5. Iterate with user until criteria are approved
 
 ### After criteria approved:
-1. Write criteria to task: `npx 7even task update <id> --acceptance-criteria '<JSON>'`
-2. Assign the task to the current user: `npx 7even task assign <id> --email <git-author-email>`
+1. Write criteria to task: `npx 7n task update <id> --acceptance-criteria '<JSON>'`
+2. Assign the task to the current user: `npx 7n task assign <id> --email <git-author-email>`
    - Get the user's email from `git config user.email`
-3. Move task to in-progress: `npx 7even task move <id> in-progress`
+3. Move task to in-progress: `npx 7n task move <id> in-progress`
 4. Suggest starting implementation with the first criterion
 
 ### During implementation:
@@ -60,7 +60,7 @@ You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFOR
   ```
 - **Progress comments**: After significant milestones, comment on the task:
   ```
-  npx 7even task comment <id> --type agent -m "Completed AC #1: scoring engine returns codes. AC #2 in progress."
+  npx 7n task comment <id> --type agent -m "Completed AC #1: scoring engine returns codes. AC #2 in progress."
   ```
 - **After completion**: Use `/7-verify-task <id>` to run acceptance criteria, then `/7-complete-task <id>` to finalize.
 
@@ -68,4 +68,4 @@ You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFOR
 - NEVER skip to implementation before criteria are defined and approved
 - Agent proposes criteria, user refines — not the other way around
 - Each criterion must be verifiable by a script, not just "it works"
-- Estimate story points if not already estimated: `npx 7even estimate suggest <uuid>`
+- Estimate story points if not already estimated: `npx 7n estimate suggest <uuid>`

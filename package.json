@@ -4,7 +4,7 @@
   "description": "Repository-local, agentic-AI-enabled issue tracker with OKR hierarchy",
   "type": "module",
   "bin": {
-    "7even": "./dist/index.js"
+    "7n": "./dist/index.js"
   },
   "files": [
     "dist",
