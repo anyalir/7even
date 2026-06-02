@@ -1,0 +1,44 @@
+README.md
+  s_e642a49f8298e3::t_9273ff3e16f193 69,71,73-75,77-86
+  s_e642a49f8298e3::t_1e9611638f5170 197
+src/core/git.ts
+  s_e642a49f8298e3::t_98687831206058 80-84,86-88,90-108
+  s_e642a49f8298e3::t_a06c211b0bbe7f 85,89
+src/core/__tests__/storage.test.ts
+  s_e642a49f8298e3::t_dd681be64db3be 311-395
+.opencode/commands/7-check-measurements.md
+  s_e642a49f8298e3::t_597948f5cf57a7 1-115
+src/core/__tests__/git-transitions.test.ts
+  s_e642a49f8298e3::t_c3825c305c3aa9 1-12,14,16-17,20-227
+  s_e642a49f8298e3::t_193fa38e659294 13,15,18-19
+src/core/storage.ts
+  s_e642a49f8298e3::t_b1b0d3b025218e 554-559,563,565-586
+  s_e642a49f8298e3::t_27335a28d799b9 360,362-367
+  s_e642a49f8298e3::t_ca877a580b57d7 560-562,564
+  s_e642a49f8298e3::t_997f4aecdd5334 15
+  s_e642a49f8298e3::t_d29fb3c56644cf 506-553
+.opencode/commands/7-start-task.md
+  s_e642a49f8298e3::t_6656362d9272fc 59,61-62
+src/cli/commands/sync.ts
+  s_e642a49f8298e3::t_9f84d178ff323f 1-23
+src/cli/index.ts
+  s_e642a49f8298e3::t_fcb06b90cd9754 13,33
+.opencode/commands/7-complete-task.md
+  s_e642a49f8298e3::t_5ab9fdf800a90c 69-72,76-78,83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "851632624ea550b6f943b1733650bc8d3ab55e4c",
+  "prompts": {},
+  "sessions": {
+    "s_e642a49f8298e3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c67fb8dffeMLsHMrKfmm5aqT",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
