@@ -10,6 +10,7 @@ import { makeEstimateCommand } from "./commands/estimate.js";
 import { makeEvaluateCommand } from "./commands/evaluate.js";
 import { makeDashboardCommand } from "./commands/dashboard.js";
 import { makeConfigCommand } from "./commands/config.js";
+import { makeSyncCommand } from "./commands/sync.js";
 
 const program = new Command();
 
@@ -29,5 +30,6 @@ program.addCommand(makeEstimateCommand());
 program.addCommand(makeEvaluateCommand());
 program.addCommand(makeDashboardCommand());
 program.addCommand(makeConfigCommand());
+program.addCommand(makeSyncCommand());
 
 program.parse();

@@ -77,6 +77,35 @@ export function getTaskCommits(
   }
 }
 
+/**
+ * Extract all task UUIDs from git commit messages in the format "task: <uuid>"
+ * Supports multiple task references in a single commit.
+ * Returns array of unique task UUIDs found in recent commits.
+ */
+export function getTasksFromRecentCommits(limit: number = 100, cwd?: string): string[] {
+  try {
+    const output = execSync(
+      `git log -${limit} --all --format="%B"`,
+      { encoding: "utf-8", cwd }
+    ).trim();
+    
+    if (!output) return [];
+    
+    // Match "task: <uuid>" pattern (case insensitive)
+    const taskPattern = /task:\s*([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/gi;
+    const matches = output.matchAll(taskPattern);
+    
+    const taskIds = new Set<string>();
+    for (const match of matches) {
+      taskIds.add(match[1].toLowerCase());
+    }
+    
+    return Array.from(taskIds);
+  } catch {
+    return [];
+  }
+}
+
 export async function casCommit(
   sevenDir: string,
   maxRetries = 3

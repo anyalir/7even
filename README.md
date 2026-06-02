@@ -66,14 +66,24 @@ Objective (O1)
 
 **Objectives** define what you want to achieve. **Key Results** are measurable outcomes that prove the objective is met. **Tasks** are the concrete work items.
 
-#### Objective Status Transitions (Automatic)
+### Status Transitions (Automatic)
 
-Objective statuses transition automatically based on progress:
+7even automatically transitions item statuses based on progress to reduce manual overhead:
 
-- **proposed → accepted**: Automatically transitions when the first Key Result is created
-- **accepted → achieved**: Automatically transitions when all tasks under all Key Results are marked as `done`
+#### Objectives
+- **proposed → accepted**: When the first Key Result is created
+- **accepted → achieved**: When all tasks under all Key Results are marked as `done`
 
-This ensures objective status always reflects the actual work state. You can still manually transition objectives using `npx s7n objective move <id> <status>` if needed.
+#### Key Results
+- **aspirational → achieved**: When all child tasks are `done` AND no measurement is defined
+- If a KR has `structuredMeasurement` or `measureScript`, it stays `aspirational` until manually confirmed by a human (requires measurement validation)
+
+#### Tasks
+- **to-do → in-progress**: When a git commit references the task (format: `task: <uuid>` in commit message body)
+- Run `npx s7n sync` to scan recent commits and auto-transition tasks
+- **in-progress → done**: Always manual (requires human or agent confirmation)
+
+You can still manually transition any item using the `move` command if needed.
 
 ### Short IDs
 
@@ -184,6 +194,7 @@ npx s7n estimate show O1KR1T1           # Show history
 
 ```bash
 npx s7n commit                          # Commit .7even/ changes to git
+npx s7n sync                            # Scan git commits and auto-transition tasks to in-progress
 npx s7n repair-index                    # Rebuild index from filesystem
 npx s7n evaluate O1KR1                  # Evaluate KR completion
 npx s7n dashboard                       # Launch local dashboard

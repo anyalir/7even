@@ -308,4 +308,89 @@ describe("storage", () => {
     obj = await readItem(sevenDir, objId);
     expect(obj.data.status).toBe("achieved");
   });
+
+  it("auto-transitions KR from aspirational to achieved when all tasks done (no measurement)", async () => {
+    // Create objective and KR
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "kr-auto-obj", objData);
+
+    const krData = makeKeyResult({ parentId: objId, structuredMeasurement: null, measureScript: null });
+    const krId = await createItem(sevenDir, "key-result", "kr-auto-kr", krData, objId);
+
+    // Create two tasks
+    const task1Data = makeTask({ parentId: krId, status: "to-do" });
+    const task1Id = await createItem(sevenDir, "task", "task-1", task1Data, krId);
+
+    const task2Data = makeTask({ parentId: krId, status: "to-do" });
+    const task2Id = await createItem(sevenDir, "task", "task-2", task2Data, krId);
+
+    // Verify KR is aspirational
+    let kr = await readItem(sevenDir, krId);
+    expect(kr.data.status).toBe("aspirational");
+
+    // Mark first task done
+    await moveItem(sevenDir, task1Id, "done");
+    kr = await readItem(sevenDir, krId);
+    expect(kr.data.status).toBe("aspirational"); // Still aspirational
+
+    // Mark second task done
+    await moveItem(sevenDir, task2Id, "done");
+
+    // Verify KR auto-transitioned to achieved
+    kr = await readItem(sevenDir, krId);
+    expect(kr.data.status).toBe("achieved");
+    expect(kr.path).toContain("achieved/");
+  });
+
+  it("does NOT auto-transition KR if measurement is defined", async () => {
+    // Create objective and KR with structured measurement
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "kr-measure-obj", objData);
+
+    const krData = makeKeyResult({ 
+      parentId: objId,
+      structuredMeasurement: {
+        type: "percentage",
+        target: 90,
+        operator: "gte",
+        unit: "%"
+      }
+    });
+    const krId = await createItem(sevenDir, "key-result", "kr-measure-kr", krData, objId);
+
+    // Create and complete a task
+    const taskData = makeTask({ parentId: krId, status: "to-do" });
+    const taskId = await createItem(sevenDir, "task", "task-1", taskData, krId);
+    await moveItem(sevenDir, taskId, "done");
+
+    // Verify KR stays aspirational (requires human measurement confirmation)
+    const kr = await readItem(sevenDir, krId);
+    expect(kr.data.status).toBe("aspirational");
+  });
+
+  it("KR achievement triggers objective achievement", async () => {
+    // Create objective with KR
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "chain-obj", objData);
+
+    const krData = makeKeyResult({ parentId: objId });
+    const krId = await createItem(sevenDir, "key-result", "chain-kr", krData, objId);
+
+    const taskData = makeTask({ parentId: krId, status: "to-do" });
+    const taskId = await createItem(sevenDir, "task", "chain-task", taskData, krId);
+
+    // Verify objective is accepted
+    let obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted");
+
+    // Complete task (triggers KR → achieved, then objective → achieved)
+    await moveItem(sevenDir, taskId, "done");
+
+    // Verify both KR and objective achieved
+    const kr = await readItem(sevenDir, krId);
+    expect(kr.data.status).toBe("achieved");
+
+    obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("achieved");
+  });
 });

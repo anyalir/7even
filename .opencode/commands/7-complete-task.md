@@ -66,12 +66,19 @@ You are a task completion agent. Your job is to finalize a task that has passed 
 
 ### After completion:
 - Show task summary: shortId, description, actual vs estimated SP
+- **Check for auto-transitions**: This task completion may have triggered:
+  - Parent KR auto-achieving (if all KR tasks done + no measurement)
+  - Parent objective auto-achieving (if all objective KRs achieved)
+  - Mention any auto-transitions that occurred
 - Suggest next steps:
   - "Other in-progress tasks: ..." (if any)
   - "Ready to start a new task? Use `/7-start-task`"
-  - If all tasks under a KR are done: "All tasks for <KR shortId> are complete! Consider verifying the KR measurement."
+  - If all tasks under a KR are done AND KR has measurement: "All tasks for <KR shortId> complete! Run `/7-check-measurements` to validate."
+  - If KR auto-achieved: "✓ <KR shortId> automatically achieved!"
+  - If objective auto-achieved: "✓ <Objective shortId> automatically achieved!"
 
 ### Key rules:
 - NEVER move to done without asking about actual effort
 - ALWAYS commit 7even state changes with `npx s7n commit`
+- After committing, check if parent KR or objective auto-transitioned
 - If the task has dependencies (other tasks depend on this one), mention which tasks are now unblocked

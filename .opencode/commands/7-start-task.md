@@ -56,8 +56,10 @@ You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFOR
 ### During implementation:
 - **Commit messages**: Write a clear subject line (no task ID in subject). Add the task UUID on a separate line in the commit body:
   ```
-  git commit -m "implement photo validation scoring engine" -m "7even-task: 84f8d63b-0fb2-492a-bbd5-59f024cbdf7a"
+  git commit -m "implement photo validation scoring engine" -m "task: 84f8d63b-0fb2-492a-bbd5-59f024cbdf7a"
   ```
+  - **Note**: Commits with `task: <uuid>` automatically transition tasks from `to-do` → `in-progress` (run `npx s7n sync` to trigger)
+  - Supports multiple tasks in one commit (one `task: <uuid>` line per task)
 - **Progress comments**: After significant milestones, comment on the task:
   ```
   npx s7n task comment <id> --type agent -m "Completed AC #1: scoring engine returns codes. AC #2 in progress."

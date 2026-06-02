@@ -12,7 +12,7 @@ import {
   writeIndex,
   readShortIdIndex,
 } from "./index-manager.js";
-import { getGitRoot, getGitAuthor } from "./git.js";
+import { getGitRoot, getGitAuthor, getTasksFromRecentCommits } from "./git.js";
 import { generateSlug } from "./slug.js";
 import { generateShortId } from "./counters.js";
 import type { ItemType } from "../types/index.js";
@@ -357,9 +357,14 @@ export async function moveItem(
       updatedIndex[id] = newRelPath;
       await writeIndex(sevenDir, updatedIndex);
 
-      // Auto-transition: when task moves to done, check if objective should move to achieved
+      // Auto-transition: when task moves to done, check if KR and objective should transition
       if (newStatus === "done" && data.parentId) {
-        // Get the KR's parent (the objective)
+        // First check if parent KR should achieve
+        await checkKeyResultAutoTransition(sevenDir, data.parentId);
+        
+        // Then check if grandparent objective should achieve
+        // (KR auto-transition might have just happened, triggering objective check)
+        // But we check anyway to be sure
         const { data: krData } = await readItem(sevenDir, data.parentId);
         if (krData.parentId) {
           await checkObjectiveAutoTransition(sevenDir, krData.parentId);
@@ -497,4 +502,85 @@ async function checkObjectiveAutoTransition(
       await moveItem(sevenDir, objectiveId, "achieved");
     }
   }
+}
+
+/**
+ * Check and auto-transition KR status based on rules:
+ * - aspirational → achieved: when all child tasks are done AND no measurement defined
+ * If measurement exists (structured or script), stay aspirational until human confirms
+ */
+async function checkKeyResultAutoTransition(
+  sevenDir: string,
+  keyResultId: string
+): Promise<void> {
+  const { data: kr } = await readItem(sevenDir, keyResultId);
+  const currentStatus = kr.status;
+
+  // Only auto-transition if currently aspirational
+  if (currentStatus !== "aspirational") {
+    return;
+  }
+
+  // Check if KR has measurement defined
+  const hasMeasurement = 
+    (kr.structuredMeasurement && kr.structuredMeasurement !== null) ||
+    (kr.measureScript && kr.measureScript !== null);
+
+  // If measurement exists, require human confirmation (no auto-transition)
+  if (hasMeasurement) {
+    return;
+  }
+
+  // Check if all child tasks are done
+  const tasks = await listItems(sevenDir, "task");
+  const krTasks = tasks.filter((t) => t.data.parentId === keyResultId);
+
+  if (krTasks.length === 0) {
+    // KR with no tasks stays aspirational
+    return;
+  }
+
+  const allTasksDone = krTasks.every((t) => t.data.status === "done");
+
+  if (allTasksDone) {
+    await moveItem(sevenDir, keyResultId, "achieved");
+    
+    // After KR achieves, check if parent objective should achieve
+    if (kr.parentId) {
+      await checkObjectiveAutoTransition(sevenDir, kr.parentId);
+    }
+  }
+}
+
+/**
+ * Check and auto-transition tasks from to-do → in-progress based on git commits.
+ * Scans recent commits for "task: <uuid>" patterns and transitions matching to-do tasks.
+ */
+export async function checkTaskAutoTransitions(sevenDir: string): Promise<number> {
+  // Get git repo root
+  const repoRoot = sevenDir.replace(/\/.7even\/?$/, "");
+  
+  // Get task UUIDs from recent commits
+  const taskIdsInCommits = getTasksFromRecentCommits(100, repoRoot);
+  
+  if (taskIdsInCommits.length === 0) {
+    return 0;
+  }
+
+  // Get all to-do tasks
+  const tasks = await listItems(sevenDir, "task");
+  const todoTasks = tasks.filter((t) => t.data.status === "to-do");
+
+  let transitionCount = 0;
+
+  for (const task of todoTasks) {
+    // Check if this task's UUID appears in recent commits
+    if (taskIdsInCommits.includes(task.id.toLowerCase())) {
+      // Auto-transition to in-progress
+      await moveItem(sevenDir, task.id, "in-progress");
+      transitionCount++;
+    }
+  }
+
+  return transitionCount;
 }
