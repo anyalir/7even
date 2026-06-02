@@ -1,0 +1,21 @@
+src/cli/commands/init.ts
+  s_e642a49f8298e3::t_cba7287a50455d 4
+  s_e642a49f8298e3::t_97a57c6a22706b 84-108
+  s_e642a49f8298e3::t_ab6890319e5054 118,124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "a60ed3fc0573a34a313e9091d31368d4563ee685",
+  "prompts": {},
+  "sessions": {
+    "s_e642a49f8298e3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c67fb8dffeMLsHMrKfmm5aqT",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
