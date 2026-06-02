@@ -130,5 +130,6 @@ Persistent, globally unique within project, case-insensitive.
 1. **MECE is global** — when proposing new KRs or tasks, cross-check against ALL existing items, not just the current parent
 2. **Comments get typed** — always use `--type agent` so humans can distinguish AI notes
 3. **Dependencies cross boundaries** — tasks can depend on tasks in other KRs
-4. **Estimation is non-destructive** — each estimate is appended to history
-5. **Dashboard at localhost:7777** — `npx s7n dashboard` for visual overview
+4. **Estimation is non-destructive and updated during task progress** — each estimate is appended to history. Estimations can go up, if complexity increases, but are expected to trend down as work progresses
+5. **.7even/ dir is issue tracker only** — do not write project files there
+6. **Dashboard at localhost:7777** — `npx s7n dashboard` for visual overview 
