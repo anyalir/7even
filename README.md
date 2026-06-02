@@ -57,7 +57,7 @@ npx s7n dashboard
 /7-verify-task O1KR1T1
 
 # Move to done, final commit
-/7-complete-task O1KR1T1  
+/7-complete-task O1KR1T1
 ```
 ```
 
@@ -65,6 +65,7 @@ npx s7n dashboard
 
 ### OKR Hierarchy
 
+```
 ```
 Objective (O1)
 ├── Key Result (O1KR1)
@@ -75,7 +76,7 @@ Objective (O1)
 │   ├── Task (O1KR2T1)
 │   └── Task (O1KR2T2)
 └── Key Result (O1KR3)
-    └── ...
+    └──
 ```
 
 **Objectives** define what you want to achieve. **Key Results** are measurable outcomes that prove the objective is met. **Tasks** are the concrete work items.
