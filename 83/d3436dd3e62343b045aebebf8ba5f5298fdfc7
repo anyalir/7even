@@ -1,0 +1,61 @@
+src/dashboard/api/routes/metrics.ts
+  s_e642a49f8298e3::t_bfaa03101eea55 2-3,8,14,19-26,40,45-57,88,92,96-98
+src/metrics/__tests__/metrics.test.ts
+  s_e642a49f8298e3::t_9c250b4e97b1ce 2,6,80-252
+README.md
+  s_e642a49f8298e3::t_c95ca94655aab5 178-180,183-201
+  s_e642a49f8298e3::t_20dff0173e44e1 230-232
+  s_e642a49f8298e3::t_e288e405d42e48 148
+  s_e642a49f8298e3::t_e22132ba0a9e2c 323
+  s_e642a49f8298e3::t_b1f2d612e41ef0 332
+  s_e642a49f8298e3::t_cebfa278173a43 216-217
+src/core/schemas/index.ts
+  s_e642a49f8298e3::t_7f689714db1890 2
+src/dashboard/app/components/GanttChart.tsx
+  s_e642a49f8298e3::t_ac61538ebd5c25 393
+  s_e642a49f8298e3::t_fdb99698be62ce 45
+  s_e642a49f8298e3::t_0b3ac96df10ea5 15
+src/metrics/forecast.ts
+  s_e642a49f8298e3::t_05c443a50b1b8d 1-244
+src/dashboard/app/components/GanttBar.tsx
+  s_e642a49f8298e3::t_a208f2eb033a21 11,30,46-60,62,65
+src/cli/commands/config.ts
+  s_e642a49f8298e3::t_f46103f2291509 1-2,4-56
+  s_e642a49f8298e3::t_52bc85b9784215 3
+src/core/schemas/config.ts
+  s_e642a49f8298e3::t_b9dd28c3140867 1-9
+package.json
+  s_e642a49f8298e3::t_6113d691e2cc30 30
+src/core/storage.ts
+  s_e642a49f8298e3::t_58aa5337f862de 7
+  s_e642a49f8298e3::t_76204ffafda311 405-426
+src/metrics/velocity.ts
+  s_e642a49f8298e3::t_425459bc69399f 6-7,21-22,74-80,93-102
+src/metrics/gantt.ts
+  s_e642a49f8298e3::t_9c5726081d9784 204-205,213-214
+  s_e642a49f8298e3::t_c51c888c775e61 1-2,16,31,41-68,75,79,102-104,107,110-137,141,149,153
+  s_e642a49f8298e3::t_ce8b4e8d4c608e 167-168
+  s_e642a49f8298e3::t_2b4e7485170c46 176-177
+  s_e642a49f8298e3::t_aa5330294fa649 30,34-40,69-72,81-99,101,108,143,154-165,169-175,178-186,189-202,206-212,215-239
+src/cli/index.ts
+  s_e642a49f8298e3::t_8d0c5ef12f1a71 31
+  s_e642a49f8298e3::t_394867f2c81e85 12
+src/dashboard/app/components/VelocityChart.tsx
+  s_e642a49f8298e3::t_077fd2e9df6851 17-24,30,38-53,58-63,65-68,78-80,86,102-105,111-113,118,136-138,156-163,175,184,194-196,211-222,235-239,269-274,289-294
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "83d3436dd3e62343b045aebebf8ba5f5298fdfc7",
+  "prompts": {},
+  "sessions": {
+    "s_e642a49f8298e3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_18c67fb8dffeMLsHMrKfmm5aqT",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
