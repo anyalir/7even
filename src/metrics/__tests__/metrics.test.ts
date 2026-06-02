@@ -1,8 +1,9 @@
 import { describe, it, expect, vi } from "vitest";
-import { calculateVelocity, type VelocityWindow } from "../velocity.js";
+import { calculateVelocity, computeTeamVelocity, type VelocityWindow } from "../velocity.js";
 import { computeBurndown, type BurndownPoint } from "../burndown.js";
 import { projectEta } from "../projection.js";
 import { computeGanttBars, type GanttInput } from "../gantt.js";
+import { forecast, type ForecastTask, type ForecastConfig } from "../forecast.js";
 import { getCommitMetrics, getPrMetrics } from "../git-metrics.js";
 
 function makeTask(overrides: Record<string, unknown> = {}) {
@@ -76,6 +77,179 @@ describe("calculateVelocity", () => {
     const tasks = [makeTask({ estimationHistory: [] })];
     expect(calculateVelocity(tasks)).toEqual([]);
   });
+
+  it("includes spPerPerson when teamSize provided", () => {
+    const tasks = [
+      makeTask({
+        estimationHistory: [
+          { date: "2026-01-01T00:00:00.000Z", spRemaining: 10, estimator: "a" },
+          { date: "2026-01-03T00:00:00.000Z", spRemaining: 0, estimator: "a" },
+        ],
+      }),
+    ];
+    const result = calculateVelocity(tasks, 7, 2);
+    expect(result[0].spPerPerson).toBe(5);
+  });
+});
+
+describe("computeTeamVelocity", () => {
+  it("returns null for no windows", () => {
+    expect(computeTeamVelocity([])).toBeNull();
+  });
+
+  it("averages last 3 windows", () => {
+    const windows: VelocityWindow[] = [
+      { start: "2026-01-01", end: "2026-01-07", completedSp: 10, taskCount: 2 },
+      { start: "2026-01-08", end: "2026-01-14", completedSp: 20, taskCount: 3 },
+      { start: "2026-01-15", end: "2026-01-21", completedSp: 15, taskCount: 2 },
+    ];
+    expect(computeTeamVelocity(windows)).toBe(15); // (10+20+15)/3
+  });
+});
+
+describe("forecast", () => {
+  const baseConfig: ForecastConfig = {
+    teamSize: 2,
+    initialVelocity: 14, // 14 SP/week = 1 SP/person/day
+    computedVelocity: null,
+  };
+
+  it("returns empty schedule for no active tasks", () => {
+    const result = forecast([], baseConfig, "2026-01-01");
+    expect(result.schedule).toEqual([]);
+    expect(result.projectedEnd).toBe("2026-01-01");
+  });
+
+  it("schedules independent tasks in parallel up to teamSize", () => {
+    const tasks: ForecastTask[] = [
+      { id: "a", status: "to-do", spRemaining: 7, dependsOn: [], assignee: null },
+      { id: "b", status: "to-do", spRemaining: 7, dependsOn: [], assignee: null },
+    ];
+    const result = forecast(tasks, baseConfig, "2026-01-01");
+    expect(result.schedule.length).toBe(2);
+    // Both should start on the same day (2 slots, 2 tasks)
+    expect(result.schedule[0].projectedStart).toBe("2026-01-01");
+    expect(result.schedule[1].projectedStart).toBe("2026-01-01");
+    // Each takes 7 SP / 1 SP/person/day = 7 days
+    expect(result.schedule[0].projectedEnd).toBe("2026-01-08");
+  });
+
+  it("forces linearity when teamSize=1", () => {
+    const tasks: ForecastTask[] = [
+      { id: "a", status: "to-do", spRemaining: 7, dependsOn: [], assignee: null },
+      { id: "b", status: "to-do", spRemaining: 7, dependsOn: [], assignee: null },
+    ];
+    const config: ForecastConfig = { teamSize: 1, initialVelocity: 7, computedVelocity: null };
+    const result = forecast(tasks, config, "2026-01-01");
+    // With 1 person at 7SP/wk = 1 SP/day, 7SP task = 7 days
+    // Task a: Jan 1-8, task b: Jan 8-15
+    expect(result.schedule[0].projectedEnd).toBe("2026-01-08");
+    expect(result.schedule[1].projectedStart).toBe("2026-01-08");
+    expect(result.schedule[1].projectedEnd).toBe("2026-01-15");
+  });
+
+  it("respects dependencies", () => {
+    const tasks: ForecastTask[] = [
+      { id: "a", status: "to-do", spRemaining: 7, dependsOn: [], assignee: null },
+      { id: "b", status: "to-do", spRemaining: 7, dependsOn: ["a"], assignee: null },
+    ];
+    const result = forecast(tasks, baseConfig, "2026-01-01");
+    // b must wait for a to complete
+    const aEnd = result.schedule.find((s) => s.taskId === "a")!.projectedEnd;
+    const bStart = result.schedule.find((s) => s.taskId === "b")!.projectedStart;
+    expect(bStart >= aEnd).toBe(true);
+  });
+
+  it("routes assigned tasks to the same slot", () => {
+    const tasks: ForecastTask[] = [
+      { id: "a", status: "to-do", spRemaining: 7, dependsOn: [], assignee: "alice@test.com" },
+      { id: "b", status: "to-do", spRemaining: 7, dependsOn: [], assignee: "alice@test.com" },
+      { id: "c", status: "to-do", spRemaining: 7, dependsOn: [], assignee: null },
+    ];
+    const result = forecast(tasks, baseConfig, "2026-01-01");
+    // Alice gets both a and b sequentially, c runs in parallel
+    const aResult = result.schedule.find((s) => s.taskId === "a")!;
+    const bResult = result.schedule.find((s) => s.taskId === "b")!;
+    const cResult = result.schedule.find((s) => s.taskId === "c")!;
+    expect(aResult.assignedSlot).toBe(bResult.assignedSlot);
+    // b starts after a (same person)
+    expect(bResult.projectedStart >= aResult.projectedEnd).toBe(true);
+    // c starts immediately (different slot)
+    expect(cResult.projectedStart).toBe("2026-01-01");
+  });
+
+  it("uses computedVelocity over initialVelocity", () => {
+    const tasks: ForecastTask[] = [
+      { id: "a", status: "to-do", spRemaining: 14, dependsOn: [], assignee: null },
+    ];
+    const config: ForecastConfig = {
+      teamSize: 1,
+      initialVelocity: 7, // would give 14 days
+      computedVelocity: 14, // gives 7 days
+    };
+    const result = forecast(tasks, config, "2026-01-01");
+    // 14 SP / (14/7 = 2 SP/day) = 7 days
+    expect(result.schedule[0].projectedEnd).toBe("2026-01-08");
+    expect(result.velocityUsed).toBe(14);
+  });
+
+  it("handles done tasks as resolved dependencies", () => {
+    const tasks: ForecastTask[] = [
+      { id: "done1", status: "done", spRemaining: 0, dependsOn: [], assignee: null },
+      { id: "b", status: "to-do", spRemaining: 7, dependsOn: ["done1"], assignee: null },
+    ];
+    const result = forecast(tasks, baseConfig, "2026-01-01");
+    // b should start immediately since done1 is already done
+    expect(result.schedule[0].projectedStart).toBe("2026-01-01");
+  });
+});
+
+describe("computeGanttBars with forecast", () => {
+  it("marks non-done tasks as forecast when config provided", () => {
+    const items: GanttInput[] = [
+      {
+        id: "t1",
+        type: "task",
+        name: "Task",
+        createdAt: "2026-01-01T00:00:00.000Z",
+        status: "to-do",
+        estimationHistory: [
+          { date: "2026-01-01T00:00:00.000Z", spRemaining: 5, estimator: "a" },
+        ],
+      },
+    ];
+    const config: ForecastConfig = {
+      teamSize: 1,
+      initialVelocity: 7,
+      computedVelocity: null,
+    };
+    const result = computeGanttBars(items, config);
+    expect(result[0].isForecast).toBe(true);
+  });
+
+  it("done tasks are not forecast", () => {
+    const items: GanttInput[] = [
+      {
+        id: "t1",
+        type: "task",
+        name: "Task",
+        createdAt: "2026-01-01T00:00:00.000Z",
+        status: "done",
+        estimationHistory: [
+          { date: "2026-01-01T00:00:00.000Z", spRemaining: 5, estimator: "a" },
+          { date: "2026-01-05T00:00:00.000Z", spRemaining: 0, estimator: "a" },
+        ],
+      },
+    ];
+    const config: ForecastConfig = {
+      teamSize: 1,
+      initialVelocity: 7,
+      computedVelocity: null,
+    };
+    const result = computeGanttBars(items, config);
+    expect(result[0].isForecast).toBeFalsy();
+    expect(result[0].progress).toBe(100);
+  });
 });
 
 describe("computeBurndown", () => {
@@ -134,8 +308,6 @@ describe("projectEta", () => {
       { start: "2026-01-15", end: "2026-01-21", completedSp: 21, taskCount: 3 },
     ];
     const result = projectEta(14, windows);
-    // avg = (14+7+21)/3 = 14 SP/week = 2 SP/day
-    // 14 SP / 2 SP/day = 7 days
     expect(result.eta).toBeTruthy();
     expect(result.confidence).toBe("medium"); // 3 windows
   });

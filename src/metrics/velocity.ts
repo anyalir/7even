@@ -3,6 +3,8 @@ export type VelocityWindow = {
   end: string;
   completedSp: number;
   taskCount: number;
+  /** SP per person (completedSp / teamSize) */
+  spPerPerson?: number;
 };
 
 type TaskLike = {
@@ -16,7 +18,8 @@ type TaskLike = {
 
 export function calculateVelocity(
   doneTasks: TaskLike[],
-  windowDays = 7
+  windowDays = 7,
+  teamSize = 1
 ): VelocityWindow[] {
   // Filter to tasks with estimation history that reached 0 SP
   const completed: Array<{ completionDate: string; sp: number }> = [];
@@ -68,7 +71,13 @@ export function calculateVelocity(
     }
 
     if (count > 0) {
-      windows.push({ start: startStr, end: endStr, completedSp: sp, taskCount: count });
+      windows.push({
+        start: startStr,
+        end: endStr,
+        completedSp: sp,
+        taskCount: count,
+        spPerPerson: Math.round((sp / teamSize) * 10) / 10,
+      });
     }
 
     completed.length = 0;
@@ -80,4 +89,15 @@ export function calculateVelocity(
   }
 
   return windows;
+}
+
+/**
+ * Compute team velocity in SP/week from historical windows.
+ * Returns null if no data.
+ */
+export function computeTeamVelocity(windows: VelocityWindow[]): number | null {
+  if (windows.length === 0) return null;
+  const recent = windows.slice(-3);
+  const totalSp = recent.reduce((s, w) => s + w.completedSp, 0);
+  return Math.round((totalSp / recent.length) * 10) / 10;
 }

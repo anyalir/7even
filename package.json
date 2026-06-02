@@ -27,7 +27,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anyalir/7even.git"
+    "url": "git+https://github.com/anyalir/7even.git"
   },
   "homepage": "https://github.com/anyalir/7even#readme",
   "bugs": {

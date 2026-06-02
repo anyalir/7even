@@ -1,4 +1,5 @@
 export { CommentSchema } from "./comment.js";
+export { ProjectConfigSchema, type ProjectConfig } from "./config.js";
 export { ObjectiveSchema } from "./objective.js";
 export { KeyResultSchema, StructuredMeasurementSchema } from "./key-result.js";
 export { TaskSchema } from "./task.js";

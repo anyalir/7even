@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import { ObjectiveSchema } from "./schemas/objective.js";
 import { KeyResultSchema } from "./schemas/key-result.js";
 import { TaskSchema } from "./schemas/task.js";
+import { ProjectConfigSchema, type ProjectConfig } from "./schemas/config.js";
 import {
   readIndex,
   addToIndex,
@@ -400,4 +401,26 @@ export async function listItems(
   }
 
   return results;
+}
+
+export async function getConfig(sevenDir: string): Promise<ProjectConfig> {
+  const configPath = join(sevenDir, "config.json");
+  try {
+    const raw = await readFile(configPath, "utf-8");
+    return ProjectConfigSchema.parse(JSON.parse(raw));
+  } catch {
+    return ProjectConfigSchema.parse({});
+  }
+}
+
+export async function setConfig(
+  sevenDir: string,
+  updates: Partial<ProjectConfig>
+): Promise<ProjectConfig> {
+  const current = await getConfig(sevenDir);
+  const merged = { ...current, ...updates };
+  const validated = ProjectConfigSchema.parse(merged);
+  const configPath = join(sevenDir, "config.json");
+  await writeFile(configPath, JSON.stringify(validated, null, 2) + "\n", "utf-8");
+  return validated;
 }

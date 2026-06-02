@@ -145,7 +145,7 @@ npx s7n t list
 
 ### Dependencies
 
-Tasks can depend on other tasks. Dependencies are visible on the dashboard and in CLI output.
+Tasks can depend on other tasks. Dependencies are visible on the dashboard (Gantt arrows, blocked badges on Board) and enforced by the forecast engine for scheduling.
 
 ```bash
 # T2 depends on T1 (T1 must finish before T2 can start)
@@ -175,7 +175,30 @@ npx s7n commit                          # Commit .7even/ changes to git
 npx s7n repair-index                    # Rebuild index from filesystem
 npx s7n evaluate O1KR1                  # Evaluate KR completion
 npx s7n dashboard                       # Launch local dashboard
+npx s7n config show                     # Show project configuration
+npx s7n config set --team-size 3        # Set team size (default: 1)
+npx s7n config set --initial-velocity 15  # Set initial velocity estimate (SP/week)
 ```
+
+### Team Configuration
+
+Configure team size and initial velocity for forecasting. Stored in `.7even/config.json`.
+
+```bash
+# Set team size (affects parallel task scheduling in forecasts)
+npx s7n config set --team-size 3
+
+# Set initial velocity estimate (used when no historical data exists)
+npx s7n config set --initial-velocity 15
+
+# Both at once
+npx s7n config set --team-size 3 --initial-velocity 15
+
+# View current config
+npx s7n config show
+```
+
+Team size limits how many tasks run in parallel. With `--team-size 3`, the forecast schedules at most 3 tasks concurrently. Assigned tasks route to their person's slot; unassigned tasks fill the earliest-free slot.
 
 ## Dashboard
 
@@ -190,6 +213,8 @@ npx s7n dashboard --port 8080           # Custom port
 
 Gantt chart with expandable objective/KR/task hierarchy. Day/week/month granularity. Dependency arrows between tasks. Click a KR for inline burndown chart.
 
+**Forecasting:** Non-done tasks show projected start/end dates as dashed, semi-transparent bars. The forecast engine builds a dependency DAG, topologically sorts tasks, then simulates scheduling across `teamSize` parallel slots. Assigned tasks route to their person's slot; unassigned tasks fill the earliest-free slot. Objective and KR bars automatically span from their earliest child's start to their latest child's end.
+
 ### Board
 
 Kanban board organized by objective and KR. Three-column layout: TO DO, IN PROGRESS, DONE. Task cards show short IDs, SP estimates, assignee badges. Dependency indicators: blocked tasks show "BLOCKED BY O1KR1T2", resolved dependencies show "← O1KR1T2". Click any card for a detail panel with comments, estimation history, and acceptance criteria.
@@ -202,7 +227,9 @@ Badge system with 7 built-in badges. Custom badges via `.7even/badges/custom/`. 
 
 ### Analytics
 
-Burndown charts (per KR or objective), velocity tracking with ETA projection, commit frequency metrics. All charts interactive with Recharts.
+Burndown charts (per KR or objective), velocity tracking with rolling average and per-person normalization, ETA projection with confidence levels (low/medium/high based on data volume). Commit frequency metrics. All charts interactive with Recharts.
+
+Velocity is displayed as both team total and per-person (dashed line). ETA uses the forecast engine when team configuration is set, falling back to `initialVelocity` when no historical data exists.
 
 ## OpenCode Integration
 
@@ -293,6 +320,7 @@ $ npx s7n task show O1KR1T1
 - **MECE is global.** When decomposing, every proposed item is cross-checked against the entire project — not just the current parent. This catches overlaps between objectives.
 - **Agent comments are labeled.** The `--type agent` flag on comments distinguishes human notes from AI-generated analysis. Both are valuable; knowing the source matters.
 - **Dependencies cross KR boundaries.** A task under O1KR2 can depend on a task under O1KR1. The dependency graph is project-wide.
+- **Forecast respects team capacity.** Team size limits parallel execution. Dependencies force linearity. Assigned tasks route to their person's slot. The result is a realistic schedule, not an optimistic one.
 
 ## Tech Stack
 
@@ -301,6 +329,7 @@ $ npx s7n task show O1KR1T1
 - **Dashboard:** React 19, Vite 6, React Router 7, Recharts 2
 - **API:** Hono (read-only, localhost)
 - **Storage:** JSON files in `.7even/`, git for persistence
+- **Forecasting:** DAG-based topological scheduling with team capacity constraints
 
 ## License
 

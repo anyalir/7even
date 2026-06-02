@@ -1,21 +1,29 @@
 import { Hono } from "hono";
-import { listItems } from "../../../core/storage.js";
-import { calculateVelocity } from "../../../metrics/velocity.js";
+import { listItems, getConfig } from "../../../core/storage.js";
+import { calculateVelocity, computeTeamVelocity } from "../../../metrics/velocity.js";
 import { computeBurndown } from "../../../metrics/burndown.js";
 import { computeGanttBars } from "../../../metrics/gantt.js";
 import type { GanttInput } from "../../../metrics/gantt.js";
 import { getTaskCommits } from "../../../core/git.js";
+import type { ForecastConfig } from "../../../metrics/forecast.js";
 
 export function metricsRoute(sevenDir: string) {
   const route = new Hono();
 
   route.get("/velocity", async (c) => {
+    const config = await getConfig(sevenDir);
     const tasks = await listItems(sevenDir, "task");
     const doneTasks = tasks
       .filter((t) => t.data.status === "done")
       .map((t) => t.data);
-    const velocity = calculateVelocity(doneTasks);
-    return c.json(velocity);
+    const velocity = calculateVelocity(doneTasks, 7, config.teamSize);
+    const teamVelocity = computeTeamVelocity(velocity);
+    return c.json({
+      windows: velocity,
+      teamSize: config.teamSize,
+      teamVelocity,
+      initialVelocity: config.initialVelocity,
+    });
   });
 
   route.get("/burndown/:krId", async (c) => {
@@ -29,9 +37,23 @@ export function metricsRoute(sevenDir: string) {
   });
 
   route.get("/gantt", async (c) => {
+    const config = await getConfig(sevenDir);
     const objectives = await listItems(sevenDir, "objective");
     const keyResults = await listItems(sevenDir, "key-result");
     const tasks = await listItems(sevenDir, "task");
+
+    // Compute velocity for forecast
+    const doneTasks = tasks
+      .filter((t) => t.data.status === "done")
+      .map((t) => t.data);
+    const velocityWindows = calculateVelocity(doneTasks, 7, config.teamSize);
+    const computedVelocity = computeTeamVelocity(velocityWindows);
+
+    const forecastConfig: ForecastConfig = {
+      teamSize: config.teamSize,
+      initialVelocity: config.initialVelocity,
+      computedVelocity,
+    };
 
     const items: GanttInput[] = [
       ...objectives.map((o) => ({
@@ -63,11 +85,17 @@ export function metricsRoute(sevenDir: string) {
         estimationHistory: t.data.estimationHistory,
         parentId: t.data.parentId,
         dependsOn: t.data.dependsOn,
+        assignee: t.data.assignee?.email ?? null,
       })),
     ];
 
-    const bars = computeGanttBars(items);
+    const bars = computeGanttBars(items, forecastConfig);
     return c.json(bars);
+  });
+
+  route.get("/config", async (c) => {
+    const config = await getConfig(sevenDir);
+    return c.json(config);
   });
 
   route.get("/commits/:taskId", async (c) => {

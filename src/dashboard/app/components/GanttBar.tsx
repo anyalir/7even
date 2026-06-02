@@ -8,6 +8,7 @@ type Props = {
   spRemaining?: number;
   startDate: string;
   endDate: string;
+  isForecast?: boolean;
 };
 
 const HEIGHT: Record<string, number> = {
@@ -26,6 +27,7 @@ export function GanttBar({
   spRemaining,
   startDate,
   endDate,
+  isForecast,
 }: Props) {
   const h = HEIGHT[type] ?? 24;
 
@@ -41,11 +43,26 @@ export function GanttBar({
         background: color,
         overflow: "hidden",
         cursor: "default",
+        opacity: isForecast ? 0.45 : 1,
+        borderStyle: isForecast ? "dashed" : "solid",
+        borderWidth: isForecast ? 1 : 0,
+        borderColor: isForecast ? color : "transparent",
+        ...(isForecast
+          ? {
+              background: `repeating-linear-gradient(
+                45deg,
+                ${color}33,
+                ${color}33 4px,
+                ${color}1a 4px,
+                ${color}1a 8px
+              )`,
+            }
+          : {}),
       }}
-      title={`${name}\n${startDate} → ${endDate}${spRemaining != null ? `\n${spRemaining} SP remaining` : ""}`}
+      title={`${isForecast ? "[FORECAST] " : ""}${name}\n${startDate} → ${endDate}${spRemaining != null ? `\n${spRemaining} SP remaining` : ""}`}
     >
       {/* Progress fill */}
-      {progress > 0 && (
+      {progress > 0 && !isForecast && (
         <div
           style={{
             position: "absolute",

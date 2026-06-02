@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  BarChart,
   Bar,
   Line,
   XAxis,
@@ -15,11 +14,20 @@ type VelocityWindow = {
   end: string;
   completedSp: number;
   taskCount: number;
+  spPerPerson?: number;
+};
+
+type VelocityResponse = {
+  windows: VelocityWindow[];
+  teamSize: number;
+  teamVelocity: number | null;
+  initialVelocity: number | null;
 };
 
 type ChartRow = VelocityWindow & {
   label: string;
   rollingAvg: number;
+  rollingAvgPerPerson: number;
 };
 
 type Props = {
@@ -27,20 +35,37 @@ type Props = {
   compact?: boolean;
 };
 
-function computeEta(windows: VelocityWindow[], totalRemainingSp: number) {
-  if (windows.length === 0 || totalRemainingSp <= 0) return null;
-  const avgSp =
-    windows.reduce((s, w) => s + w.completedSp, 0) / windows.length;
-  if (avgSp <= 0) return null;
-  const windowsNeeded = totalRemainingSp / avgSp;
-  // Assume 7-day windows
-  const daysNeeded = Math.ceil(windowsNeeded * 7);
+function computeEta(
+  windows: VelocityWindow[],
+  totalRemainingSp: number,
+  teamSize: number,
+  initialVelocity: number | null
+) {
+  const velocityPerWeek =
+    windows.length > 0
+      ? windows.slice(-3).reduce((s, w) => s + w.completedSp, 0) /
+        Math.min(windows.length, 3)
+      : initialVelocity;
+
+  if (!velocityPerWeek || velocityPerWeek <= 0 || totalRemainingSp <= 0)
+    return null;
+
+  const daysNeeded = Math.ceil((totalRemainingSp / velocityPerWeek) * 7);
   const eta = new Date();
   eta.setDate(eta.getDate() + daysNeeded);
   return {
     date: eta.toISOString().slice(0, 10),
-    confidence: windows.length >= 3 ? "high" : "low",
+    confidence:
+      windows.length >= 5
+        ? "high"
+        : windows.length >= 2
+          ? "medium"
+          : "low",
     daysNeeded,
+    velocityPerWeek: Math.round(velocityPerWeek * 10) / 10,
+    velocityPerPerson:
+      Math.round((velocityPerWeek / teamSize) * 10) / 10,
+    teamSize,
   };
 }
 
@@ -50,12 +75,15 @@ export function VelocityChart({ compact }: Props) {
     date: string;
     confidence: string;
     daysNeeded: number;
+    velocityPerWeek: number;
+    velocityPerPerson: number;
+    teamSize: number;
   } | null>(null);
 
   useEffect(() => {
     Promise.all([
       fetch("/api/metrics/velocity").then(
-        (r) => r.json() as Promise<VelocityWindow[]>
+        (r) => r.json() as Promise<VelocityResponse>
       ),
       fetch("/api/objectives").then(
         (r) =>
@@ -71,16 +99,23 @@ export function VelocityChart({ compact }: Props) {
           >
       ),
     ])
-      .then(([windows, objs]) => {
+      .then(([velData, objs]) => {
+        const windows = velData.windows;
+        const teamSize = velData.teamSize;
+
         // Compute rolling avg
         const chartRows: ChartRow[] = windows.map((w, i) => {
           const slice = windows.slice(Math.max(0, i - 2), i + 1);
           const avg =
             slice.reduce((s, x) => s + x.completedSp, 0) / slice.length;
+          const avgPp =
+            slice.reduce((s, x) => s + (x.spPerPerson ?? x.completedSp), 0) /
+            slice.length;
           return {
             ...w,
             label: w.start.slice(5),
             rollingAvg: Math.round(avg * 10) / 10,
+            rollingAvgPerPerson: Math.round(avgPp * 10) / 10,
           };
         });
         setRows(chartRows);
@@ -98,7 +133,9 @@ export function VelocityChart({ compact }: Props) {
             }
           }
         }
-        setEta(computeEta(windows, remaining));
+        setEta(
+          computeEta(windows, remaining, teamSize, velData.initialVelocity)
+        );
       })
       .catch(() => {});
   }, []);
@@ -116,9 +153,14 @@ export function VelocityChart({ compact }: Props) {
               {rows[rows.length - 1].taskCount} TASKS
             </div>
             {eta && (
-              <div style={{ marginTop: 4, fontSize: 10 }}>
-                ETA: {eta.date}
-              </div>
+              <>
+                <div style={{ marginTop: 4, fontSize: 10 }}>
+                  ETA: {eta.date}
+                </div>
+                <div style={{ fontSize: 9, color: "var(--text-muted)" }}>
+                  {eta.velocityPerWeek} SP/WK ({eta.teamSize} PEOPLE)
+                </div>
+              </>
             )}
           </>
         ) : (
@@ -130,7 +172,7 @@ export function VelocityChart({ compact }: Props) {
 
   return (
     <div>
-      {/* ETA annotation */}
+      {/* ETA + velocity annotation */}
       {eta && (
         <div
           style={{
@@ -139,6 +181,7 @@ export function VelocityChart({ compact }: Props) {
             gap: 8,
             marginBottom: 12,
             fontSize: 12,
+            flexWrap: "wrap",
           }}
         >
           <span style={{ color: "var(--text-muted)" }}>Est. completion:</span>
@@ -148,7 +191,9 @@ export function VelocityChart({ compact }: Props) {
               background:
                 eta.confidence === "high"
                   ? "var(--color-sage)"
-                  : "var(--color-amber)",
+                  : eta.confidence === "medium"
+                    ? "var(--color-amber)"
+                    : "var(--color-coral)",
               color: "var(--bg-primary)",
               padding: "1px 6px",
               fontSize: 10,
@@ -163,6 +208,18 @@ export function VelocityChart({ compact }: Props) {
           >
             ({eta.daysNeeded}d remaining)
           </span>
+          <span
+            style={{
+              color: "var(--text-muted)",
+              fontSize: 10,
+              marginLeft: 8,
+              borderLeft: "1px solid var(--border-subtle)",
+              paddingLeft: 8,
+            }}
+          >
+            {eta.velocityPerWeek} SP/wk · {eta.velocityPerPerson} SP/person/wk
+            · {eta.teamSize} {eta.teamSize === 1 ? "person" : "people"}
+          </span>
         </div>
       )}
 
@@ -175,6 +232,11 @@ export function VelocityChart({ compact }: Props) {
           }}
         >
           No velocity data available
+          {eta && (
+            <div style={{ marginTop: 8, fontSize: 11 }}>
+              Using initial velocity estimate for forecasting
+            </div>
+          )}
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={280}>
@@ -204,10 +266,12 @@ export function VelocityChart({ compact }: Props) {
                 color: "var(--text-primary)",
                 fontSize: 12,
               }}
-              formatter={(v, name) => [
-                name === "rollingAvg" ? `${v} SP (avg)` : `${v} SP`,
-                name === "rollingAvg" ? "Rolling Avg" : "Completed",
-              ]}
+              formatter={(v: number, name: string) => {
+                if (name === "rollingAvg") return [`${v} SP (team avg)`, "Rolling Avg"];
+                if (name === "rollingAvgPerPerson")
+                  return [`${v} SP (per person avg)`, "Per Person"];
+                return [`${v} SP`, "Completed"];
+              }}
               labelFormatter={(l) => `Window: ${l}`}
             />
             <Bar
@@ -220,6 +284,14 @@ export function VelocityChart({ compact }: Props) {
               dataKey="rollingAvg"
               stroke="var(--color-amber)"
               strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="rollingAvgPerPerson"
+              stroke="var(--color-lavender)"
+              strokeWidth={1.5}
+              strokeDasharray="4 3"
               dot={false}
             />
           </ComposedChart>

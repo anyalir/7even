@@ -12,6 +12,7 @@ type GanttBarData = {
   parentId?: string;
   progress: number;
   dependsOn?: string[];
+  isForecast?: boolean;
 };
 
 // Deterministic color from objective id
@@ -41,6 +42,7 @@ type RowItem = GanttBarData & {
   objectiveId: string;
   shortId?: string;
   childIds?: string[];
+  isForecast?: boolean;
 };
 
 type GanttChartProps = {
@@ -388,6 +390,7 @@ export function GanttChart({ onKrClick, activeBurndownKrId }: GanttChartProps = 
                     progress={row.progress}
                     startDate={row.start}
                     endDate={row.end}
+                    isForecast={row.isForecast}
                   />
                 </div>
               </div>
