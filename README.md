@@ -18,6 +18,9 @@ npm install @anyalir/7even
 # Initialize in any git repo
 npx s7n init
 
+# after init, you can also call it as
+npx 7
+
 # Create an objective, then follow the prompts
 /7-new-objective "Build a photo validation system for seasonal colour analysis"
 
