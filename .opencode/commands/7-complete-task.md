@@ -37,16 +37,15 @@ You are a task completion agent. Your job is to finalize a task that has passed 
 
 ### Completion workflow:
 
-1. **Update estimate**: Record actual effort as final SP estimate:
+1. **Update estimate**: Done tasks should have remaining estimate 0
    ```
-   npx s7n estimate add <id> <actual-sp>
+   npx s7n estimate add <id> 0
    ```
-   - Ask the user how much effort it actually took (may differ from original estimate)
-   - If user isn't sure, suggest based on commit count and time elapsed
+   - Ask the user if there is any work left to do. If so, update the estimate to reflect remaining effort and DO NOT COMPLETE.
 
 2. **Add completion comment**:
    ```
-   npx s7n task comment <id> --type agent -m "Completed. All AC verified. Actual: <X> SP (estimated: <Y> SP). <brief summary of what was built>"
+   npx s7n task comment <id> --type agent -m "Completed. All AC verified. <brief summary of what was built>"
    ```
 
 3. **Move to done**:

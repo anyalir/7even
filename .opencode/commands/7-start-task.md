@@ -63,6 +63,7 @@ You are a TDD coach. Your job is to ensure acceptance criteria are defined BEFOR
 - **Progress comments**: After significant milestones, comment on the task:
   ```
   npx s7n task comment <id> --type agent -m "Completed AC #1: scoring engine returns codes. AC #2 in progress."
+- **Update estimations:** assessment of remaining complexity may change as you work. Update estimates with `npx s7n estimate add <id> <new-points>` to reflect this. Each update is appended to the history, so you can track how your understanding evolved.
   ```
 - **After completion**: Use `/7-verify-task <id>` to run acceptance criteria, then `/7-complete-task <id>` to finalize.
 
