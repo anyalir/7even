@@ -66,6 +66,15 @@ Objective (O1)
 
 **Objectives** define what you want to achieve. **Key Results** are measurable outcomes that prove the objective is met. **Tasks** are the concrete work items.
 
+#### Objective Status Transitions (Automatic)
+
+Objective statuses transition automatically based on progress:
+
+- **proposed → accepted**: Automatically transitions when the first Key Result is created
+- **accepted → achieved**: Automatically transitions when all tasks under all Key Results are marked as `done`
+
+This ensures objective status always reflects the actual work state. You can still manually transition objectives using `npx s7n objective move <id> <status>` if needed.
+
 ### Short IDs
 
 Every item gets a hierarchical short ID: `O1`, `O1KR1`, `O1KR1T1`. These are persistent (stored in JSON), globally unique within a project, and accepted by all CLI commands. Case-insensitive.

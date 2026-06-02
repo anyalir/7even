@@ -207,4 +207,105 @@ describe("storage", () => {
     expect(taskPaths.some((p) => p.includes("same-name.json"))).toBe(true);
     expect(taskPaths.some((p) => p.includes("same-name-2.json"))).toBe(true);
   });
+
+  it("auto-transitions objective from proposed to accepted when first KR created", async () => {
+    // Create objective in proposed status
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "auto-obj", objData);
+
+    // Verify it's proposed
+    let obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("proposed");
+
+    // Create first KR
+    const krData = makeKeyResult({ parentId: objId });
+    await createItem(sevenDir, "key-result", "auto-kr", krData, objId);
+
+    // Verify objective auto-transitioned to accepted
+    obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted");
+    expect(obj.path).toContain("accepted/");
+  });
+
+  it("auto-transitions objective from accepted to achieved when all tasks done", async () => {
+    // Create objective (will start proposed)
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "achieve-obj", objData);
+
+    // Create KR (will auto-transition objective to accepted)
+    const krData = makeKeyResult({ parentId: objId });
+    const krId = await createItem(sevenDir, "key-result", "achieve-kr", krData, objId);
+
+    // Create two tasks
+    const task1Data = makeTask({ parentId: krId, status: "to-do" });
+    const task1Id = await createItem(sevenDir, "task", "task-1", task1Data, krId);
+
+    const task2Data = makeTask({ parentId: krId, status: "to-do" });
+    const task2Id = await createItem(sevenDir, "task", "task-2", task2Data, krId);
+
+    // Verify objective is accepted
+    let obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted");
+
+    // Mark first task done
+    await moveItem(sevenDir, task1Id, "done");
+    obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted"); // Still accepted, not all done
+
+    // Mark second task done
+    await moveItem(sevenDir, task2Id, "done");
+
+    // Verify objective auto-transitioned to achieved
+    obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("achieved");
+    expect(obj.path).toContain("achieved/");
+  });
+
+  it("does not auto-transition to achieved if KR has no tasks", async () => {
+    // Create objective and KR
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "no-tasks-obj", objData);
+
+    const krData = makeKeyResult({ parentId: objId });
+    await createItem(sevenDir, "key-result", "no-tasks-kr", krData, objId);
+
+    // Verify objective is accepted (from KR creation) but not achieved
+    const obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted");
+    expect(obj.path).toContain("accepted/");
+  });
+
+  it("auto-transitions with multiple KRs when all tasks done", async () => {
+    // Create objective
+    const objData = makeObjective({ status: "proposed" });
+    const objId = await createItem(sevenDir, "objective", "multi-kr-obj", objData);
+
+    // Create KR1 with 1 task
+    const kr1Data = makeKeyResult({ parentId: objId });
+    const kr1Id = await createItem(sevenDir, "key-result", "kr-1", kr1Data, objId);
+    const task1Data = makeTask({ parentId: kr1Id, status: "to-do" });
+    const task1Id = await createItem(sevenDir, "task", "task-1", task1Data, kr1Id);
+
+    // Create KR2 with 1 task
+    const kr2Data = makeKeyResult({ parentId: objId });
+    const kr2Id = await createItem(sevenDir, "key-result", "kr-2", kr2Data, objId);
+    const task2Data = makeTask({ parentId: kr2Id, status: "to-do" });
+    const task2Id = await createItem(sevenDir, "task", "task-2", task2Data, kr2Id);
+
+    // Verify accepted
+    let obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted");
+
+    // Mark KR1's task done
+    await moveItem(sevenDir, task1Id, "done");
+    obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("accepted"); // Still accepted
+
+    // Mark KR2's task done
+    await moveItem(sevenDir, task2Id, "done");
+
+    // Now should be achieved
+    obj = await readItem(sevenDir, objId);
+    expect(obj.data.status).toBe("achieved");
+  });
 });

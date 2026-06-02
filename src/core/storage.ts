@@ -178,6 +178,11 @@ export async function createItem(
   const relativePath = relative(sevenDir, filePath).replace(/\\/g, "/");
   await addToIndex(sevenDir, id, relativePath, shortId);
 
+  // Auto-transition: when KR is created, check if objective should move to accepted
+  if (itemType === "key-result" && parentId) {
+    await checkObjectiveAutoTransition(sevenDir, parentId);
+  }
+
   return id;
 }
 
@@ -351,6 +356,15 @@ export async function moveItem(
       const updatedIndex = await readIndex(sevenDir);
       updatedIndex[id] = newRelPath;
       await writeIndex(sevenDir, updatedIndex);
+
+      // Auto-transition: when task moves to done, check if objective should move to achieved
+      if (newStatus === "done" && data.parentId) {
+        // Get the KR's parent (the objective)
+        const { data: krData } = await readItem(sevenDir, data.parentId);
+        if (krData.parentId) {
+          await checkObjectiveAutoTransition(sevenDir, krData.parentId);
+        }
+      }
     }
   }
 }
@@ -423,4 +437,64 @@ export async function setConfig(
   const configPath = join(sevenDir, "config.json");
   await writeFile(configPath, JSON.stringify(validated, null, 2) + "\n", "utf-8");
   return validated;
+}
+
+/**
+ * Check and auto-transition objective status based on rules:
+ * - proposed → accepted: when first KR is created
+ * - accepted → achieved: when all tasks under all KRs are done
+ */
+async function checkObjectiveAutoTransition(
+  sevenDir: string,
+  objectiveId: string
+): Promise<void> {
+  const { data: objective } = await readItem(sevenDir, objectiveId);
+  const currentStatus = objective.status;
+
+  // Rule 1: proposed → accepted when first KR exists
+  if (currentStatus === "proposed") {
+    const krs = await listItems(sevenDir, "key-result");
+    const objectiveKrs = krs.filter((kr) => kr.data.parentId === objectiveId);
+    if (objectiveKrs.length > 0) {
+      await moveItem(sevenDir, objectiveId, "accepted");
+    }
+    return;
+  }
+
+  // Rule 2: accepted → achieved when all tasks under all KRs are done
+  if (currentStatus === "accepted") {
+    const krs = await listItems(sevenDir, "key-result");
+    const objectiveKrs = krs.filter((kr) => kr.data.parentId === objectiveId);
+
+    if (objectiveKrs.length === 0) {
+      // No KRs yet, stay accepted
+      return;
+    }
+
+    // Check if all tasks under all KRs are done
+    const tasks = await listItems(sevenDir, "task");
+    let allTasksDone = true;
+    let hasAnyTasks = false;
+
+    for (const kr of objectiveKrs) {
+      const krTasks = tasks.filter((t) => t.data.parentId === kr.id);
+      if (krTasks.length === 0) {
+        // KR with no tasks means not complete
+        allTasksDone = false;
+        break;
+      }
+      hasAnyTasks = true;
+      for (const task of krTasks) {
+        if (task.data.status !== "done") {
+          allTasksDone = false;
+          break;
+        }
+      }
+      if (!allTasksDone) break;
+    }
+
+    if (hasAnyTasks && allTasksDone) {
+      await moveItem(sevenDir, objectiveId, "achieved");
+    }
+  }
 }
