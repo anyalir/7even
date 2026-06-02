@@ -78,6 +78,7 @@ Always use `--type agent` when adding comments as an AI agent.
 
 ```bash
 npx s7n commit                          # Commit .7even/ to git
+npx s7n sync                            # Scan commits and auto-transition tasks to in-progress
 npx s7n repair-index                    # Rebuild index from filesystem
 ```
 
@@ -91,7 +92,8 @@ npx s7n repair-index                    # Rebuild index from filesystem
 | `/7-breakdown` | User wants to decompose a KR into tasks (MECE validated, dependencies) |
 | `/7-start-task` | User is ready to work on a task (defines AC, assigns, starts) |
 | `/7-verify-task` | User wants to check if acceptance criteria pass |
-| `/7-complete-task` | User finished a task (record effort, move to done) |
+| `/7-complete-task` | User finished a task (record effort, move to done, check auto-transitions) |
+| `/7-check-measurements` | Scan for KRs with completed tasks needing measurement validation |
 | `/7-evaluate` | User wants to check if a KR or objective is achieved |
 
 **Prefer slash commands over raw CLI** for decomposition and task lifecycle — they include MECE cross-checking, guided workflows, and automatic comment/dependency recording.
@@ -101,10 +103,30 @@ npx s7n repair-index                    # Rebuild index from filesystem
 When working on a task, include the task UUID in the commit body:
 
 ```bash
-git commit -m "implement feature X" -m "7even-task: <task-uuid>"
+git commit -m "implement feature X" -m "task: <task-uuid>"
 ```
 
 Clean subject line. UUID on separate line in body. Never in subject.
+
+**Auto-transitions**: Commits with `task: <uuid>` automatically transition tasks from `to-do` → `in-progress`. Run `npx s7n sync` to scan recent commits and trigger transitions.
+
+## Status Transitions (Automatic)
+
+7even automatically transitions statuses to reduce manual overhead:
+
+### Objectives
+- `proposed → accepted`: When first KR is created
+- `accepted → achieved`: When all tasks under all KRs are done
+
+### Key Results
+- `aspirational → achieved`: When all child tasks are done AND no measurement defined
+- If KR has `structuredMeasurement` or `measureScript`, stays `aspirational` until human confirms measurement
+
+### Tasks
+- `to-do → in-progress`: When commit references task (`task: <uuid>` format)
+- `in-progress → done`: Always manual (human or agent must confirm)
+
+**Agent responsibility**: After completing a task, check if parent KR or objective auto-achieved. Mention this to the user.
 
 ## OKR Hierarchy
 
