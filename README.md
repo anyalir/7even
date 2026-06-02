@@ -45,6 +45,20 @@ npx s7n estimate add O1KR1T1 5
 
 # Launch the dashboard
 npx s7n dashboard
+
+```
+## Work Loop
+
+```bash
+# Pick a task and start. The agent will help you define acceptance criteria, assign to you, and move to in-progress. You can hand off implementation itself to a subagent if you like, or do it yourself
+/7-start-task O1KR1T1
+
+# Run acceptance criteria scripts, report pass/fail
+/7-verify-task O1KR1T1
+
+# Move to done, final commit
+/7-complete-task O1KR1T1  
+```
 ```
 
 ## Concepts
