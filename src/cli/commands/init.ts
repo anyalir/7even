@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { resolveSevenDir, initSevenDir } from "../../core/storage.js";
 import chalk from "chalk";
-import { mkdir, readdir, symlink, lstat } from "node:fs/promises";
+import { mkdir, readdir, symlink, lstat, readlink } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -81,6 +81,31 @@ async function symlinkOpenCode(sevenDir: string) {
   );
 }
 
+async function symlinkShortBin(sevenDir: string) {
+  const gitRoot = dirname(sevenDir);
+  const binDir = join(gitRoot, "node_modules", ".bin");
+  const s7nBin = join(binDir, "s7n");
+  const shortBin = join(binDir, "7");
+
+  try {
+    await lstat(s7nBin);
+  } catch {
+    return; // s7n not installed via npm, skip
+  }
+
+  try {
+    const stat = await lstat(shortBin).catch(() => null);
+    if (stat) return; // already exists
+    // Read s7n target so we point to the same thing
+    const target = await readlink(s7nBin);
+    await symlink(target, shortBin);
+    console.log(chalk.green(`Created shortcut: npx 7 now works`));
+  } catch (err: any) {
+    // Non-fatal — just a convenience
+    console.log(chalk.dim(`Could not create 'npx 7' shortcut: ${err.message}`));
+  }
+}
+
 export function makeInitCommand(): Command {
   return new Command("init")
     .description("Initialize .7even/ directory in the current git repo")
@@ -90,11 +115,13 @@ export function makeInitCommand(): Command {
         await initSevenDir(sevenDir);
         console.log(chalk.green(`Initialized .7even/ in ${sevenDir}`));
         await symlinkOpenCode(sevenDir);
+        await symlinkShortBin(sevenDir);
       } catch (err: any) {
         if (err.message?.includes("already exists")) {
           console.error(chalk.yellow("Already initialized"));
           const sevenDir = await resolveSevenDir();
           await symlinkOpenCode(sevenDir);
+          await symlinkShortBin(sevenDir);
           process.exitCode = 1;
         } else {
           console.error(chalk.red(err.message));
