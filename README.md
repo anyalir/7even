@@ -211,7 +211,8 @@ npx s7n estimate show O1KR1T1           # Show history
 npx s7n commit                          # Commit .7even/ changes to git
 npx s7n sync                            # Scan git commits and auto-transition tasks to in-progress
 npx s7n repair-index                    # Rebuild index from filesystem
-npx s7n evaluate O1KR1                  # Evaluate KR completion
+npx s7n evaluate kr O1KR1                  # Evaluate KR completion
+npx s7n evaluate objective O1              # Check objective completion
 npx s7n dashboard                       # Launch local dashboard
 npx s7n config show                     # Show project configuration
 npx s7n config set --team-size 3        # Set team size (default: 1)
