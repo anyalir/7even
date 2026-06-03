@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { resolveSevenDir } from "../../core/storage.js";
+import { resolveSevenDir, resolveId } from "../../core/storage.js";
 import {
   checkKrTaskCompletion,
   evaluateKr,
@@ -20,9 +20,10 @@ export function makeEvaluateCommand(): Command {
     .action(async (krId: string, opts) => {
       try {
         const sevenDir = await resolveSevenDir();
+        const resolvedId = await resolveId(sevenDir, krId);
 
         // Check task completion first
-        const completion = await checkKrTaskCompletion(sevenDir, krId);
+        const completion = await checkKrTaskCompletion(sevenDir, resolvedId);
         console.log(
           chalk.bold(`Tasks: ${completion.done}/${completion.total} done`)
         );
@@ -38,7 +39,7 @@ export function makeEvaluateCommand(): Command {
         }
 
         // Run evaluation
-        const result = await evaluateKr(sevenDir, krId);
+        const result = await evaluateKr(sevenDir, resolvedId);
         console.log(chalk.bold(`Evaluation: ${result.status}`));
         if (result.scriptOutput) {
           console.log(chalk.dim(`Script output:\n${result.scriptOutput}`));
@@ -46,7 +47,7 @@ export function makeEvaluateCommand(): Command {
 
         if (result.status === "achieved") {
           if (opts.auto) {
-            const cascade = await cascadeAchievement(sevenDir, krId);
+            const cascade = await cascadeAchievement(sevenDir, resolvedId);
             console.log(chalk.green(`KR moved to achieved: ${cascade.krMoved}`));
             if (cascade.objectiveMoved) {
               console.log(
@@ -77,9 +78,10 @@ export function makeEvaluateCommand(): Command {
     .action(async (objectiveId: string) => {
       try {
         const sevenDir = await resolveSevenDir();
+        const resolvedId = await resolveId(sevenDir, objectiveId);
         const completion = await checkObjectiveCompletion(
           sevenDir,
-          objectiveId
+          resolvedId
         );
         console.log(
           chalk.bold(
