@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import crypto from "node:crypto";
 import { resolveSevenDir, createItem, readItem, listItems, updateItem, moveItem, addComment } from "../../core/storage.js";
+import { readShortIdIndex } from "../../core/index-manager.js";
 import { generateSlug } from "../../core/slug.js";
 import { getGitAuthor } from "../../core/git.js";
 import { formatItem, formatItemList } from "../formatters/item.js";
@@ -51,6 +52,14 @@ export function makeTaskCommand(): Command {
         const resolvedId = await resolveId(sevenDir, id, "task");
         const { data, path } = await readItem(sevenDir, resolvedId);
         const slug = path.replace(/\.json$/, "").split("/").pop() ?? id;
+        // Resolve dependsOn UUIDs to short IDs for readability
+        if (data.dependsOn?.length > 0) {
+          const shortIndex = await readShortIdIndex(sevenDir);
+          const uuidToShortId = Object.fromEntries(
+            Object.entries(shortIndex).map(([shortId, uuid]) => [uuid, shortId])
+          );
+          data.dependsOn = data.dependsOn.map((uuid: string) => uuidToShortId[uuid] ?? uuid);
+        }
         console.log(formatItem(data, "task", slug));
       } catch (err: any) {
         console.error(chalk.red(err.message));
@@ -210,6 +219,11 @@ async function resolveId(
     if (item.path.includes(`/${idOrSlug}/`) || item.path.includes(`/${idOrSlug}.json`)) {
       return item.id;
     }
+  }
+  // Detect common typo: leading zero instead of letter O
+  if (/^0\d/i.test(idOrSlug)) {
+    const suggestion = idOrSlug.replace(/^0/, "O").toUpperCase();
+    throw new Error(`Invalid identifier: "${idOrSlug}". Did you mean "${suggestion}"? (letter O, not zero)`);
   }
   throw new Error(`Item not found: ${idOrSlug}`);
 }
