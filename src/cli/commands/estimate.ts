@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { resolveSevenDir, readItem } from "../../core/storage.js";
+import { resolveSevenDir, readItem, resolveId } from "../../core/storage.js";
 import {
   addEstimation,
   getLatestEstimate,
@@ -20,13 +20,14 @@ export function makeEstimateCommand(): Command {
     .action(async (taskId: string, sp: string, opts) => {
       try {
         const sevenDir = await resolveSevenDir();
+        const resolvedId = await resolveId(sevenDir, taskId);
         const spNum = Number(sp);
         if (isNaN(spNum) || spNum < 0) {
           throw new Error(`Invalid story points: "${sp}"`);
         }
         const estimator =
           opts.estimator ?? `${getGitAuthor().name} <${getGitAuthor().email}>`;
-        await addEstimation(sevenDir, taskId, spNum, estimator);
+        await addEstimation(sevenDir, resolvedId, spNum, estimator);
         console.log(chalk.green(`Estimation added: ${spNum} SP for ${taskId.slice(0, 8)}`));
       } catch (err: any) {
         console.error(chalk.red(err.message));
@@ -40,7 +41,8 @@ export function makeEstimateCommand(): Command {
     .action(async (taskId: string) => {
       try {
         const sevenDir = await resolveSevenDir();
-        const { data } = await readItem(sevenDir, taskId);
+        const resolvedId = await resolveId(sevenDir, taskId);
+        const { data } = await readItem(sevenDir, resolvedId);
         const history = data.estimationHistory ?? [];
         if (history.length === 0) {
           console.log(chalk.dim("No estimations recorded."));
@@ -71,7 +73,8 @@ export function makeEstimateCommand(): Command {
     .action(async (taskId: string) => {
       try {
         const sevenDir = await resolveSevenDir();
-        const { data } = await readItem(sevenDir, taskId);
+        const resolvedId = await resolveId(sevenDir, taskId);
+        const { data } = await readItem(sevenDir, resolvedId);
         const suggestion = suggestReEstimate(data as any);
         console.log(chalk.bold(`Suggested: ${suggestion.suggestedSp} SP`));
         console.log(chalk.dim(`Rationale: ${suggestion.rationale}`));
