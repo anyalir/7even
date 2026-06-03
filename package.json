@@ -15,7 +15,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && vite build --config src/dashboard/vite.config.ts",
     "test": "vitest run"
   },
   "keywords": [
