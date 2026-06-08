@@ -1,0 +1,19 @@
+src/dashboard/app/components/GanttHeader.tsx
+  s_4dfd017423161a::t_609f291896cb12 104,109-119,121,123-129,131-142,144-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "230ab84f4187b549a86d397a686835a5fc068164",
+  "prompts": {},
+  "sessions": {
+    "s_4dfd017423161a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_15865f3adffeY33ZWbVDEBgzFY",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
