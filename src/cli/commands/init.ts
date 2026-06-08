@@ -96,8 +96,8 @@ async function symlinkShortBin(sevenDir: string) {
   try {
     const stat = await lstat(shortBin).catch(() => null);
     if (stat) return; // already exists
-    // Read s7n target so we point to the same thing
-    const target = await readlink(s7nBin);
+    // Use the known package structure path
+    const target = join("..", "@anyalir", "7even", "dist", "index.js");
     await symlink(target, shortBin);
     console.log(chalk.green(`Created shortcut: npx 7 now works`));
   } catch (err: any) {
