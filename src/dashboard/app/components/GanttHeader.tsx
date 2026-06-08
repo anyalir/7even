@@ -101,51 +101,62 @@ export function GanttHeader({
       {/* Time axis */}
       <div
         style={{
-          position: "relative",
+          display: "flex",
           height: 28,
           borderBottom: "1px solid var(--border-subtle)",
         }}
       >
-        {ticks.map((t, i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: `${t.pct}%`,
-              bottom: 0,
-              fontSize: 10,
-              color: "var(--text-muted)",
-              transform: "translateX(-50%)",
-              whiteSpace: "nowrap",
-            }}
-          >
+        {/* Label column spacer */}
+        <div style={{ width: 340, minWidth: 340 }} />
+        
+        {/* Bar area with ticks */}
+        <div
+          style={{
+            flex: 1,
+            position: "relative",
+          }}
+        >
+          {ticks.map((t, i) => (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: `${t.pct}%`,
+                bottom: 0,
+                fontSize: 10,
+                color: "var(--text-muted)",
+                transform: "translateX(-50%)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <div
+                style={{
+                  width: 1,
+                  height: 6,
+                  background: "var(--border-subtle)",
+                  margin: "0 auto 2px",
+                }}
+              />
+              {t.label}
+            </div>
+          ))}
+
+          {/* Today marker */}
+          {todayPct >= 0 && todayPct <= 100 && (
             <div
               style={{
-                width: 1,
-                height: 6,
-                background: "var(--border-subtle)",
-                margin: "0 auto 2px",
+                position: "absolute",
+                left: `${todayPct}%`,
+                top: 0,
+                bottom: -4,
+                width: 2,
+                background: "var(--color-coral)",
+                zIndex: 2,
               }}
+              title="Today"
             />
-            {t.label}
-          </div>
-        ))}
-
-        {/* Today marker */}
-        {todayPct >= 0 && todayPct <= 100 && (
-          <div
-            style={{
-              position: "absolute",
-              left: `${todayPct}%`,
-              top: 0,
-              bottom: -4,
-              width: 2,
-              background: "var(--color-coral)",
-              zIndex: 2,
-            }}
-            title="Today"
-          />
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
