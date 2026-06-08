@@ -1,6 +1,6 @@
 {
   "name": "@anyalir/7even",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Repository-local, agentic-AI-enabled issue tracker with OKR hierarchy",
   "type": "module",
   "bin": {
