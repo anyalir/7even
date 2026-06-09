@@ -6,7 +6,7 @@ export interface TaskData {
   assignee?: { name?: string; email: string };
   estimationHistory?: Array<{ date: string; spRemaining: number; estimator: string }>;
   comments?: Array<{ author: string; date: string; text: string }>;
-  acceptanceCriteria?: string[];
+  acceptanceCriteria?: Array<string | { description: string; script?: string }>;
   dependsOn?: string[];
   shortId?: string;
   [key: string]: unknown;

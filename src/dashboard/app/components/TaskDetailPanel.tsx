@@ -242,11 +242,20 @@ export function TaskDetailPanel({ task, krTasks, objColor = "var(--color-lavende
           {task.acceptanceCriteria && task.acceptanceCriteria.length > 0 && (
             <Section title="ACCEPTANCE CRITERIA">
               <ul style={{ paddingLeft: 16, fontSize: 12 }}>
-                {task.acceptanceCriteria.map((ac, i) => (
-                  <li key={i} style={{ marginBottom: 4 }}>
-                    {ac}
-                  </li>
-                ))}
+                {task.acceptanceCriteria.map((ac, i) => {
+                  const criterion = typeof ac === "string" ? ac : ac.description;
+                  const script = typeof ac === "object" && ac.script ? ac.script : null;
+                  return (
+                    <li key={i} style={{ marginBottom: 8 }}>
+                      {criterion}
+                      {script && (
+                        <div style={{ fontSize: 11, opacity: 0.6, marginTop: 2, fontFamily: "monospace" }}>
+                          ↳ {script}
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </Section>
           )}
