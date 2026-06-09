@@ -1,0 +1,21 @@
+src/dashboard/app/components/TaskDetailPanel.tsx
+  s_4dfd017423161a::t_1967fade564284 245-258
+src/dashboard/app/components/TaskCard.tsx
+  s_4dfd017423161a::t_58087b45c8da17 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "a8cd10b726c1ba02594d754a87569616f2411bb6",
+  "prompts": {},
+  "sessions": {
+    "s_4dfd017423161a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_15865f3adffeY33ZWbVDEBgzFY",
+        "model": "claude-sonnet-4.5"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
