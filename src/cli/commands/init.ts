@@ -79,6 +79,14 @@ async function symlinkOpenCode(sevenDir: string) {
     (f) => f === "7even",
     "OpenCode skill",
   );
+
+  // Agents (executor/validator subagents for spawn-pair)
+  await symlinkDir(
+    join(pkgRoot, ".opencode", "agents"),
+    join(gitRoot, ".opencode", "agents"),
+    (f) => f.startsWith("7-") && f.endsWith(".md"),
+    "OpenCode agents",
+  );
 }
 
 async function symlinkShortBin(sevenDir: string) {

@@ -95,8 +95,45 @@ npx s7n repair-index                    # Rebuild index from filesystem
 | `/7-complete-task` | User finished a task (record effort, move to done, check auto-transitions) |
 | `/7-check-measurements` | Scan for KRs with completed tasks needing measurement validation |
 | `/7-evaluate` | User wants to check if a KR or objective is achieved |
+| `/7-spawn-pair` | Execute a single task via automated executor/validator pair |
+| `/7-spawn-pairs` | Execute multiple tasks in parallel via batch executor/validator pairs |
 
 **Prefer slash commands over raw CLI** for decomposition and task lifecycle — they include MECE cross-checking, guided workflows, and automatic comment/dependency recording.
+
+## Automated Execution (Executor/Validator Pairs)
+
+For hands-off task execution, 7even provides an executor/validator agent pattern. The main agent orchestrates — it never implements or verifies directly.
+
+### Agents
+
+| Agent | Model | Role | Permissions |
+|-------|-------|------|-------------|
+| `7-executor` | Sonnet 4.5 | Implements code, writes tests, commits | edit, bash, read |
+| `7-validator` | Opus 4.6 | Reviews criteria, verifies implementation, finishes tasks | bash, read (no edit) |
+
+### Single task: `/7-spawn-pair <task-id>`
+
+Orchestrates one executor/validator cycle:
+1. **Executor proposes** 3-5 acceptance criteria with verification approaches
+2. **Validator reviews** criteria → `APPROVED` or `REJECTED` (max 2 rejection rounds)
+3. **Executor implements** with approved criteria, commits with `task: <uuid>` in body, re-estimates as needed
+4. **Validator verifies** — checks clean working tree, commit format, runs all AC scripts
+5. **Loop or finish** — on `FAIL`, executor fixes and validator re-verifies (max 3 rounds). On `ALL_PASS`, validator finalizes: sets estimate to 0, moves task to done, commits 7even state, checks parent KR
+
+### Batch execution: `/7-spawn-pairs [task-ids]`
+
+Runs N executor/validator pairs concurrently:
+- Accepts comma-separated, space-separated, or range notation (`O1KR1T1-T3`)
+- Pre-flight validates dependencies — skips tasks with unsatisfied deps
+- All phases run in parallel batches (propose → review → implement → verify)
+- Reports per-pair results as they complete; escalates after 3 failed verifications
+
+### Key rules for automated execution
+- Orchestrator NEVER implements or verifies — always delegates to subagents
+- Every executor commit MUST include `task: <full-uuid>` in commit body
+- Executor re-estimates via `npx s7n estimate add` when complexity changes
+- Only the validator can finish a task (move to done)
+- Validator checks: clean working tree → commit format → estimation updated → all AC pass
 
 ## Commit Format
 

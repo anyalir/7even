@@ -49,9 +49,13 @@ npx s7n dashboard
 ```
 ## Work Loop
 
+### Manual (human-in-the-loop)
+
 ```bash
-# Pick a task and start. The agent will help you define acceptance criteria, assign to you, and move to in-progress. You can hand off implementation itself to a subagent if you like, or do it yourself
+# Pick a task and start. The agent will help you define acceptance criteria, assign to you, and move to in-progress
 /7-start-task O1KR1T1
+
+# (implement the task)
 
 # Run acceptance criteria scripts, report pass/fail
 /7-verify-task O1KR1T1
@@ -59,6 +63,18 @@ npx s7n dashboard
 # Move to done, final commit
 /7-complete-task O1KR1T1
 ```
+
+### Automated (executor/validator pairs)
+
+```bash
+# Fully automated: executor implements, validator verifies, no human intervention needed
+/7-spawn-pair O1KR1T1
+
+# Batch: run multiple tasks in parallel
+/7-spawn-pairs O1KR1T1,O1KR1T2,O1KR1T3
+
+# Or use range notation
+/7-spawn-pairs O1KR1T1-T3
 ```
 
 ## Concepts
@@ -272,7 +288,7 @@ Velocity is displayed as both team total and per-person (dashed line). ETA uses 
 
 ## OpenCode Integration
 
-7even ships with slash commands for [OpenCode](https://opencode.ai). Running `npx s7n init` symlinks them into `.opencode/commands/`.
+7even ships with slash commands and subagent definitions for [OpenCode](https://opencode.ai). Running `npx s7n init` symlinks them into `.opencode/commands/` and `.opencode/agents/`.
 
 ### Workflow: New Project
 
@@ -286,12 +302,36 @@ The MECE analysis checks every proposed item against all existing items across t
 
 ### Workflow: Task Execution
 
+#### Manual
+
 ```
 /7-start-task O1KR1T1     Define acceptance criteria, assign, move to in-progress
                           (implement the task)
 /7-verify-task O1KR1T1    Run acceptance criteria scripts, report pass/fail
 /7-complete-task O1KR1T1  Record actual SP, move to done, final commit
 ```
+
+#### Automated (executor/validator pairs)
+
+For hands-off execution, spawn executor/validator agent pairs. The main agent orchestrates — it never implements or verifies directly.
+
+| Agent | Model | Role |
+|-------|-------|------|
+| `7-executor` | Sonnet 4.5 | Proposes acceptance criteria, implements code, writes tests, commits |
+| `7-validator` | Opus 4.6 | Reviews criteria, verifies implementation, finishes tasks (read-only) |
+
+```
+/7-spawn-pair O1KR1T1     Single task: full executor/validator cycle
+/7-spawn-pairs O1KR1T1-T3 Batch: N pairs run concurrently
+```
+
+The cycle for each pair:
+1. Executor proposes 3-5 acceptance criteria
+2. Validator reviews → APPROVED or REJECTED (max 2 rejection rounds)
+3. Executor implements with approved criteria, commits with `task: <uuid>`
+4. Validator verifies: clean tree, commit format, runs all AC scripts
+5. On ALL_PASS: validator finalizes (estimate → 0, move → done, commit state)
+6. On FAIL: executor fixes, validator re-verifies (max 3 rounds, then escalates)
 
 ### Commit Format
 
@@ -317,6 +357,8 @@ git commit -m "implement photo validation scoring engine" \
 | `/7-pause` | Pause current work with context |
 | `/7-proceed` | Resume paused work |
 | `/7-finish` | Wrap up a session |
+| `/7-spawn-pair` | Automated single-task execution via executor/validator pair |
+| `/7-spawn-pairs` | Batch automated execution — N pairs in parallel |
 
 ## Example: Real Project
 
