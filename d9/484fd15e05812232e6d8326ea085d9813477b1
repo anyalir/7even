@@ -1,0 +1,36 @@
+README.md
+  s_89710bc3d296a4::t_15eb43c1365740 291
+  s_89710bc3d296a4::t_698f98ecb689b6 305-306,314-334
+  s_89710bc3d296a4::t_4b850a82de9dff 360-361
+  s_89710bc3d296a4::t_59533052a14c46 52-53,55,58-59,66-77
+  s_89710bc3d296a4::t_b6693142e2cc4a 335
+.opencode/commands/7-spawn-pairs.md
+  s_89710bc3d296a4::t_f923f53b9408ff 1-183
+src/cli/commands/init.ts
+  s_89710bc3d296a4::t_c5c0c269e2b3e2 82-89
+.opencode/agents/7-executor.md
+  s_89710bc3d296a4::t_5e435f1d07e534 1-103
+.opencode/skills/7even/SKILL.md
+  s_89710bc3d296a4::t_6b8180e8e6d859 98-99,103-136
+  s_89710bc3d296a4::t_8850a5939c4796 137
+.opencode/commands/7-spawn-pair.md
+  s_89710bc3d296a4::t_c47ef5a82d4738 1-141
+.opencode/agents/7-validator.md
+  s_89710bc3d296a4::t_db9fec00c80d03 1-125
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.8",
+  "base_commit_sha": "d9484fd15e05812232e6d8326ea085d9813477b1",
+  "prompts": {},
+  "sessions": {
+    "s_89710bc3d296a4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_152dd4865ffeJMwY1CjfMHAy9T",
+        "model": "claude-opus-4.6"
+      },
+      "human_author": "Anya Livia Rudolph <anya.rudolph@clark.de>"
+    }
+  }
+}
