@@ -82,7 +82,6 @@ npx s7n dashboard
 ### OKR Hierarchy
 
 ```
-```
 Objective (O1)
 ├── Key Result (O1KR1)
 │   ├── Task (O1KR1T1)
@@ -92,7 +91,9 @@ Objective (O1)
 │   ├── Task (O1KR2T1)
 │   └── Task (O1KR2T2)
 └── Key Result (O1KR3)
-    └──
+    ├── Task (O1KR3T1)
+    ├── Task (O1KR3T1)
+    └── ...
 ```
 
 **Objectives** define what you want to achieve. **Key Results** are measurable outcomes that prove the objective is met. **Tasks** are the concrete work items.
